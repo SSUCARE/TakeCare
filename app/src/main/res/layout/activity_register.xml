@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_weight="5"
     android:background="@color/bg_color"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -25,61 +25,56 @@
         android:orientation="vertical"
         android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/et_email_l"
-            android:layout_width="300dp"
+        <TextView
+            android:text="이메일과 비밀번호를 등록하세요"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/font_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:hint="이메일"
-            android:inputType="textEmailAddress"
-            android:fontFamily="@font/font_button" />
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal" />
 
         <EditText
-            android:id="@+id/et_password_l"
-            android:layout_width="300dp"
+            android:id="@+id/et_email_r"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:hint="이메일"
+            android:fontFamily="@font/font_button"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/et_password_r"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
             android:hint="비밀번호"
-            android:inputType="textPassword"
-            android:fontFamily="@font/font_button" />
+            android:fontFamily="@font/font_button"
+            android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/btn_color"
-            android:text="로그인"
+            android:text="회원가입"
             android:textSize="16dp"
             android:fontFamily="@font/font_button" />
 
         <TextView
-            android:id="@+id/tv_register"
-            android:text="신규 회원가입"
-            android:textSize="16dp"
+            android:id="@+id/tv_login"
+            android:text="회원이시면 여기서 로그인하세요"
+            android:fontFamily="@font/font_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/font_button"/>
+            android:layout_gravity="center_horizontal" />
 
-        <TextView
-            android:id="@+id/tv_find"
-            android:text="비밀번호 찾기"
-            android:textSize="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/font_button"/>
 
     </LinearLayout>
 
