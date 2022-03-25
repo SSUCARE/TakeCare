@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_weight="3"
+    android:weightSum="3"
     android:background="@color/bg_color"
     tools:context=".FindActivity">
 
@@ -27,7 +27,7 @@
 
         <TextView
             android:text="등록한 이메일을 입력하세요"
-            android:textSize="16dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:fontFamily="@font/font_button"
             android:layout_width="wrap_content"
@@ -42,19 +42,21 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:hint="이메일"
+            android:textSize="18sp"
             android:fontFamily="@font/font_button"
             android:inputType="textEmailAddress" />
 
         <Button
             android:id="@+id/btn_find"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="@color/btn_color"
             android:text="인증 메일 발송"
-            android:textSize="16dp"
+            android:textSize="16sp"
+            android:padding="10dp"
             android:fontFamily="@font/font_button" />
 
     </LinearLayout>

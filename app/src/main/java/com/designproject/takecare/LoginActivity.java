@@ -50,7 +50,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == buttonLogin) {
-
+            finish();
+            startActivity(new Intent(this, InfoActivity.class));
         }
 
         if (view == textViewRegister) {
