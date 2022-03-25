@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.TakeCare" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- No Title Bar-->
-        <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blue_sky</item>
         <item name="colorAccent">@color/white</item>
         <!-- Customize your theme here. -->
     </style>

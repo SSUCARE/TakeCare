@@ -12,9 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TakeCare">
 
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".InfoActivity"/>
+        <activity android:name=".FindActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity" />
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".FirstActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
