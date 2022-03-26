@@ -23,7 +23,7 @@
         android:text="아무 곳이나 클릭해주세요"
         android:textSize="16sp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/font_button"
+        android:fontFamily="@font/font_normal"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"/>
 

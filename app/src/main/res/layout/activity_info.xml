@@ -12,7 +12,7 @@
         android:text="개인정보을 입력해주세요"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:fontFamily="@font/font_button"
+        android:fontFamily="@font/font_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -28,7 +28,7 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_button"
+                android:fontFamily="@font/font_normal"
                 android:padding="20dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="30dp"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_toEndOf="@id/tv_name"
-                android:fontFamily="@font/font_button"
+                android:fontFamily="@font/font_normal"
                 android:inputType="text"/>
 
         </TableRow>
@@ -54,7 +54,7 @@
                 android:id="@+id/tv_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_button"
+                android:fontFamily="@font/font_normal"
                 android:padding="20dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="30dp"
@@ -74,7 +74,7 @@
                     android:layout_weight="1"
                     android:text="남자"
                     android:textSize="14dp"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_man"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
@@ -83,7 +83,7 @@
                     android:layout_weight="1"
                     android:text="여자"
                     android:textSize="14dp"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_woman"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
@@ -96,7 +96,7 @@
                 android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_button"
+                android:fontFamily="@font/font_normal"
                 android:padding="20dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="30dp"
@@ -117,7 +117,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:inputType="number"/>
 
                 <TextView
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:text="세"
                     android:textSize="14sp"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:padding="10dp" />
 
             </LinearLayout>
@@ -137,7 +137,7 @@
                 android:id="@+id/tv_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_button"
+                android:fontFamily="@font/font_normal"
                 android:padding="20dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="30dp"
@@ -159,7 +159,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:inputType="number"/>
 
                 <TextView
@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:text="cm"
                     android:textSize="14sp"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:padding="10dp" />
 
             </LinearLayout>
@@ -179,7 +179,7 @@
                 android:id="@+id/tv_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_button"
+                android:fontFamily="@font/font_normal"
                 android:padding="20dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="30dp"
@@ -199,7 +199,7 @@
                     android:layout_weight="1"
                     android:text="보호자"
                     android:textSize="14sp"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_caring"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
@@ -208,7 +208,7 @@
                     android:layout_weight="1"
                     android:text="피보호자"
                     android:textSize="14sp"
-                    android:fontFamily="@font/font_button"
+                    android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_cared"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" />
@@ -228,6 +228,6 @@
         android:text="등록"
         android:textSize="16sp"
         android:padding="10dp"
-        android:fontFamily="@font/font_button"/>
+        android:fontFamily="@font/font_normal"/>
 
 </LinearLayout>

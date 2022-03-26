@@ -29,7 +29,7 @@
             android:text="등록한 이메일을 입력하세요"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:fontFamily="@font/font_button"
+            android:fontFamily="@font/font_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:hint="이메일"
             android:textSize="18sp"
-            android:fontFamily="@font/font_button"
+            android:fontFamily="@font/font_normal"
             android:inputType="textEmailAddress" />
 
         <Button
@@ -57,7 +57,7 @@
             android:text="인증 메일 발송"
             android:textSize="16sp"
             android:padding="10dp"
-            android:fontFamily="@font/font_button" />
+            android:fontFamily="@font/font_normal" />
 
     </LinearLayout>
 
