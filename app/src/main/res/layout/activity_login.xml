@@ -36,7 +36,7 @@
             android:hint="이메일"
             android:textSize="18sp"
             android:inputType="textEmailAddress"
-            android:fontFamily="@font/font_button" />
+            android:fontFamily="@font/font_normal" />
 
         <EditText
             android:id="@+id/et_password_l"
@@ -49,7 +49,7 @@
             android:hint="비밀번호"
             android:textSize="18sp"
             android:inputType="textPassword"
-            android:fontFamily="@font/font_button" />
+            android:fontFamily="@font/font_normal" />
 
         <Button
             android:id="@+id/btn_login"
@@ -62,7 +62,7 @@
             android:text="로그인"
             android:textSize="16sp"
             android:padding="10dp"
-            android:fontFamily="@font/font_button" />
+            android:fontFamily="@font/font_normal" />
 
         <TextView
             android:id="@+id/tv_register"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/font_button"/>
+            android:fontFamily="@font/font_normal"/>
 
         <TextView
             android:id="@+id/tv_find"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/font_button"/>
+            android:fontFamily="@font/font_normal"/>
 
     </LinearLayout>
 
