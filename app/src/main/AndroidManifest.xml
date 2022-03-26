@@ -11,12 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TakeCare">
-
-        <activity android:name=".InfoActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity android:name=".InfoActivity" />
         <activity android:name=".FindActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-
         <activity
             android:name=".FirstActivity"
             android:exported="true">
@@ -26,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
