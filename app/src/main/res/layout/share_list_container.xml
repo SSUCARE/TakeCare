@@ -1,69 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="180dp"
-    android:layout_height="180dp"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="190dp"
+    android:layout_height="190dp"
     android:background="@drawable/layout_border1"
-    android:layout_marginBottom="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="10dp"
+    android:layout_marginTop="10dp">
+
+    <TextView
+        android:id="@+id/share_list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/font_normal"
+        android:text="___"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="A님의 건강체크"
-        android:textSize="17dp"
-        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/share_list_name"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/share_list_name"/>
+        android:text=" 님의 건강체크"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/font_normal"/>
+
     <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="8dp"
+        android:id="@+id/share_list_graph"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:padding="10dp"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintTop_toBottomOf="@id/share_list_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintEnd_toStartOf="@id/calendar"
+        app:layout_constraintEnd_toStartOf="@id/share_list_calendar"
         app:layout_constraintHorizontal_chainStyle="spread"
         android:background="@drawable/layout_border2"
         android:src="@drawable/share_graph"
-        android:scaleType="centerInside"
-        android:id="@+id/graph"/>
+        android:scaleType="centerInside" />
+
     <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="8dp"
+        android:id="@+id/share_list_calendar"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:padding="10dp"
         android:background="@drawable/layout_border2"
-        app:layout_constraintTop_toTopOf="@id/graph"
-        app:layout_constraintStart_toEndOf="@id/graph"
+        app:layout_constraintTop_toTopOf="@id/share_list_graph"
+        app:layout_constraintStart_toEndOf="@id/share_list_graph"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/share_graph"
-        android:scaleType="centerCrop"
-        android:id="@+id/calendar"/>
+        android:src="@drawable/share_calendar"
+        android:scaleType="centerCrop" />
+
     <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="8dp"
+        android:id="@+id/share_list_prescription"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/layout_border2"
-        app:layout_constraintTop_toBottomOf="@id/graph"
+        app:layout_constraintTop_toBottomOf="@id/share_list_graph"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        app:layout_constraintStart_toStartOf="@id/graph"
-        android:src="@drawable/share_graph"
-        android:scaleType="centerCrop"
-        android:id="@+id/third"/>
+        app:layout_constraintStart_toStartOf="@id/share_list_graph"
+        android:src="@drawable/share_prescription"
+        android:scaleType="centerCrop"/>
+
     <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="8dp"
+        android:id="@+id/share_list_report"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/layout_border2"
-        app:layout_constraintTop_toBottomOf="@id/graph"
+        app:layout_constraintTop_toBottomOf="@id/share_list_graph"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        app:layout_constraintEnd_toEndOf="@id/calendar"
-        android:src="@drawable/share_graph"
-        android:scaleType="centerCrop"
-        android:id="@+id/review"/>
+        app:layout_constraintEnd_toEndOf="@id/share_list_calendar"
+        android:src="@drawable/share_report"
+        android:scaleType="centerCrop"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

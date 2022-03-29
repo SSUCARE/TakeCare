@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_color"
+    android:background="@color/tab_color"
     android:weightSum="5"
     tools:context=".FirstActivity">
 
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="아무 곳이나 클릭해주세요"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/font_normal"
         android:layout_gravity="center_horizontal"

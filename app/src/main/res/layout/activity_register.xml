@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="5"
-    android:background="@color/bg_color"
+    android:background="@color/tab_color"
     tools:context=".RegisterActivity">
 
     <ImageView
@@ -27,8 +27,8 @@
 
         <TextView
             android:text="이메일과 비밀번호를 등록하세요"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/black"
             android:fontFamily="@font/font_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:hint="이메일"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:fontFamily="@font/font_normal"
             android:inputType="textEmailAddress" />
 
@@ -53,7 +53,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:hint="비밀번호"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:fontFamily="@font/font_normal"
             android:inputType="textPassword" />
 
@@ -66,14 +66,15 @@
             android:layout_marginBottom="20dp"
             android:background="@color/btn_color"
             android:text="회원가입"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:fontFamily="@font/font_normal" />
 
         <TextView
             android:id="@+id/tv_login"
             android:text="회원이시면 여기서 로그인하세요"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:fontFamily="@font/font_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
