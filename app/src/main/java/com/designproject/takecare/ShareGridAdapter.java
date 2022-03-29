@@ -13,20 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.ViewHolder>{
+
     List<String> list;
+
     public ShareGridAdapter(List<String>list){
         this.list=list;
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         ImageButton btn1,btn2,btn3,btn4;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.share_list_name);
-            btn1=itemView.findViewById(R.id.graph);
-            btn2=itemView.findViewById(R.id.calendar);
-            btn3=itemView.findViewById(R.id.third);
-            btn4=itemView.findViewById(R.id.review);
+            btn1=itemView.findViewById(R.id.share_list_graph);
+            btn2=itemView.findViewById(R.id.share_list_calendar);
+            btn3=itemView.findViewById(R.id.share_list_prescription);
+            btn4=itemView.findViewById(R.id.share_list_report);
         }
     }
 
@@ -36,8 +40,8 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
         Context context=parent.getContext();
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view=inflater.inflate(R.layout.share_list_container,parent,false);
-        ViewHolder vh=new ViewHolder(view);
-        return vh;
+        ViewHolder viewholder=new ViewHolder(view);
+        return viewholder;
     }
 
     @Override
