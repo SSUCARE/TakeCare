@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/font_normal"
-        android:text="___"
+        android:text="____"
         android:includeFontPadding="false"
         android:textColor="@color/black"
         android:textSize="16sp"
