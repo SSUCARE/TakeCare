@@ -32,13 +32,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="11"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/layout_border1"
             android:padding="10dp">
 
@@ -46,10 +48,11 @@
                 android:id="@+id/share_my_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/list_check"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:includeFontPadding="false"
                 android:text="___"
                 android:textSize="20sp"
                 android:textColor="@color/black"
@@ -59,11 +62,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/share_my_name"
-                android:text=" 님의 건강체크"
+                app:layout_constraintLeft_toRightOf="@+id/share_my_name"
+                android:text="님의 건강체크"
+                app:layout_constraintRight_toRightOf="parent"
+                android:includeFontPadding="false"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"/>
+                android:fontFamily="@font/font_normal"
+                android:id="@+id/list_check"/>
 
             <ImageButton
                 android:id="@+id/share_my_graph"
@@ -168,6 +174,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="8">
 
             <androidx.recyclerview.widget.RecyclerView
