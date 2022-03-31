@@ -5,8 +5,8 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryDark">@color/blue_sky</item>
+        <item name="colorPrimary">@color/actionbar_color</item>
+        <item name="colorPrimaryDark">@color/statusbar_color</item>
         <item name="colorAccent">@color/white</item>
         <!-- Customize your theme here. -->
     </style>

@@ -7,14 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#D5D5D5</color>
-    <color name="setting_back">#EAEAEA</color>
+    <color name="gray">#D5D5D5</color>
+    <color name="statusbar_color">#4994D0</color>
     <color name="actionbar_color">#73BBEA</color>
-
-
-    <color name="blue">#4994D0</color>
-    <color name="blue_sky">#73BBEA</color>
     <color name="btn_color">#7FB8DE</color>
-    <color name="bg_color">#FAFAFA</color>
+    <color name="tab_color">#FAFAFA</color>
+    <color name="bg_color">#EAEAEA</color>
+
 
 </resources>

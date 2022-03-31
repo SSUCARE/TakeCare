@@ -3,15 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/drawable/layout_border1.xml" value="0.2235" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/drawable/layout_border2.xml" value="0.243" />
         <entry key="..\:/ASproject/TakeCare/app/src/main/res/font/font.xml" value="0.3125" />
         <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_find.xml" value="0.28984375" />
         <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_first.xml" value="0.28984375" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_home.xml" value="0.28984375" />
         <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_info.xml" value="0.28984375" />
         <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_login.xml" value="0.28984375" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_main.xml" value="0.2864864864864865" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_main2.xml" value="0.28984375" />
         <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/activity_register.xml" value="0.28984375" />
-        <entry key="..\:/MakeApp/TakeCare/app/src/main/res/drawable/layout_border1.xml" value="0.1" />
-        <entry key="..\:/MakeApp/TakeCare/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/MakeApp/TakeCare/app/src/main/res/layout/tab1_fragment.xml" value="0.12685185185185185" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/fragment_home.xml" value="0.2659722222222222" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/fragment_mypage.xml" value="0.28984375" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/fragment_share.xml" value="0.28984375" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/share_list_container.xml" value="0.4" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/tab1_fragment.xml" value="0.2534722222222222" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/tab2_fragment.xml" value="0.2534722222222222" />
+        <entry key="..\:/ASproject/TakeCare/app/src/main/res/layout/tab3_fragment.xml" value="0.2534722222222222" />
       </map>
     </option>
   </component>

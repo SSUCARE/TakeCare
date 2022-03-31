@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#D5D5D5"/>
-    <!--내부 색깔-->
-
+    <!-- 내부 색깔 -->
+    <solid
+        android:color="@color/bg_color"/>
+    <!--모서리 끝부분의 둥근정도 -->
     <corners
         android:radius="15dp"/>
-    <!--모서리 끝부분의 둥근정도 -->
+    <!-- padding 설정 -->
     <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
 </shape>

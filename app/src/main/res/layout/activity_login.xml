@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="5"
-    android:background="@color/bg_color"
+    android:background="@color/tab_color"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
 
         <EditText
             android:id="@+id/et_email_l"
@@ -34,7 +35,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="이메일"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:inputType="textEmailAddress"
             android:fontFamily="@font/font_normal" />
 
@@ -47,7 +48,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="비밀번호"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:inputType="textPassword"
             android:fontFamily="@font/font_normal" />
 
@@ -60,14 +61,15 @@
             android:layout_marginBottom="10dp"
             android:background="@color/btn_color"
             android:text="로그인"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:fontFamily="@font/font_normal" />
 
         <TextView
             android:id="@+id/tv_register"
             android:text="신규 회원가입"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -77,7 +79,7 @@
         <TextView
             android:id="@+id/tv_find"
             android:text="비밀번호 찾기"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
