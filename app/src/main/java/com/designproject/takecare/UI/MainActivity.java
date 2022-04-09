@@ -1,19 +1,32 @@
-package com.designproject.takecare;
+package com.designproject.takecare.UI;
 
 import android.content.Intent;
-import android.media.Image;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import com.designproject.takecare.Fragment.HomeFragment;
+import com.designproject.takecare.Fragment.MyPageFragment;
+import com.designproject.takecare.Fragment.ShareFragment;
+import com.designproject.takecare.KakaoLogin.SessionCallback;
+import com.designproject.takecare.R;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 public class MainActivity extends AppCompatActivity {
 
     private long backKeyPressedTime = 0;
-    ImageButton tab_btn1, tab_btn2, tab_btn3;
+
+    private SessionCallback sessionCallback = new SessionCallback();
+    Session session;
+
+    private int flag_login;
+    private ImageButton tab_btn1, tab_btn2, tab_btn3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         init();
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
 
+        session = Session.getCurrentSession();
+        session.addCallback(sessionCallback);
     }
 
     @Override
@@ -46,8 +61,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
-        finish();
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        SharedPreferences sharedPreferences= getSharedPreferences("FLAG", MODE_PRIVATE);
+        flag_login = sharedPreferences.getInt("flag",0);
+        Log.d("logout", "flag : " + flag_login);
+        switch (flag_login) {
+            case 0 :
+                finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                break;
+            case 1 :
+                break;
+            case 2:
+                Log.d("Kakao Logout", "onClick");
+                UserManagement.getInstance()
+                        .requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onSessionClosed(ErrorResult errorResult) {
+                                super.onSessionClosed(errorResult);
+                                Log.d("Kakao Logout", "onSessionClosed : " + errorResult.getErrorMessage());
+
+                            }
+
+                            @Override
+                            public void onCompleteLogout() {
+                                if (sessionCallback != null) {
+                                    Session.getCurrentSession().removeCallback(sessionCallback);
+                                }
+
+                                Log.d("Kakao Logout", "onCompleteLogout : logout");
+                            }
+                        });
+                break;
+            default:
+                break;
+        }
     }
 
     public void click_event(View view) {
@@ -73,5 +120,13 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 세션 콜백 삭제
+        Session.getCurrentSession().removeCallback(sessionCallback);
     }
 }

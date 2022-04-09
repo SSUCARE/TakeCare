@@ -1,11 +1,11 @@
-package com.designproject.takecare;
+package com.designproject.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.widget.LinearLayout;
+import com.designproject.takecare.R;
+
 
 public class FirstActivity extends AppCompatActivity {
 
@@ -13,7 +13,6 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-
     }
 
    @Override

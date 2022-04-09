@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/share_list_name"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="님의 건강체크"
+        android:text=" 님의 건강체크"
         android:textSize="16sp"
         android:textColor="@color/black"
         android:fontFamily="@font/font_normal"

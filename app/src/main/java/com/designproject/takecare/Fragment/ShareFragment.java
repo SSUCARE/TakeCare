@@ -1,16 +1,15 @@
-package com.designproject.takecare;
+package com.designproject.takecare.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.designproject.takecare.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +18,11 @@ public class ShareFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        name.add("안녕");
-        name.add("안녕하");
-        name.add("안녕하세");
-        name.add("인녕하세요");
-        name.add("hellom");
+        name.add("홍길동");
+        name.add("김말숙");
+        name.add("이지은");
+        name.add("박지수");
+        name.add("나진우");
 
         View view=inflater.inflate(R.layout.fragment_share,container, false);
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/tab_color"
-    tools:context=".InfoActivity">
+    tools:context="com.designproject.takecare.UI.InfoActivity">
 
     <TextView
         android:text="개인정보을 입력해주세요"
@@ -64,6 +64,7 @@
                 android:textColor="@color/black"/>
 
             <RadioGroup
+                android:id="@+id/rg_gender"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5sp"
@@ -77,7 +78,9 @@
                     android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_man"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:layout_weight="1"
@@ -86,7 +89,8 @@
                     android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_woman"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"/>
             </RadioGroup>
 
         </TableRow>
@@ -109,7 +113,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="5dp"
                 android:orientation="horizontal"
                 android:gravity="center">
 
@@ -151,7 +154,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="5dp"
                 android:orientation="horizontal"
                 android:gravity="center">
 
@@ -192,6 +194,7 @@
                 android:textColor="@color/black"/>
 
             <RadioGroup
+                android:id="@+id/rg_role"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5dp"
@@ -205,7 +208,9 @@
                     android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_caring"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:layout_weight="1"
@@ -214,7 +219,8 @@
                     android:fontFamily="@font/font_normal"
                     android:id="@+id/rb_cared"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"/>
             </RadioGroup>
 
         </TableRow>
