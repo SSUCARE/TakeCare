@@ -130,5 +130,4 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # User defined
-/app/src/main/res/values/api_secret_key.xml
-/app/src/main/res/values/web_client_id.xml
+/app/src/main/res/values/secret.xml
