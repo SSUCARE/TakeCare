@@ -7,7 +7,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.designproject.takecare"
+        applicationId "com.ssu.takecare"
         minSdkVersion 26
         targetSdkVersion 31
         versionCode 1
@@ -34,15 +34,11 @@ android {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:29.2.1')
-    implementation 'com.google.firebase:firebase-analytics'             // 파이어베이스 앱 분석
-    implementation 'com.google.firebase:firebase-core:20.1.2'           // 파이어베이스 코어
-    implementation 'com.google.firebase:firebase-auth:21.0.3'           // 파이어베이스 인증1
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'              // 파이어베이스 인증2
-    implementation 'com.github.bumptech.glide:glide:4.11.0'             // 글라이드 이미지 로딩1
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'      // 글라이드 이미지 로딩2
+    implementation platform('com.google.firebase:firebase-bom:29.3.0')
+    implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
-    implementation "com.kakao.sdk:v2-user:2.9.0"                        // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.9.0"
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.30.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -51,6 +47,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.8.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

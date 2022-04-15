@@ -1,4 +1,4 @@
-package com.designproject.takecare;
+package com.ssu.takecare;
 
 import android.content.Context;
 

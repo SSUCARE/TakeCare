@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.designproject.takecare">
+    package="com.ssu.takecare">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.designproject.takecare.KakaoLogin.GlobalApplication"
+        android:name="com.ssu.takecare.KakaoLogin.KakaoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,17 +15,27 @@
         android:theme="@style/Theme.TakeCare"
         android:usesCleartextTraffic="true">
 
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_native_key" />
-
-        <activity android:name="com.designproject.takecare.UI.MainActivity" />
-        <activity android:name="com.designproject.takecare.UI.InfoActivity" />
-        <activity android:name="com.designproject.takecare.UI.LoginActivity" />
-        <activity android:name="com.designproject.takecare.UI.FindActivity" />
-        <activity android:name="com.designproject.takecare.UI.RegisterActivity" />
         <activity
-            android:name="com.designproject.takecare.UI.FirstActivity"
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="@string/kakao_native_key" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.ssu.takecare.UI.MainActivity" />
+        <activity android:name="com.ssu.takecare.UI.InfoActivity" />
+        <activity android:name="com.ssu.takecare.UI.LoginActivity" />
+        <activity android:name="com.ssu.takecare.UI.FindActivity" />
+        <activity android:name="com.ssu.takecare.UI.RegisterActivity" />
+        <activity
+            android:name="com.ssu.takecare.UI.FirstActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

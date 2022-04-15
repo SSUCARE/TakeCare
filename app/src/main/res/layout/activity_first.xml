@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/tab_color"
     android:weightSum="5"
-    tools:context="com.designproject.takecare.UI.FirstActivity">
+    tools:context="com.ssu.takecare.UI.FirstActivity">
 
     <ImageView
         android:layout_width="wrap_content"

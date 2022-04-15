@@ -1,4 +1,4 @@
-package com.designproject.takecare.Fragment;
+package com.ssu.takecare.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.designproject.takecare.R;
+import com.ssu.takecare.R;
 
 public class MyPageFragment extends Fragment {
     @Nullable

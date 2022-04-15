@@ -1,4 +1,4 @@
-package com.designproject.takecare.UI;
+package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.designproject.takecare.R;
-import com.designproject.takecare.Retrofit.RetrofitManager;
+import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.RetrofitManager;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 

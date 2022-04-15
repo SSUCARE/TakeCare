@@ -1,4 +1,4 @@
-package com.designproject.takecare.UI;
+package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import com.designproject.takecare.R;
+import com.ssu.takecare.R;
 
 public class FindActivity extends AppCompatActivity implements View.OnClickListener {
 

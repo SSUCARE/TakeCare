@@ -1,4 +1,4 @@
-package com.designproject.takecare.UI;
+package com.ssu.takecare.UI;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,25 +7,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.designproject.takecare.Fragment.HomeFragment;
-import com.designproject.takecare.Fragment.MyPageFragment;
-import com.designproject.takecare.Fragment.ShareFragment;
-import com.designproject.takecare.KakaoLogin.SessionCallback;
-import com.designproject.takecare.R;
-import com.kakao.auth.Session;
-import com.kakao.network.ErrorResult;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.kakao.sdk.user.UserApiClient;
+import com.ssu.takecare.Fragment.HomeFragment;
+import com.ssu.takecare.Fragment.MyPageFragment;
+import com.ssu.takecare.Fragment.ShareFragment;
+import com.ssu.takecare.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "LoginActivity";
     private long backKeyPressedTime = 0;
 
-    private SessionCallback sessionCallback = new SessionCallback();
-    Session session;
-
-    private int flag_login;
     private ImageButton tab_btn1, tab_btn2, tab_btn3;
 
     @Override
@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
-
-        session = Session.getCurrentSession();
-        session.addCallback(sessionCallback);
     }
 
     @Override
@@ -62,35 +59,58 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout(View view) {
         SharedPreferences sharedPreferences= getSharedPreferences("FLAG", MODE_PRIVATE);
-        flag_login = sharedPreferences.getInt("flag",0);
-        Log.d("logout", "flag : " + flag_login);
+        int flag_login = sharedPreferences.getInt("flag",0);
         switch (flag_login) {
             case 0 :
                 finish();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             case 1 :
+                GoogleSignInClient gsc = GoogleSignIn.getClient(getApplicationContext(), GoogleSignInOptions.DEFAULT_SIGN_IN);
+
+                gsc.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG,"SignOut : Google Logout");
+                    }
+                });
+
+                gsc.revokeAccess().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG,"RevokeAccess : Google Logout");
+                    }
+                });
+
+                finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             case 2:
-                Log.d("Kakao Logout", "onClick");
-                UserManagement.getInstance()
-                        .requestLogout(new LogoutResponseCallback() {
-                            @Override
-                            public void onSessionClosed(ErrorResult errorResult) {
-                                super.onSessionClosed(errorResult);
-                                Log.d("Kakao Logout", "onSessionClosed : " + errorResult.getErrorMessage());
+                UserApiClient.getInstance().logout(error -> {
+                    if (error != null) {
+                        Log.e(TAG, "카카로 로그아웃 실패, SDK에서 토큰 삭제됨", error);
+                    }
+                    else {
+                        Log.i(TAG, "카카오 로그아웃 성공, SDK에서 토큰 삭제됨");
+                    }
 
-                            }
+                    return null;
+                });
 
-                            @Override
-                            public void onCompleteLogout() {
-                                if (sessionCallback != null) {
-                                    Session.getCurrentSession().removeCallback(sessionCallback);
-                                }
+                // 연결 끊기
+                UserApiClient.getInstance().unlink(error -> {
+                    if (error != null) {
+                        Log.e(TAG, "카카오 연결 끊기 실패", error);
+                    }
+                    else {
+                        Log.i(TAG, "카카오 연결 끊기 성공. SDK에서 토큰 삭제 됨");
+                    }
 
-                                Log.d("Kakao Logout", "onCompleteLogout : logout");
-                            }
-                        });
+                    return null;
+                });
+
+                finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             default:
                 break;
@@ -125,8 +145,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // 세션 콜백 삭제
-        Session.getCurrentSession().removeCallback(sessionCallback);
     }
 }

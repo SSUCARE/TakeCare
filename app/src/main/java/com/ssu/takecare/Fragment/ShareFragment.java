@@ -1,4 +1,4 @@
-package com.designproject.takecare.Fragment;
+package com.ssu.takecare.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.designproject.takecare.R;
+import com.ssu.takecare.R;
 import java.util.ArrayList;
 import java.util.List;
 

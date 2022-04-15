@@ -1,4 +1,4 @@
-package com.designproject.takecare.Fragment;
+package com.ssu.takecare.Fragment;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.designproject.takecare.R;
+import com.ssu.takecare.R;
 import java.util.List;
 
 public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.ViewHolder>{

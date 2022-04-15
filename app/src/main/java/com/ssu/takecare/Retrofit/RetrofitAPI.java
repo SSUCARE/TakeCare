@@ -1,4 +1,4 @@
-package com.designproject.takecare.Retrofit;
+package com.ssu.takecare.Retrofit;
 
 import com.google.gson.JsonElement;
 import retrofit2.Call;

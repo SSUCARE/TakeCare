@@ -1,10 +1,10 @@
-package com.designproject.takecare.UI;
+package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import com.designproject.takecare.R;
+import com.ssu.takecare.R;
 
 
 public class FirstActivity extends AppCompatActivity {

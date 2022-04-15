@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:weightSum="10"
     android:background="@color/tab_color"
-    tools:context="com.designproject.takecare.UI.LoginActivity">
+    tools:context="com.ssu.takecare.UI.LoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@color/btn_color"
-            android:text="로그인"
+            android:text="이메일로 로그인"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:padding="10dp"
@@ -85,9 +85,9 @@
                 android:id="@+id/btn_kakao"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
+                android:scaleType="fitXY"
                 android:layout_below="@+id/btn_google"
-                android:src="@drawable/login_kakao"
-                android:scaleType="fitXY"/>
+                android:src="@drawable/login_kakao" />
 
         </RelativeLayout>
 
