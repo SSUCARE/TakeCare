@@ -1,11 +1,15 @@
-package com.ssu.takecare.KakaoLogin;
+package com.ssu.takecare.Appplication;
 
+import com.ssu.takecare.Retrofit.RetrofitClient;
 import android.app.Application;
 import com.kakao.sdk.common.KakaoSdk;
 import com.ssu.takecare.R;
 
-public class KakaoApplication extends Application {
-    private static KakaoApplication instance;
+import retrofit2.Retrofit;
+
+public class ApplicationClass extends Application {
+    private static ApplicationClass instance;
+    private final String BASE_URL = "http://10.0.2.2:8080/";
 
     @Override
     public void onCreate() {
@@ -14,6 +18,8 @@ public class KakaoApplication extends Application {
 
         // Kakao SDK 초기화
         KakaoSdk.init(this, getResources().getString(R.string.native_key));
+
+        Retrofit rc = RetrofitClient.getClient(BASE_URL);
     }
 
     @Override

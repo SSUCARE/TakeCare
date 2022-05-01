@@ -30,7 +30,7 @@ public class ShareFragment extends Fragment {
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
         listview.setLayoutManager(gridLayoutManager);
 
-        ShareGridAdapter adapter=new ShareGridAdapter(name);
+        ShareGridAdapter adapter=new ShareGridAdapter(name, getActivity());
         listview.setAdapter(adapter);
         return view;
     }

@@ -200,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             updateUI(account);
         } catch (ApiException e) {
-            Log.w("handleSignInResult", "handleSignInResult failed : code = " + e.getStatusCode());
+            Log.w("handleSignInResult", "handleSignInResult failed : code = " + e);
             updateUI(null);
         }
     }

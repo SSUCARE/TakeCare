@@ -15,4 +15,11 @@
     <color name="bg_color">#EAEAEA</color>
 
 
+    <!--그래프랑 관련된 color -->
+    <color name="green">#2F9D27</color>
+    <color name="red">#FF0000</color>
+    <color name="sugar_chart_yellow">#FFE400</color>
+    <color name="sugar_gradeint_start">#1266FF</color>
+    <color name="sugar_gradient_end">#B4FFFF</color>
+    <color name="weight_chart">#00B4DB</color>
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.kakao.sdk.user.UserApiClient;
+import com.ssu.takecare.Dialog.PressureDialog;
+import com.ssu.takecare.Dialog.SugarDialog;
+import com.ssu.takecare.Dialog.WeightDialog;
 import com.ssu.takecare.Fragment.HomeFragment;
 import com.ssu.takecare.Fragment.MyPageFragment;
 import com.ssu.takecare.Fragment.ShareFragment;
@@ -23,10 +27,13 @@ import com.ssu.takecare.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "MainActivity";
     private long backKeyPressedTime = 0;
 
     private ImageButton tab_btn1, tab_btn2, tab_btn3;
+    private TextView hp_input, lp_input;
+    private TextView bs_input, as_input;
+    private TextView w_input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,62 @@ public class MainActivity extends AppCompatActivity {
         tab_btn1 = findViewById(R.id.tab_btn1);
         tab_btn2 = findViewById(R.id.tab_btn2);
         tab_btn3 = findViewById(R.id.tab_btn3);
+    }
+
+    public void inputPressure(View view) {
+        PressureDialog pDialog = new PressureDialog(this);
+        pDialog.setPressureDialogListener(new PressureDialog.PressureDialogListener() {
+            @Override
+            public void okClicked(String high_pressure, String low_pressure) {
+                hp_input = findViewById(R.id.high_pressure);
+                lp_input = findViewById(R.id.low_pressure);
+
+                if (!high_pressure.equals(""))
+                    hp_input.setText(high_pressure);
+
+                if (!low_pressure.equals(""))
+                    lp_input.setText(low_pressure);
+            }
+        });
+
+        pDialog.show();
+    }
+
+    public void inputSugar(View view) {
+        SugarDialog sDialog = new SugarDialog(this);
+        sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
+            @Override
+            public void okClicked(String before_sugar, String after_sugar, int input_hour, int input_minute) {
+                bs_input = findViewById(R.id.before_sugar);
+                as_input = findViewById(R.id.after_sugar);
+
+                if (!before_sugar.equals(""))
+                    bs_input.setText(before_sugar);
+
+                if (!after_sugar.equals(""))
+                    as_input.setText(after_sugar);
+
+                Log.d(TAG, "input_hour : " + input_hour);
+                Log.d(TAG, "input_minute : " + input_minute);
+            }
+        });
+
+        sDialog.show();
+    }
+
+    public void inputWeight(View view) {
+        WeightDialog wDialog = new WeightDialog(this);
+        wDialog.setWeightDialogListener(new WeightDialog.WeightDialogListener() {
+            @Override
+            public void okClicked(String weight) {
+                w_input = findViewById(R.id.weight);
+
+                if (!weight.equals(""))
+                    w_input.setText(weight);
+            }
+        });
+
+        wDialog.show();
     }
 
     public void logout(View view) {

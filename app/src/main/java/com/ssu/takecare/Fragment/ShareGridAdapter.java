@@ -1,6 +1,7 @@
 package com.ssu.takecare.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ssu.takecare.R;
+import com.ssu.takecare.UI.ShareGraph;
+
 import java.util.List;
 
 public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.ViewHolder>{
 
+    Context mContext;
     List<String> list;
 
-    public ShareGridAdapter(List<String>list) {
+    public ShareGridAdapter(List<String>list, Context context) {
+        this.mContext = context;
         this.list = list;
     }
 
@@ -30,6 +35,13 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
             btn2=itemView.findViewById(R.id.share_list_calendar);
             btn3=itemView.findViewById(R.id.share_list_prescription);
             btn4=itemView.findViewById(R.id.share_list_report);
+
+            btn1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mContext.startActivity(new Intent(view.getContext(), ShareGraph.class));
+                }
+            });
         }
     }
 
@@ -45,8 +57,8 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            String name=list.get(position);
-            holder.name.setText(name);
+        String name=list.get(position);
+        holder.name.setText(name);
     }
 
     @Override

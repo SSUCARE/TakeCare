@@ -162,7 +162,8 @@
                 android:text="입력"
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"/>
+                android:fontFamily="@font/font_normal"
+                android:onClick="inputPressure"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -247,7 +248,8 @@
                 android:text="입력"
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"/>
+                android:fontFamily="@font/font_normal"
+                android:onClick="inputSugar"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -307,7 +309,8 @@
                 android:text="입력"
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"/>
+                android:fontFamily="@font/font_normal"
+                android:onClick="inputWeight"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button

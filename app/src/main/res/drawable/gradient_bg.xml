@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <!--angle의 90은 밑으로 내려가면서 색깔이 변하겠다는 속성 값이다.-->
+        <shape>
+            <gradient
+                android:endColor="@color/sugar_gradeint_start"
+                android:startColor="@color/sugar_gradient_end"
+                android:angle="90"/>
+        </shape>
+    </item>
+</selector>
+    <!--혈당 그래프에서 그래디언 효과 구현--> 
