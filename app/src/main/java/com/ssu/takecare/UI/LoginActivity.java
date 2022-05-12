@@ -30,6 +30,7 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.message.
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EntityUtils;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
+import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -38,10 +39,8 @@ import com.ssu.takecare.R;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
-
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -65,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        sharedPreferences = getSharedPreferences("FLAG", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("TakeCare", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         email_login = findViewById(R.id.et_email_login);
@@ -98,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putInt("flag", 1);
+                editor.putInt("flag_login", 1);
                 editor.apply();
 
                 Intent intent = googleSignInClient.getSignInIntent();
@@ -122,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         kakaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putInt("flag", 2);
+                editor.putInt("flag_login", 2);
                 editor.apply();
 
                 // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -149,6 +148,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -160,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (account != null) {
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -239,7 +243,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == buttonLogin) {
-            editor.putInt("flag", 0);
+            editor.putInt("flag_login", 0);
             editor.apply();
 
             String email_str = email_login.getText().toString();
@@ -258,16 +262,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.d("LoginActivity", "password : " + password_str);
 
                 RetrofitManager instance = new RetrofitManager();
-                instance.loginReq(email_str, password_str);
-                instance.loginRes(email_str, password_str);
+                instance.login(email_str, password_str, new RetrofitCallback() {
+                    @Override
+                    public void onError(Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                    }
 
-                finish();
-                startActivity(new Intent(this, InfoActivity.class));
+                    @Override
+                    public void onSuccess(String message, String token) {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        setPreference("accessToken", token);
+
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), InfoActivity.class));
+                    }
+
+                    @Override
+                    public void onFailure(int error_code) {
+                        Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
 
         if (view == textViewRegister) {
-            startActivity(new Intent(this, RegisterActivity.class));
+            startActivity(new Intent(this, SignupActivity.class));
         }
 
         if (view == textViewFind) {
@@ -275,8 +294,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void setPreference(String flag, String value) {
+        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(flag, value);
+        editor.apply();
+    }
+
+    public String getPreference(String flag) {
+        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
+        return pref.getString(flag, "");
     }
 }

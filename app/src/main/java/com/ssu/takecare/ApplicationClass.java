@@ -1,18 +1,24 @@
-package com.ssu.takecare.Appplication;
+package com.ssu.takecare;
 
 import com.ssu.takecare.Retrofit.RetrofitClient;
 import android.app.Application;
+import android.content.SharedPreferences;
 import com.kakao.sdk.common.KakaoSdk;
-import com.ssu.takecare.R;
+
 
 import retrofit2.Retrofit;
 
 public class ApplicationClass extends Application {
+
     private static ApplicationClass instance;
     private final String BASE_URL = "http://10.0.2.2:8080/";
 
+    SharedPreferences sharedPreferences;
+
     @Override
     public void onCreate() {
+        sharedPreferences = getApplicationContext().getSharedPreferences("TakeCare", MODE_PRIVATE);
+
         super.onCreate();
         instance = this;
 

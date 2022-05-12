@@ -1,9 +1,11 @@
 package com.ssu.takecare.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static android.os.SystemClock.sleep;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +15,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitManager;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
+    String error_message = "";
+    int flag = 0;
 
     private EditText email_register;
     private EditText password_register;
@@ -27,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_signup);
 
         email_register = (EditText) findViewById(R.id.et_email_register);
         password_register = (EditText) findViewById(R.id.et_password_register);
@@ -73,20 +81,43 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 dialog.dismiss();
             }
             else {
-                Log.d("RegisterActivity", "email : " + email_str);
-                Log.d("RegisterActivity", "password : " + password_str);
-
                 RetrofitManager instance = new RetrofitManager();
-                instance.register(email_str, password_str);
+                instance.signup(email_str, password_str, new RetrofitCallback() {
+                    @Override
+                    public void onError(Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                    }
 
-                finish();
-                startActivity(new Intent(this, LoginActivity.class));
+                    @Override
+                    public void onSuccess(String message, String email) {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    }
+
+                    @Override
+                    public void onFailure(int error_code) {
+                        Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
-
-        if (view == textViewLogin) {
+        else if (view == textViewLogin) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+
+    public void setPreference(String flag, int value) {
+        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(flag, value);
+        editor.apply();
+    }
+
+    public int getPreference(String flag) {
+        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
+        return pref.getInt(flag, 0);
     }
 }

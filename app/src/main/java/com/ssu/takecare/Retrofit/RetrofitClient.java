@@ -4,8 +4,15 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ssu.takecare.ApplicationClass;
+
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,6 +22,14 @@ public class RetrofitClient {
 
     public static Retrofit getClient(String baseURL) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
+
+//        client.addInterceptor(new Interceptor() {
+//            @Override
+//            public Response intercept(@NonNull Chain chain) throws IOException {
+//                Request request = chain.request().newBuilder().addHeader("Authorization", ApplicationClass.class.).build();
+//                return chain.proceed(request);
+//            }
+//        });
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override

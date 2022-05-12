@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
-        SharedPreferences sharedPreferences= getSharedPreferences("FLAG", MODE_PRIVATE);
-        int flag_login = sharedPreferences.getInt("flag",0);
+        SharedPreferences sharedPreferences= getSharedPreferences("TakeCare", MODE_PRIVATE);
+        int flag_login = sharedPreferences.getInt("flag_login",0);
         switch (flag_login) {
             case 0 :
                 finish();

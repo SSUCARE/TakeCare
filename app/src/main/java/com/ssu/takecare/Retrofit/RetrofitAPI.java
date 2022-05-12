@@ -1,30 +1,34 @@
 package com.ssu.takecare.Retrofit;
 
 import com.google.gson.JsonElement;
+import com.ssu.takecare.Retrofit.Login.RequestLogin;
+import com.ssu.takecare.Retrofit.Login.ResponseLogin;
+import com.ssu.takecare.Retrofit.Signup.RequestSignup;
+import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface RetrofitAPI {
-    @FormUrlEncoded
+
+    @Headers("Content-Type: application/json")
+    @POST("users")
+    Call<ResponseSignup> registerRequest(@Body RequestSignup body);
+
+    @Headers("Content-Type: application/json")
     @POST("users/login")
-    Call<JsonElement> loginRequest(@Field("email") String email_login, @Field("password") String password_login);
-
-    @GET("users/login")
-    Call<JsonElement> loginResponse(@Query("email") String email_login, @Query("password") String password_login);
-
-    @FormUrlEncoded
-    @POST("users/signup")
-    Call<JsonElement> registerRequest(@Field("email") String email_register, @Field("password") String password_register);
+    Call<ResponseLogin> loginRequest(@Body RequestLogin body);
 
     @FormUrlEncoded
     @POST("users/info")
-    Call<JsonElement> infoRequest(@Field("name") String name_info,
-                                      @Field("gender") String gender_info,
-                                      @Field("age") int age_info,
-                                      @Field("height") int height_info,
-                                      @Field("role") String role_info);
+    Call<JsonElement> infoRequest(@Field("name") String name,
+                                      @Field("gender") String gender,
+                                      @Field("age") int age,
+                                      @Field("height") int height,
+                                      @Field("role") String role);
 }
