@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitManager;
@@ -81,8 +82,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 dialog.dismiss();
             }
             else {
-                RetrofitManager instance = new RetrofitManager();
-                instance.signup(email_str, password_str, new RetrofitCallback() {
+                ApplicationClass.retrofit_manager.signup(email_str, password_str, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
                         Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
@@ -107,17 +107,5 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
-    }
-
-    public void setPreference(String flag, int value) {
-        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt(flag, value);
-        editor.apply();
-    }
-
-    public int getPreference(String flag) {
-        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
-        return pref.getInt(flag, 0);
     }
 }

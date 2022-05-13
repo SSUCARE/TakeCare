@@ -1,8 +1,11 @@
 package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,12 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitManager;
 
 public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button buttonInfo;
     private long backKeyPressedTime = 0;
 
     private EditText name_register;
@@ -28,8 +33,12 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     private RadioGroup gender_rg;
     private RadioGroup role_rg;
 
-    private String gender_register = "man";
-    private String role_register = "caring";
+    private String gender_register = "MALE";
+    private String role_register = "ROLE_CARER";
+
+    private Button buttonInfo;
+
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +58,10 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
             public void onCheckedChanged(RadioGroup radioGroup, int checked) {
                 switch (checked) {
                     case R.id.rb_man:
-                        gender_register = "man";
+                        gender_register = "MALE";
                         break;
                     case R.id.rb_woman:
-                        gender_register = "woman";
+                        gender_register = "FEMALE";
                         break;
                 }
             }
@@ -64,10 +73,10 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
             public void onCheckedChanged(RadioGroup radioGroup, int checked) {
                 switch (checked) {
                     case R.id.rb_caring:
-                        role_register = "caring";
+                        role_register = "ROLE_CARER";
                         break;
                     case R.id.rb_cared:
-                        role_register = "cared";
+                        role_register = "ROLE_CARED";
                         break;
                 }
             }
@@ -132,11 +141,28 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("InfoActivity", "height : " + height_int);
                 Log.d("InfoActivity", "role : " + role_register);
 
-                RetrofitManager instance = new RetrofitManager();
-                instance.info(name_str, gender_register, age_int, height_int, role_register);
+                ApplicationClass.retrofit_manager.info(name_str, gender_register, age_int, height_int, role_register, new RetrofitCallback() {
+                    @Override
+                    public void onError(Throwable t) {
+                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                    }
 
-                finish();
-                startActivity(new Intent(this, MainActivity.class));
+                    @Override
+                    public void onSuccess(String message, String token) {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+                        editor.putInt("input_info", 1);
+                        editor.apply();
+
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
+
+                    @Override
+                    public void onFailure(int error_code) {
+                        Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
     }

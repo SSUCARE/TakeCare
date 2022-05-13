@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.kakao.sdk.user.UserApiClient;
+import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Dialog.PressureDialog;
 import com.ssu.takecare.Dialog.SugarDialog;
 import com.ssu.takecare.Dialog.WeightDialog;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView hp_input, lp_input;
     private TextView bs_input, as_input;
     private TextView w_input;
+
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,14 +124,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
-        SharedPreferences sharedPreferences= getSharedPreferences("TakeCare", MODE_PRIVATE);
-        int flag_login = sharedPreferences.getInt("flag_login",0);
+        int flag_login = ApplicationClass.sharedPreferences.getInt("flag_login",0);
         switch (flag_login) {
-            case 0 :
+            case 1 :
+                setPreference("email_login", "");
+                setPreference("password_login", "");
+                setPreference("accessToken", "");
+
+                editor.putInt("flag_login", 0);
+                editor.apply();
+
                 finish();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
-            case 1 :
+            case 2 :
+                editor.putInt("flag_login", 0);
+                editor.apply();
+
                 GoogleSignInClient gsc = GoogleSignIn.getClient(getApplicationContext(), GoogleSignInOptions.DEFAULT_SIGN_IN);
 
                 gsc.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
@@ -148,7 +160,10 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
-            case 2:
+            case 3 :
+                editor.putInt("flag_login", 0);
+                editor.apply();
+
                 UserApiClient.getInstance().logout(error -> {
                     if (error != null) {
                         Log.e(TAG, "카카로 로그아웃 실패, SDK에서 토큰 삭제됨", error);
@@ -208,5 +223,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void setPreference(String flag, String value) {
+        editor.putString(flag, value);
+        editor.apply();
+    }
+
+    public String getPreference(String flag) {
+        return ApplicationClass.sharedPreferences.getString(flag, "");
     }
 }

@@ -30,8 +30,8 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.message.
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EntityUtils;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
+import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.Retrofit.RetrofitManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Task;
@@ -47,8 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "LoginActivity";
     private long backKeyPressedTime = 0;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     private GoogleSignInClient googleSignInClient;
     private static final int REQ_SIGN_GOOGLE = 1234;         // 구글 로그인 결과 코드
@@ -63,9 +62,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        sharedPreferences = getSharedPreferences("TakeCare", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
         email_login = findViewById(R.id.et_email_login);
         password_login = findViewById(R.id.et_password_login);
@@ -97,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         googleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putInt("flag_login", 1);
+                editor.putInt("flag_login", 2);
                 editor.apply();
 
                 Intent intent = googleSignInClient.getSignInIntent();
@@ -121,7 +117,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         kakaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putInt("flag_login", 2);
+                editor.putInt("flag_login", 3);
                 editor.apply();
 
                 // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -243,7 +239,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == buttonLogin) {
-            editor.putInt("flag_login", 0);
+            editor.putInt("flag_login", 1);
             editor.apply();
 
             String email_str = email_login.getText().toString();
@@ -261,8 +257,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.d("LoginActivity", "email : " + email_str);
                 Log.d("LoginActivity", "password : " + password_str);
 
-                RetrofitManager instance = new RetrofitManager();
-                instance.login(email_str, password_str, new RetrofitCallback() {
+                ApplicationClass.retrofit_manager.login(email_str, password_str, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
                         Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
@@ -271,7 +266,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onSuccess(String message, String token) {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        setPreference("email_login", email_str);
+                        setPreference("password_login", password_str);
                         setPreference("accessToken", token);
+
+                        // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 MainActivity로 감
+
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), InfoActivity.class));
@@ -295,14 +295,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void setPreference(String flag, String value) {
-        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
         editor.putString(flag, value);
         editor.apply();
     }
 
     public String getPreference(String flag) {
-        SharedPreferences pref = getSharedPreferences("TakeCare", MODE_PRIVATE);
-        return pref.getString(flag, "");
+        return ApplicationClass.sharedPreferences.getString(flag, "");
     }
 }

@@ -6,21 +6,22 @@ import com.google.gson.JsonElement;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.Retrofit.Info.RequestInfo;
+import com.ssu.takecare.Retrofit.Info.ResponseInfo;
 import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
 
 public class RetrofitManager {
-    private final String BASE_URL = "http://10.0.2.2:8080/";
-    private RetrofitAPI retrofit_api = RetrofitClient.getClient(BASE_URL).create(RetrofitAPI.class);
 
     public void signup(String email, String password, RetrofitCallback callback) {
         RequestSignup requestSignup = new RequestSignup();
         requestSignup.setEmail(email);
         requestSignup.setPassword(password);
 
-        Call<ResponseSignup> call = retrofit_api.registerRequest(requestSignup);
+        Call<ResponseSignup> call = ApplicationClass.retrofit_api.registerRequest(requestSignup);
 
         call.enqueue(new Callback<ResponseSignup>() {
             @Override
@@ -53,7 +54,7 @@ public class RetrofitManager {
         requestLogin.setEmail(email);
         requestLogin.setPassword(password);
 
-        Call<ResponseLogin> call = retrofit_api.loginRequest(requestLogin);
+        Call<ResponseLogin> call = ApplicationClass.retrofit_api.loginRequest(requestLogin);
 
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
@@ -81,25 +82,39 @@ public class RetrofitManager {
         });
     }
 
-    public void info(String name, String gender, int age, int height, String role) {
-        Call<JsonElement> call = retrofit_api.infoRequest(name, gender, age, height, role);
+    public void info(String name, String gender, int age, int height, String role, RetrofitCallback callback) {
+        RequestInfo requestInfo = new RequestInfo();
+        requestInfo.setName(name);
+        requestInfo.setGender(gender);
+        requestInfo.setAge(age);
+        requestInfo.setHeight(height);
+        requestInfo.setRole(role);
+        requestInfo.setWeight(60);
 
-        call.enqueue(new Callback<JsonElement>() {
+        Call<ResponseInfo> call = ApplicationClass.retrofit_api.infoRequest(requestInfo);
+
+        call.enqueue(new Callback<ResponseInfo>() {
             @Override
-            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+            public void onResponse(@NonNull Call<ResponseInfo> call, @NonNull Response<ResponseInfo> response) {
                 if (response.isSuccessful()) {
-                    Log.d("RetrofitManager", "onResponse : 성공, 결과 : " + response.body());
+                    ResponseInfo body = response.body();
+                    Log.d("RetrofitManager", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess(body.message, body.data);
                 }
                 else {
-                    Log.d("RetrofitManager", "onResponse : 실패, 결과 : " + response.body());
-                    Log.d("RetrofitManager", "onResponse : status code is " + response.code());
+                    Log.d("RetrofitManager", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
-                Log.d("RetrofitManager", "onFailure : " + t.getLocalizedMessage());
+            public void onFailure(@NonNull Call<ResponseInfo> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
             }
         });
     }

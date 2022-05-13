@@ -1,6 +1,8 @@
 package com.ssu.takecare.Retrofit;
 
 import com.google.gson.JsonElement;
+import com.ssu.takecare.Retrofit.Info.RequestInfo;
+import com.ssu.takecare.Retrofit.Info.ResponseInfo;
 import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
@@ -12,6 +14,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface RetrofitAPI {
@@ -24,11 +27,7 @@ public interface RetrofitAPI {
     @POST("users/login")
     Call<ResponseLogin> loginRequest(@Body RequestLogin body);
 
-    @FormUrlEncoded
-    @POST("users/info")
-    Call<JsonElement> infoRequest(@Field("name") String name,
-                                      @Field("gender") String gender,
-                                      @Field("age") int age,
-                                      @Field("height") int height,
-                                      @Field("role") String role);
+    @Headers("Content-Type: application/json")
+    @PUT("users")
+    Call<ResponseInfo> infoRequest(@Body RequestInfo body);
 }
