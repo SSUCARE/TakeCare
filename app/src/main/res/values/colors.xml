@@ -14,7 +14,6 @@
     <color name="tab_color">#FAFAFA</color>
     <color name="bg_color">#EAEAEA</color>
 
-
     <!--그래프랑 관련된 color -->
     <color name="green">#2F9D27</color>
     <color name="red">#FF0000</color>
@@ -22,4 +21,10 @@
     <color name="sugar_gradeint_start">#1266FF</color>
     <color name="sugar_gradient_end">#B4FFFF</color>
     <color name="weight_chart">#00B4DB</color>
+
+    <!--Prescription 노트랑 관련된 color-->
+    <color name="pre_text">#8C000000</color>
+
+    <!--리포트 수치 박스 color-->
+    <color name="box_color">#1AD5D5D5</color>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 내부 색깔, 앞의 두자리는 투명도, 뒤에 6자리는 rgb값 -->
+    <solid
+        android:color="#ec6841"/>
+    <!--모서리 끝부분의 둥근정도 -->
+    <corners
+        android:radius="200dp"/>
+    <!-- padding 설정 -->
+    <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
+</shape>
+    <!-- 고혈압 전단계, 수축:120미만 이완:80미만-->

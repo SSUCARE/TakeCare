@@ -38,12 +38,16 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button buttonInfo;
 
+    String email;
+
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+
+        email = ApplicationClass.sharedPreferences.getString("email_login", "");
 
         buttonInfo = (Button) findViewById(R.id.btn_info);
         buttonInfo.setOnClickListener(this);
@@ -151,7 +155,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                     public void onSuccess(String message, String token) {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
-                        editor.putInt("input_info", 1);
+                        editor.putInt(email, 1);
                         editor.apply();
 
                         finish();

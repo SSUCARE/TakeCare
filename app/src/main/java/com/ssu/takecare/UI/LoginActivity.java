@@ -172,7 +172,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-
     }
 
     private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
@@ -271,10 +270,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         setPreference("accessToken", token);
 
                         // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 MainActivity로 감
-
-
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), InfoActivity.class));
+                        if (ApplicationClass.sharedPreferences.getInt(email_str, 0) != 0) {
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+                        else {
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), InfoActivity.class));
+                        }
                     }
 
                     @Override

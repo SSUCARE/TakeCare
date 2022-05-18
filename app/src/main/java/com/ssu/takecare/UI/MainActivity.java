@@ -24,7 +24,10 @@ import com.ssu.takecare.Fragment.HomeFragment;
 import com.ssu.takecare.Fragment.MyPageFragment;
 import com.ssu.takecare.Fragment.ShareFragment;
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.RetrofitCallback;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +46,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init();
+        tab_btn1 = findViewById(R.id.tab_btn1);
+        tab_btn2 = findViewById(R.id.tab_btn2);
+        tab_btn3 = findViewById(R.id.tab_btn3);
+
+        hp_input = findViewById(R.id.high_pressure);
+        lp_input = findViewById(R.id.low_pressure);
+        bs_input = findViewById(R.id.before_sugar);
+        as_input = findViewById(R.id.after_sugar);
+        w_input = findViewById(R.id.weight);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
     }
 
@@ -61,20 +73,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void init() {
-        tab_btn1 = findViewById(R.id.tab_btn1);
-        tab_btn2 = findViewById(R.id.tab_btn2);
-        tab_btn3 = findViewById(R.id.tab_btn3);
-    }
-
     public void inputPressure(View view) {
         PressureDialog pDialog = new PressureDialog(this);
         pDialog.setPressureDialogListener(new PressureDialog.PressureDialogListener() {
             @Override
             public void okClicked(String high_pressure, String low_pressure) {
-                hp_input = findViewById(R.id.high_pressure);
-                lp_input = findViewById(R.id.low_pressure);
-
                 if (!high_pressure.equals(""))
                     hp_input.setText(high_pressure);
 
@@ -91,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
             public void okClicked(String before_sugar, String after_sugar, int input_hour, int input_minute) {
-                bs_input = findViewById(R.id.before_sugar);
-                as_input = findViewById(R.id.after_sugar);
-
                 if (!before_sugar.equals(""))
                     bs_input.setText(before_sugar);
 
@@ -113,14 +113,62 @@ public class MainActivity extends AppCompatActivity {
         wDialog.setWeightDialogListener(new WeightDialog.WeightDialogListener() {
             @Override
             public void okClicked(String weight) {
-                w_input = findViewById(R.id.weight);
-
                 if (!weight.equals(""))
                     w_input.setText(weight);
             }
         });
 
         wDialog.show();
+    }
+
+    public void makeReport(View view) {
+        // 모든 값은 0으로 초기화하고 시작, sugarLevels에 값을 할당하지 않으면 Null Exception 발생.
+        int systolic = 0;
+        int diastolic = 0;
+        List<Integer> sugarLevels = new ArrayList<>(); sugarLevels.add(0); sugarLevels.add(0);
+        int weight = 0;
+
+        String num = hp_input.getText().toString();
+        Log.d("확인", num);
+
+        if (!hp_input.getText().toString().equals("____")){
+            systolic = Integer.parseInt(hp_input.getText().toString());
+        }
+
+        if (!lp_input.getText().toString().equals("____")){
+            diastolic = Integer.parseInt(lp_input.getText().toString());
+        }
+
+        if (!bs_input.getText().toString().equals("____")){
+            sugarLevels.add(Integer.parseInt(hp_input.getText().toString()));
+        }
+
+        if (!as_input.getText().toString().equals("____")){
+            sugarLevels.add(Integer.parseInt(hp_input.getText().toString()));
+        }
+
+        if (!w_input.getText().toString().equals("____")){
+            weight = Integer.parseInt(w_input.getText().toString());
+        }
+
+        Log.d("확인","최고 혈압 : " + systolic + "최저 혈압 : " + diastolic + "혈당:" + sugarLevels.get(0) + "몸무게 : " + weight);
+
+        ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
+            @Override
+            public void onError(Throwable t) {
+                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(String message, String token) {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int error_code) {
+                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void logout(View view) {

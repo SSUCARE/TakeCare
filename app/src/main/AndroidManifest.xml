@@ -30,6 +30,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".UI.CalendarActivity" />
+        <activity android:name=".UI.ReportActivity" />
+        <activity android:name=".UI.PresciptionNoteActivity" />
+        <activity android:name=".UI.ProfileActivity" />
         <activity android:name=".UI.ShareGraph" />
         <activity
             android:name=".UI.MainActivity"
