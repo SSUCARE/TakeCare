@@ -18,6 +18,10 @@ public class DataInfoCheck {
     @SerializedName("weight")
     public int weight;
 
+    //추가 매칭 액티비티에서 필요
+    @SerializedName("role")
+    public String role;
+
     public int getAge() {
         return age;
     }
@@ -73,4 +77,8 @@ public class DataInfoCheck {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role; }
 }

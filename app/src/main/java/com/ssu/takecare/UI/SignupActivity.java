@@ -1,14 +1,11 @@
 package com.ssu.takecare.UI;
 
-import static android.os.SystemClock.sleep;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,16 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.Retrofit.RetrofitManager;
-
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
-    String error_message = "";
-    int flag = 0;
+
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     private EditText email_register;
     private EditText password_register;
@@ -91,6 +85,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onSuccess(String message, String email) {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+                        editor.putInt(email, 0);
+                        editor.apply();
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));

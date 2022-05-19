@@ -4,17 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResponseInfoCheck {
     @SerializedName("data")
-    public DataInfoCheck datainfocheck;
+    public DataInfoCheck dataInfoCheck;
+
     @SerializedName("message")
     public String message;
 
-    public DataInfoCheck getDatainfocheck() {
-        return datainfocheck;
+    public DataInfoCheck getDataInfocheck() {
+        return dataInfoCheck;
     }
 
-    public void setDatainfocheck(DataInfoCheck datainfocheck) {
-        this.datainfocheck = datainfocheck;
-    }
+    public void setDataInfoCheck(DataInfoCheck dataInfoCheck) { this.dataInfoCheck = dataInfoCheck; }
 
     public String getMessage() {
         return message;

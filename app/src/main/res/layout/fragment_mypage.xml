@@ -164,7 +164,7 @@
                 android:fontFamily="@font/font_normal"/>
 
             <ImageView
-                android:id="@+id/btn_friend"
+                android:id="@+id/btn_match"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:layout_constraintTop_toTopOf="parent"

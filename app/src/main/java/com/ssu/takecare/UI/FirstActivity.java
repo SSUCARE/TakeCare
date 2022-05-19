@@ -29,7 +29,7 @@ public class FirstActivity extends AppCompatActivity {
             String loginEmail = ApplicationClass.sharedPreferences.getString("email_login", "");
             String loginPwd = ApplicationClass.sharedPreferences.getString("password_login", "");
 
-            if (loginEmail != null && loginPwd != null) {
+            if (!loginEmail.equals("") && !loginPwd.equals("")) {
                 Log.d("LoginActivity", "email : " + loginEmail);
                 Log.d("LoginActivity", "password : " + loginPwd);
 

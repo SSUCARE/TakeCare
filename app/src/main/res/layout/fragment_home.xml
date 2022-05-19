@@ -323,7 +323,8 @@
             android:text="리포트 작성"
             android:textSize="16sp"
             android:textColor="@color/black"
-            android:fontFamily="@font/font_normal"/>
+            android:fontFamily="@font/font_normal"
+            android:onClick="makeReport"/>
 
     </LinearLayout>
 

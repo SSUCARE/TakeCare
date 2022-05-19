@@ -30,18 +30,21 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".UI.MatchActivity" />
         <activity android:name=".UI.CalendarActivity" />
         <activity android:name=".UI.ReportActivity" />
         <activity android:name=".UI.PresciptionNoteActivity" />
         <activity android:name=".UI.ProfileActivity" />
         <activity android:name=".UI.ShareGraph" />
-        <activity
-            android:name=".UI.MainActivity"
-            android:exported="true"/>
         <activity android:name=".UI.InfoActivity" />
         <activity android:name=".UI.LoginActivity" />
         <activity android:name=".UI.FindActivity" />
         <activity android:name=".UI.SignupActivity" />
+
+        <activity
+            android:name=".UI.MainActivity"
+            android:exported="true"/>
+
         <activity
             android:name=".UI.FirstActivity"
             android:exported="true">
@@ -51,6 +54,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+    </application>
 </manifest>

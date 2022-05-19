@@ -1,6 +1,6 @@
 package com.ssu.takecare.Retrofit;
 
-public interface RetrofitCallback<T> {
+public interface RetrofitCallback {
     void onError(Throwable t);
 
     void onSuccess(String message, String data);

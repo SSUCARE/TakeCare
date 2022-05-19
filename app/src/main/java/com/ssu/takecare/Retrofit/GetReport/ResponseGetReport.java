@@ -6,22 +6,22 @@ public class ResponseGetReport {
     @SerializedName("data")
     public DataGetReport datagetreprot;
 
-    public DataGetReport getDatagetreprot() {
-        return datagetreprot;
-    }
+    @SerializedName("message")
+    public String message;
 
     public void setDatagetreprot(DataGetReport datagetreprot) {
         this.datagetreprot = datagetreprot;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
-    @SerializedName("message")
-    public String message;
+    public DataGetReport getDatagetreprot() {
+        return datagetreprot;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

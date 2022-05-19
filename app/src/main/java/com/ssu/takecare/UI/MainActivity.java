@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView bs_input, as_input;
     private TextView w_input;
 
+    private TextView user_name;
+
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
@@ -49,12 +51,6 @@ public class MainActivity extends AppCompatActivity {
         tab_btn1 = findViewById(R.id.tab_btn1);
         tab_btn2 = findViewById(R.id.tab_btn2);
         tab_btn3 = findViewById(R.id.tab_btn3);
-
-        hp_input = findViewById(R.id.high_pressure);
-        lp_input = findViewById(R.id.low_pressure);
-        bs_input = findViewById(R.id.before_sugar);
-        as_input = findViewById(R.id.after_sugar);
-        w_input = findViewById(R.id.weight);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
     }
@@ -74,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputPressure(View view) {
+        hp_input = findViewById(R.id.high_pressure);
+        lp_input = findViewById(R.id.low_pressure);
+
         PressureDialog pDialog = new PressureDialog(this);
         pDialog.setPressureDialogListener(new PressureDialog.PressureDialogListener() {
             @Override
@@ -90,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputSugar(View view) {
+        bs_input = findViewById(R.id.before_sugar);
+        as_input = findViewById(R.id.after_sugar);
+
         SugarDialog sDialog = new SugarDialog(this);
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputWeight(View view) {
+        w_input = findViewById(R.id.weight);
+
         WeightDialog wDialog = new WeightDialog(this);
         wDialog.setWeightDialogListener(new WeightDialog.WeightDialogListener() {
             @Override
@@ -122,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makeReport(View view) {
+        hp_input = findViewById(R.id.high_pressure);
+        lp_input = findViewById(R.id.low_pressure);
+        bs_input = findViewById(R.id.before_sugar);
+        as_input = findViewById(R.id.after_sugar);
+        w_input = findViewById(R.id.weight);
+
         // 모든 값은 0으로 초기화하고 시작, sugarLevels에 값을 할당하지 않으면 Null Exception 발생.
         int systolic = 0;
         int diastolic = 0;

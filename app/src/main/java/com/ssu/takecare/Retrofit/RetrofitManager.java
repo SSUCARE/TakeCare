@@ -13,6 +13,7 @@ import com.ssu.takecare.Retrofit.Info.ResponseInfo;
 import com.ssu.takecare.Retrofit.InfoCheck.ResponseInfoCheck;
 import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
+import com.ssu.takecare.Retrofit.Match.ResponseCare;
 import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
@@ -160,7 +161,7 @@ public class RetrofitManager {
         });
     }
 
-    public void infoCheck(RetrofitCallback callback) {
+    public void infoCheck(UserInfoCallback callback) {
         Call<ResponseInfoCheck> call = ApplicationClass.retrofit_api.infoCheckRequest();
 
         call.enqueue(new Callback<ResponseInfoCheck>() {
@@ -170,8 +171,10 @@ public class RetrofitManager {
                     ResponseInfoCheck body = response.body();
                     Log.d("RetrofitManager_check", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_check", "onResponse : status code is " + response.code());
+                    Log.d("RetrofitManager_check", "이름 : " + body.getDataInfocheck().getName());
+                    Log.d("RetrofitManager_check", "이메일 : " + body.getDataInfocheck().getEmail());
 
-                    callback.onSuccess(body.message, "userId : " + body.getDatainfocheck().getId() + "name : " + body.getDatainfocheck().getName());
+                    callback.onSuccess(body.message, body);
                 }
                 else {
                     Log.d("RetrofitManager_check", "onResponse : 실패, error code : " + response.code());
@@ -190,7 +193,7 @@ public class RetrofitManager {
     }
 
     public void getReport(int path, int year, int month, int date, RetrofitCallback callback) {
-        Call<ResponseGetReport>call=ApplicationClass.retrofit_api.getReportRequest(1,year,month,date);
+        Call<ResponseGetReport>call=ApplicationClass.retrofit_api.getReportRequest(path, year, month, date);
 
         call.enqueue(new Callback<ResponseGetReport>() {
             @Override
@@ -213,6 +216,98 @@ public class RetrofitManager {
             @Override
             public void onFailure(@NonNull Call<ResponseGetReport> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager", "ReportonFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void getCareMatchInfo(CareListCallback callback) {
+        Call<List<ResponseCare>> call = ApplicationClass.retrofit_api.GetCaredbRequest();
+
+        call.enqueue(new Callback<List<ResponseCare>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<ResponseCare>> call, @NonNull Response<List<ResponseCare>> response) {
+                if (response.isSuccessful()) {
+                    List<ResponseCare> body = response.body();
+                    callback.onSuccess("GetCaredbRequest 호출:", body);
+                } else {
+                    Log.d("RetrofitManager", "GetCare_onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<ResponseCare>> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager", "GetCare_onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void careRequest(String userEmail, RetrofitCallback callback) {
+        Call<Void> call = ApplicationClass.retrofit_api.careRequest(userEmail);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess("careRequest 호출:", response.body().toString());
+                } else {
+                    callback.onFailure(response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void careAcceptRequest(int userId, RetrofitCallback callback) {
+        Call<Object> call = ApplicationClass.retrofit_api.careAcceptRequest(userId);
+
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess("careAcceptRequest 호출:", response.body().toString());
+                } else {
+                    callback.onFailure(response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void careDeleteRequest(int userId, RetrofitCallback callback) {
+        Call<Object> call = ApplicationClass.retrofit_api.careDeleteRequest(userId);
+
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess("careDeleteRequest 호출:", response.body().toString());
+                } else {
+                    callback.onFailure(response.code());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
 
                 callback.onError(t);
             }

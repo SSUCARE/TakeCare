@@ -1,69 +1,74 @@
 package com.ssu.takecare.Retrofit.GetReport;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
+import java.time.LocalDateTime;
 
 public class DataGetReport {
+
     @SerializedName("createdAt")
-    public String createdAt;
+    public LocalDateTime createdAt;
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
+    @SerializedName("reportId")
+    public int reportId;
 
-    public void setCreatedAt(String createdAt) {
+    @SerializedName("diastolic")
+    public int diastolic;
+
+    @SerializedName("systolic")
+    public int sytstolic;
+
+    @SerializedName("sugarLevels")
+    public List<Integer> sugarLevels = null;
+
+    @SerializedName("weight")
+    public int weight;
+
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public int getDiastolic() {
-        return diastolic;
-    }
-
-    public void setDiastolic(int diastolic) {
-        this.diastolic = diastolic;
-    }
-
-    public int getReportId() {
-        return reportId;
     }
 
     public void setReportId(int reportId) {
         this.reportId = reportId;
     }
 
-    public List<Integer> getSugarLevels() {
-        return sugarLevels;
-    }
-
-    public void setSugarLevels(List<Integer> sugarLevels) {
-        this.sugarLevels = sugarLevels;
-    }
-
-    public int getSytstolic() {
-        return sytstolic;
+    public void setDiastolic(int diastolic) {
+        this.diastolic = diastolic;
     }
 
     public void setSytstolic(int sytstolic) {
         this.sytstolic = sytstolic;
     }
 
-    public int getWeight() {
-        return weight;
+    public void setSugarLevels(List<Integer> sugarLevels) {
+        this.sugarLevels = sugarLevels;
     }
 
     public void setWeight(int weight) {
         this.weight = weight;
     }
 
-    @SerializedName("diastolic")
-    public int diastolic;
-    @SerializedName("reportId")
-    public int reportId;
-    @SerializedName("sugarLevels")
-    public List<Integer> sugarLevels=null;
-    @SerializedName("systolic")
-    public int sytstolic;
-    @SerializedName("weight")
-    public int weight;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public int getReportId() {
+        return reportId;
+    }
+
+    public int getDiastolic() {
+        return diastolic;
+    }
+
+    public int getSytstolic() {
+        return sytstolic;
+    }
+
+    public List<Integer> getSugarLevels() {
+        return sugarLevels;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
 }
