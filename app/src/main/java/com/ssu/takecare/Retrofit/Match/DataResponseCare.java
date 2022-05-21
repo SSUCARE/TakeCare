@@ -20,7 +20,6 @@ public class DataResponseCare {
         return this.status;
     }
 
-
     public void setId(Integer id) {
         this.id=id;
     }

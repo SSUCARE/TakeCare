@@ -40,9 +40,11 @@ public class ListViewMatchAdapter extends BaseAdapter {
     public String getKeyByIndex(Map<String, Integer> map,int index){
         return (String) map.keySet().toArray()[index];
     }
+
     public Integer getUserId() {
         return this.userId;
     }
+
     // getView method is called for each item of ListView
     public View getView(int position, View view, ViewGroup parent) {
         // inflate the layout for each item of listView
@@ -50,18 +52,19 @@ public class ListViewMatchAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.activity_listview, parent, false);
 
         // get the reference of textView and button
-        TextView txtlistTitle = (TextView) view.findViewById(R.id.txtlistview);
+        TextView txtListTitle = (TextView) view.findViewById(R.id.txtlistview);
         Button btnAction = (Button) view.findViewById(R.id.btnAction);
 
 
         String userName= getKeyByIndex(arrData, position);
         userId = getElementByIndex(arrData, position);
 
-        txtlistTitle.setText(userName);
+        txtListTitle.setText(userName);
 
-        if(acceptedOrNot.equals("PENDING")) {
+        if (acceptedOrNot.equals("PENDING")) {
             btnAction.setText("취소");
-        } else if (acceptedOrNot.equals("ACCEPTED")){
+        }
+        else if (acceptedOrNot.equals("ACCEPTED")){
             btnAction.setText("삭제");
         }
 
@@ -74,10 +77,12 @@ public class ListViewMatchAdapter extends BaseAdapter {
                     @Override
                     public void onError(Throwable t) {
                     }
+
                     @Override
                     public void onSuccess(String message, String data) {
                         Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
                     public void onFailure(int error_code) {
                     }
@@ -89,12 +94,10 @@ public class ListViewMatchAdapter extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 }

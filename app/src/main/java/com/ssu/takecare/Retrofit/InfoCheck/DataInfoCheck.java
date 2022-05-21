@@ -1,20 +1,27 @@
 package com.ssu.takecare.Retrofit.InfoCheck;
 
 import com.google.gson.annotations.SerializedName;
+
 /*회원 정보 조회*/
 public class DataInfoCheck {
     @SerializedName("age")
     public int age;
+
     @SerializedName("email")
     public String email;
+
     @SerializedName("gender")
     public String gender;
+
     @SerializedName("height")
     public int height;
+
     @SerializedName("id")
     public int id;
+
     @SerializedName("name")
     public String name;
+
     @SerializedName("weight")
     public int weight;
 

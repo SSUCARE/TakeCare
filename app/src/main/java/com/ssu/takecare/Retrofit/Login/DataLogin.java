@@ -7,6 +7,14 @@ public class DataLogin {
     @SerializedName("accessToken")
     public String accessToken;
 
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
     @NonNull
     @Override
     public String toString() {

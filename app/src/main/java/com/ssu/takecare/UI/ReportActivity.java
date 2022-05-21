@@ -8,53 +8,52 @@ import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.InfoCheck.ResponseInfoCheck;
+import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.Retrofit.UserInfoCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
 public class ReportActivity extends AppCompatActivity {
-    int userId;
+    Integer userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-
-        ApplicationClass.retrofit_manager.infoCheck(new UserInfoCallback() {
+/*
+        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
             @Override
             public void onError(Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
-
             @Override
-            public void onSuccess(String message, ResponseInfoCheck data) {
-                userId = data.getDataInfocheck().getId();
-
-                Log.d("ReportActivity", "onSuccess : userId : " + userId);
-
-                ApplicationClass.retrofit_manager.getReport(userId, 2022, 5, 18, new RetrofitCallback() {
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.d("확인,ReportActivity,getReport:onerror", "에러:" + t.toString());
-                    }
-
-                    @Override
-                    public void onSuccess(String message, String data) {
-                        Log.d("확인,ReportActivity,getReport:onsucess", data);
-                    }
-
-                    @Override
-                    public void onFailure(int error_code) {
-                        Log.d("확인,ReportActivity,getReport:onfailure", "실패:" + error_code);
-                    }
-                });
+            public void onSuccess(String message, ResponseGetUser data) {
+                userId=data.getData().getId();
             }
-
             @Override
             public void onFailure(int error_code) {
-                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
             }
         });
+        ApplicationClass.retrofit_manager.getReport(1,2022,05,14,new RetrofitCallback() {
+            @Override
+            public void onError(Throwable t) {
+               // Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                Log.d("확인,getReport","에러:"+t.toString());
+            }
+            @Override
+            public void onSuccess(String message, String data) {
+            //    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                Log.d("확인,getReport",data);
+            }
+            @Override
+            public void onFailure(int error_code) {
+              //  Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                Log.d("확인,getReport","실패:"+error_code);
+            }
+        });
+    */
     }
+
 
     public void back_btn_event(View view) {
         finish();

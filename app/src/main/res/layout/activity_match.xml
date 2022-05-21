@@ -9,7 +9,6 @@
     android:weightSum="12"
     android:orientation="vertical">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bar_match"
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             android:fontFamily="@font/font_normal"
             android:text="상대방 설정창"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -32,8 +31,8 @@
 
         <Button
             android:id="@+id/plus_icon_button"
-            android:layout_width="43dp"
-            android:layout_height="43dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="72dp"
             android:background="@drawable/plus"
             app:layout_constraintStart_toEndOf="@id/TitleTextView"
@@ -55,7 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/white"
-            android:textSize="10dp"
+            android:textSize="15dp"
             android:fontFamily="@font/font_normal"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,7 +85,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/white"
-        android:textSize="10dp"
+        android:textSize="15dp"
         android:fontFamily="@font/font_normal"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

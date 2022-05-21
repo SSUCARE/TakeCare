@@ -14,8 +14,11 @@ import com.ssu.takecare.Retrofit.InfoCheck.ResponseInfoCheck;
 import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
+import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
 import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
 
@@ -126,6 +129,35 @@ public class RetrofitManager {
         });
     }
 
+    public void infoCheck(RetrofitUserInfoCallback callback) {
+        Call<ResponseGetUser> call = ApplicationClass.retrofit_api.infoCheckRequest();
+
+        call.enqueue(new Callback<ResponseGetUser>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseGetUser> call, @NonNull Response<ResponseGetUser> response) {
+                if (response.isSuccessful()) {
+                    ResponseGetUser body = response.body();
+                    Log.d("RetrofitManager_infoCheck", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_infoCheck", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess(body.message, body);
+                }
+                else {
+                    Log.d("RetrofitManager_infoCheck", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseGetUser> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_infoCheck", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
     public void makeReport(int systolic, int diastolic, List<Integer> sugarLevels, int weight, RetrofitCallback callback) {
         RequestReport requestReport = new RequestReport();
         requestReport.setDiastolic(diastolic);
@@ -140,13 +172,13 @@ public class RetrofitManager {
             public void onResponse(@NonNull Call<ResponseReport> call, @NonNull Response<ResponseReport> response) {
                 if (response.isSuccessful()) {
                     ResponseReport body = response.body();
-                    Log.d("RetrofitManager_report", "onResponse : 성공, message : " + body.toString());
-                    Log.d("RetrofitManager_report", "onResponse : status code is " + response.code());
+                    Log.d("RetrofitManager_makeReport", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_makeReport", "onResponse : status code is " + response.code());
 
                     callback.onSuccess(body.message, body.message);
                 }
                 else {
-                    Log.d("RetrofitManager_report", "onResponse : 실패, error code : " + response.code());
+                    Log.d("RetrofitManager_makeReport", "onResponse : 실패, error code : " + response.code());
 
                     callback.onFailure(response.code());
                 }
@@ -154,38 +186,7 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<ResponseReport> call, @NonNull Throwable t) {
-                Log.e("RetrofitManager_report", "onFailure : " + t.getLocalizedMessage());
-
-                callback.onError(t);
-            }
-        });
-    }
-
-    public void infoCheck(UserInfoCallback callback) {
-        Call<ResponseInfoCheck> call = ApplicationClass.retrofit_api.infoCheckRequest();
-
-        call.enqueue(new Callback<ResponseInfoCheck>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseInfoCheck> call, @NonNull Response<ResponseInfoCheck> response) {
-                if (response.isSuccessful()) {
-                    ResponseInfoCheck body = response.body();
-                    Log.d("RetrofitManager_check", "onResponse : 성공, message : " + body.toString());
-                    Log.d("RetrofitManager_check", "onResponse : status code is " + response.code());
-                    Log.d("RetrofitManager_check", "이름 : " + body.getDataInfocheck().getName());
-                    Log.d("RetrofitManager_check", "이메일 : " + body.getDataInfocheck().getEmail());
-
-                    callback.onSuccess(body.message, body);
-                }
-                else {
-                    Log.d("RetrofitManager_check", "onResponse : 실패, error code : " + response.code());
-
-                    callback.onFailure(response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseInfoCheck> call, @NonNull Throwable t) {
-                Log.e("RetrofitManager_check", "onFailure : " + t.getLocalizedMessage());
+                Log.e("RetrofitManager_makeReport", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }
@@ -200,70 +201,82 @@ public class RetrofitManager {
             public void onResponse(@NonNull Call<ResponseGetReport> call, @NonNull Response<ResponseGetReport> response) {
                 if (response.isSuccessful()) {
                     ResponseGetReport body = response.body();
-                    Log.d("RetrofitManager", "ReportonResponse : 성공, message : " + body.toString());
-                    Log.d("RetrofitManager", "ReportonResponse : status code is " + response.code());
-                    String data="고혈압:"+body.getDatagetreprot().diastolic;
-                    data+="저혈압:"+body.getDatagetreprot().sytstolic;
+                    Log.d("RetrofitManager_getReport", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_getReport", "onResponse : status code is " + response.code());
+
+                    String data = "고혈압:"+body.getDataGetReport().diastolic;
+                    data += "저혈압:"+body.getDataGetReport().sytstolic;
+
                     callback.onSuccess(body.message, data);
-                } else {
-                    Log.d("RetrofitManager", "ReportonResponse : 실패, error code : " + response.code());
+                }
+                else {
+                    Log.d("RetrofitManager_getReport", "onResponse : 실패, error code : " + response.code());
 
                     callback.onFailure(response.code());
-
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseGetReport> call, @NonNull Throwable t) {
-                Log.e("RetrofitManager", "ReportonFailure : " + t.getLocalizedMessage());
+                Log.e("RetrofitManager_getReport", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }
         });
     }
 
-    public void getCareMatchInfo(CareListCallback callback) {
-        Call<List<ResponseCare>> call = ApplicationClass.retrofit_api.GetCaredbRequest();
+    public void getCareDBMatchInfo(RetrofitCareCallback callback) {
+        Call<ResponseCare> call = ApplicationClass.retrofit_api.GetCareDBRequest();
 
-        call.enqueue(new Callback<List<ResponseCare>>() {
+        call.enqueue(new Callback<ResponseCare>() {
             @Override
-            public void onResponse(@NonNull Call<List<ResponseCare>> call, @NonNull Response<List<ResponseCare>> response) {
+            public void onResponse( Call<ResponseCare> call,  Response<ResponseCare> response) {
                 if (response.isSuccessful()) {
-                    List<ResponseCare> body = response.body();
-                    callback.onSuccess("GetCaredbRequest 호출:", body);
-                } else {
-                    Log.d("RetrofitManager", "GetCare_onResponse : 실패, error code : " + response.code());
+                    ResponseCare body = response.body();
+                    Log.d("RetrofitManager_matchInfo", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_matchInfo", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess("GetCareDBRequest 호출 : ", body);
+                }
+                else {
+                    Log.d("RetrofitManager_matchInfo", "onResponse : 실패, error code : " + response.code());
 
                     callback.onFailure(response.code());
-
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<ResponseCare>> call, @NonNull Throwable t) {
-                Log.e("RetrofitManager", "GetCare_onFailure : " + t.getLocalizedMessage());
+            public void onFailure( Call<ResponseCare> call,  Throwable t) {
+                Log.e("RetrofitManager_matchInfo", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }
         });
     }
 
-    public void careRequest(String userEmail, RetrofitCallback callback) {
-        Call<Void> call = ApplicationClass.retrofit_api.careRequest(userEmail);
+    public void careRequest(int userId, RetrofitCallback callback) {
+        Call<Void> call = ApplicationClass.retrofit_api.careRequest(userId);
 
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess("careRequest 호출:", response.body().toString());
-                } else {
-                    callback.onFailure(response.code());
+                    Void body = response.body();
+                    Log.d("RetrofitManager_careRequest", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_careRequest", "onResponse : status code is " + response.code());
 
+                    callback.onSuccess("careRequest 호출 : ", "1");
+                }
+                else {
+                    Log.d("RetrofitManager_careRequest", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("RetrofitManager_careRequest", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }
@@ -277,15 +290,22 @@ public class RetrofitManager {
             @Override
             public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess("careAcceptRequest 호출:", response.body().toString());
-                } else {
-                    callback.onFailure(response.code());
+                    Object body = response.body();
+                    Log.d("RetrofitManager_careAcceptRequest", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_careAcceptRequest", "onResponse : status code is " + response.code());
+                    
+                    callback.onSuccess("careAcceptRequest 호출:", body.toString());
+                }
+                else {
+                    Log.d("RetrofitManager_careAcceptRequest", "onResponse : 실패, error code : " + response.code());
 
+                    callback.onFailure(response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+                Log.e("RetrofitManager_careAcceptRequest", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }
@@ -299,15 +319,51 @@ public class RetrofitManager {
             @Override
             public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess("careDeleteRequest 호출:", response.body().toString());
-                } else {
-                    callback.onFailure(response.code());
+                    Object body = response.body();
+                    Log.d("RetrofitManager_careDeleteRequest", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_careDeleteRequest", "onResponse : status code is " + response.code());
 
+                    callback.onSuccess("careDeleteRequest 호출:", body.toString());
+                }
+                else {
+                    Log.d("RetrofitManager_careDeleteRequest", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+                Log.e("RetrofitManager_careDeleteRequest", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void getByEmailUserInfo(String email, RetrofitUserInfoCallback callback) {
+        Call<ResponseGetUser> call = ApplicationClass.retrofit_api.searchByEmailRequest(email);
+
+        call.enqueue(new Callback<ResponseGetUser>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseGetUser> call, @NonNull Response<ResponseGetUser> response) {
+                if (response.isSuccessful()) {
+                    ResponseGetUser body = response.body();
+                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess("searchByEmailRequest 호출:", body);
+                }
+                else {
+                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseGetUser> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_getByEmailUserInfo", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }

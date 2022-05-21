@@ -4,21 +4,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResponseGetReport {
     @SerializedName("data")
-    public DataGetReport datagetreprot;
+    public DataGetReport dataGetReport;
 
     @SerializedName("message")
     public String message;
 
-    public void setDatagetreprot(DataGetReport datagetreprot) {
-        this.datagetreprot = datagetreprot;
+    public void setDataGetReport(DataGetReport dataGetReport) {
+        this.dataGetReport = dataGetReport;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
-    public DataGetReport getDatagetreprot() {
-        return datagetreprot;
+    public DataGetReport getDataGetReport() {
+        return dataGetReport;
     }
 
     public String getMessage() {

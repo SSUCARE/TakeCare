@@ -7,6 +7,7 @@ import com.ssu.takecare.Retrofit.InfoCheck.ResponseInfoCheck;
 import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
+import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
 import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
@@ -43,7 +44,11 @@ public interface RetrofitAPI {
     // 회원정보 조회
     @Headers("Content-Type: application/json")
     @GET("/users")
-    Call<ResponseInfoCheck> infoCheckRequest();
+    Call<ResponseGetUser> infoCheckRequest();
+
+    @Headers("Content-Type: application/json")
+    @GET("/users/{email}")
+    Call<ResponseGetUser> searchByEmailRequest(@Path("email") String path);
 
     // report 생성
     @Headers("Content-Type: application/json")
@@ -52,24 +57,22 @@ public interface RetrofitAPI {
 
     // report 조회하기
     @Headers("Content-Type: application/json")
-    @GET("/report/{userId}")
+    @GET("/users/{userId}/")
     Call<ResponseGetReport> getReportRequest(@Path("userId")int path, @Query("year")int year, @Query("month")int month, @Query("date")int date);
 
     @Headers("Content-Type: application/json")
     @GET("/care")
-    Call<List<ResponseCare>> GetCaredbRequest();
-
-
-    @Headers("Content-Type: application/json")
-    @POST("/care/{userEmail}")
-    Call<Void> careRequest(@Path("userEmail") String path);
-
+    Call<ResponseCare> GetCareDBRequest();
 
     @Headers("Content-Type: application/json")
-    @POST("/care/{userid}/accept")
+    @POST("/care/request/{userId}")
+    Call<Void> careRequest(@Path("userId") int path);
+
+    @Headers("Content-Type: application/json")
+    @POST("/care/request/{userId}/accept")
     Call<Object> careAcceptRequest(@Path("userId") int path);
 
     @Headers("Content-Type: application/json")
-    @DELETE("/{userid}")
+    @DELETE("/care/{userId}")
     Call<Object> careDeleteRequest(@Path("userId") int path);
 }

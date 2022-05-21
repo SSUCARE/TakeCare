@@ -2,12 +2,11 @@ package com.ssu.takecare.Retrofit.GetReport;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
-import java.time.LocalDateTime;
 
 public class DataGetReport {
 
     @SerializedName("createdAt")
-    public LocalDateTime createdAt;
+    public String createdAt;
 
     @SerializedName("reportId")
     public int reportId;
@@ -24,7 +23,7 @@ public class DataGetReport {
     @SerializedName("weight")
     public int weight;
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -48,7 +47,7 @@ public class DataGetReport {
         this.weight = weight;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 

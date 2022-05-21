@@ -22,9 +22,12 @@ import com.ssu.takecare.Dialog.SugarDialog;
 import com.ssu.takecare.Dialog.WeightDialog;
 import com.ssu.takecare.Fragment.HomeFragment;
 import com.ssu.takecare.Fragment.MyPageFragment;
+import com.ssu.takecare.Fragment.RoleCaredFragment;
 import com.ssu.takecare.Fragment.ShareFragment;
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView user_name;
 
+    private String ROLE_CARED_OR_ROLE_CARER;
+
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
@@ -53,6 +58,28 @@ public class MainActivity extends AppCompatActivity {
         tab_btn3 = findViewById(R.id.tab_btn3);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
+
+        CARED_OR_CARER_Temporaliy();
+    }
+
+    /*보호자 모드, 피보호자 모드 선택 위해 호출.
+       다음에 한번 SharedPreference에 /User 정보 한번 불러온다음 저장하는 것 통일하기 */
+    public void CARED_OR_CARER_Temporaliy(){
+        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
+            @Override
+            public void onError(Throwable t) {
+            }
+
+            @Override
+            public void onSuccess(String message, ResponseGetUser data) {
+                //우 선은 전역변수로 선언
+                ROLE_CARED_OR_ROLE_CARER = data.getData().getRole();
+            }
+
+            @Override
+            public void onFailure(int error_code) {
+            }
+        });
     }
 
     @Override
@@ -262,7 +289,11 @@ public class MainActivity extends AppCompatActivity {
                 tab_btn3.setImageResource(R.drawable.tab_btn3);
                 break;
             case R.id.tab_btn2:
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment()).commit();
+                if (ROLE_CARED_OR_ROLE_CARER.equals("ROLE_CARER"))
+                    getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment()).commit();
+                else
+                    getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new RoleCaredFragment()).commit();
+
                 tab_btn1.setImageResource(R.drawable.tab_btn1);
                 tab_btn2.setImageResource(R.drawable.tab_btn2_select);
                 tab_btn3.setImageResource(R.drawable.tab_btn3);

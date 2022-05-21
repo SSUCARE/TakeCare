@@ -42,9 +42,9 @@ public class RetrofitClient {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client.addInterceptor(loggingInterceptor);
 
-        client.connectTimeout(100, TimeUnit.SECONDS);
-        client.readTimeout(100, TimeUnit.SECONDS);
-        client.writeTimeout(100, TimeUnit.SECONDS);
+        client.connectTimeout(10, TimeUnit.SECONDS);
+        client.readTimeout(10, TimeUnit.SECONDS);
+        client.writeTimeout(10, TimeUnit.SECONDS);
         client.retryOnConnectionFailure(true);
 
         if (retrofitClient == null) {

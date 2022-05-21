@@ -25,7 +25,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
         super();
         this.mContext = context;
         this.arrData = arrData;
-        this.acceptedOrNot=acceptedOrNot;
+        this.acceptedOrNot = acceptedOrNot;
     }
 
     public int getCount() {
@@ -45,6 +45,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
     public Integer getUserId() {
         return this.userId;
     }
+
     // getView method is called for each item of ListView
     public View getView(int position, View view, ViewGroup parent) {
         // inflate the layout for each item of listView
@@ -53,7 +54,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
 
 
         // get the reference of textView and button
-        TextView txtlistTitle = (TextView) view.findViewById(R.id.txtlistview2);
+        TextView txtListTitle = (TextView) view.findViewById(R.id.txtlistview2);
         Button btnAction = (Button) view.findViewById(R.id.btnAction1);
 
         Button btnAction2 = (Button) view.findViewById(R.id.btnAction2);
@@ -63,7 +64,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
         userId = getElementByIndex(arrData, position);
 
         // Set the title and button name
-        txtlistTitle.setText(userName);
+        txtListTitle.setText(userName);
 
         // Click listener of button
         btnAction.setOnClickListener(new View.OnClickListener() {
@@ -75,16 +76,19 @@ public class ListView2MatchAdapter extends BaseAdapter {
                     @Override
                     public void onError(Throwable t) {
                     }
+
                     @Override
                     public void onSuccess(String message, String data) {
                         Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
                     public void onFailure(int error_code) {
                     }
                 });
             }
         });
+
         // Click listener of button
         btnAction2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,10 +99,12 @@ public class ListView2MatchAdapter extends BaseAdapter {
                     @Override
                     public void onError(Throwable t) {
                     }
+
                     @Override
                     public void onSuccess(String message, String data) {
                         Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
                     public void onFailure(int error_code) {
                     }
@@ -106,17 +112,14 @@ public class ListView2MatchAdapter extends BaseAdapter {
             }
         });
 
-
         return view;
     }
 
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 }

@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         textViewRegister.setOnClickListener(this);
         textViewFind.setOnClickListener(this);
 
+        /*
         // 구글 로그인
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
@@ -141,6 +142,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+        */
     }
 
     @Override
@@ -152,15 +154,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        updateUI(account);
     }
 
     private void updateUI(GoogleSignInAccount account) {
         if (account != null) {
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
         } else {
-            //Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -246,13 +248,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             AlertDialog dialog = dialogBuilder.create();
+
             if (email_str.equals("") || password_str.equals("")) {
                 dialogBuilder.setTitle("알림");
                 dialogBuilder.setMessage("빈 칸을 전부 채워주세요.");
                 dialogBuilder.setPositiveButton("확인", null);
                 dialogBuilder.show();
                 dialog.dismiss();
-            } else {
+            }
+            else {
                 Log.d("LoginActivity", "email : " + email_str);
                 Log.d("LoginActivity", "password : " + password_str);
 

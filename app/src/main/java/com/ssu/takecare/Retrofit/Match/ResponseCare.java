@@ -1,15 +1,16 @@
 package com.ssu.takecare.Retrofit.Match;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class ResponseCare {
     @SerializedName("data")
-    private DataResponseCare data;
+    private List<DataResponseCare> data;
 
     @SerializedName("message")
     public String message;
 
-    public void setData(DataResponseCare data) {
+    public void setData(List<DataResponseCare> data) {
         this.data = data;
     }
 
@@ -17,7 +18,7 @@ public class ResponseCare {
         this.message = message;
     }
 
-    public DataResponseCare getData() {
+    public List<DataResponseCare> getData() {
         return data;
     }
 

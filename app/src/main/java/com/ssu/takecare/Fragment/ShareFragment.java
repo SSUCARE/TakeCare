@@ -70,7 +70,7 @@ public class ShareFragment extends Fragment {
         });
 
         RecyclerView listview=(RecyclerView)view.findViewById(R.id.share_listview);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         listview.setLayoutManager(gridLayoutManager);
 
         ShareGridAdapter adapter=new ShareGridAdapter(name, getActivity());
