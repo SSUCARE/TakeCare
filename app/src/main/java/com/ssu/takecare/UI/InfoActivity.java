@@ -156,6 +156,20 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
                         editor.putInt(email, 1);
+                        editor.putString("name", name_str);
+                        editor.putInt("age", age_int);
+                        editor.putInt("height", height_int);
+
+                        if (gender_register.equals("MALE"))
+                            editor.putString("gender", "남성");
+                        else
+                            editor.putString("gender", "여성");
+
+                        if (role_register.equals("ROLE_CARER"))
+                            editor.putString("role", "보호자");
+                        else
+                            editor.putString("role", "피보호자");
+
                         editor.apply();
 
                         finish();

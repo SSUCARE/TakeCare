@@ -2,15 +2,9 @@ package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
-import com.ssu.takecare.ApplicationClass;
+
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.InfoCheck.ResponseInfoCheck;
-import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
-import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
 public class ReportActivity extends AppCompatActivity {
     Integer userId;
@@ -18,7 +12,7 @@ public class ReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report);
+        setContentView(R.layout.activity_share_report);
 /*
         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
             @Override
@@ -34,6 +28,7 @@ public class ReportActivity extends AppCompatActivity {
             //    Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
             }
         });
+
         ApplicationClass.retrofit_manager.getReport(1,2022,05,14,new RetrofitCallback() {
             @Override
             public void onError(Throwable t) {

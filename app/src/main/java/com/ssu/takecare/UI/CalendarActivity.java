@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.ssu.takecare.R;
 
 public class CalendarActivity extends AppCompatActivity {
@@ -14,12 +16,16 @@ public class CalendarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+        setContentView(R.layout.activity_share_calendar);
+
+        MaterialCalendarView materialCalendarView = findViewById(R.id.calendar_view);
+        materialCalendarView.setSelectedDate(CalendarDay.today());
+
         layout=(ConstraintLayout)findViewById(R.id.Calendar_transfer_Report);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),ReportActivity.class);
+                Intent intent=new Intent(getApplicationContext(), ReportActivity.class);
                 startActivity(intent);
                 finish();
             }

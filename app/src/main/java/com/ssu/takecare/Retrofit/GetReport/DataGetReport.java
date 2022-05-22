@@ -11,11 +11,11 @@ public class DataGetReport {
     @SerializedName("reportId")
     public int reportId;
 
+    @SerializedName("systolic")
+    public int systolic;
+
     @SerializedName("diastolic")
     public int diastolic;
-
-    @SerializedName("systolic")
-    public int sytstolic;
 
     @SerializedName("sugarLevels")
     public List<Integer> sugarLevels = null;
@@ -31,12 +31,12 @@ public class DataGetReport {
         this.reportId = reportId;
     }
 
-    public void setDiastolic(int diastolic) {
-        this.diastolic = diastolic;
+    public void setSystolic(int systolic) {
+        this.systolic = systolic;
     }
 
-    public void setSytstolic(int sytstolic) {
-        this.sytstolic = sytstolic;
+    public void setDiastolic(int diastolic) {
+        this.diastolic = diastolic;
     }
 
     public void setSugarLevels(List<Integer> sugarLevels) {
@@ -55,12 +55,12 @@ public class DataGetReport {
         return reportId;
     }
 
-    public int getDiastolic() {
-        return diastolic;
+    public int getSystolic() {
+        return systolic;
     }
 
-    public int getSytstolic() {
-        return sytstolic;
+    public int getDiastolic() {
+        return diastolic;
     }
 
     public List<Integer> getSugarLevels() {

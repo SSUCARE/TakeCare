@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,7 +29,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="11"
+        android:layout_weight="8"
         android:layout_marginTop="23dp"
         android:layout_marginLeft="23dp"
         android:layout_marginRight="23dp"
@@ -67,11 +68,11 @@
 
         <ImageButton
             android:id="@+id/cared_my_graph"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:padding="10dp"
             android:background="@drawable/layout_border2"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/protected_name"
             app:layout_constraintBottom_toTopOf="@id/cared_my_presciption"
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -91,12 +92,12 @@
             app:layout_constraintVertical_bias="0.2"
             android:text="그래프"
             android:textStyle="bold"
-            android:textSize="20dp"/>
+            android:textSize="16sp"/>
 
         <ImageButton
             android:id="@+id/cared_my_calendar"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:padding="10dp"
             android:background="@drawable/layout_border2"
             app:layout_constraintTop_toTopOf="@id/cared_my_graph"
@@ -115,12 +116,12 @@
             app:layout_constraintVertical_bias="0.2"
             android:text="캘린더"
             android:textStyle="bold"
-            android:textSize="20dp"/>
+            android:textSize="16sp"/>
 
         <ImageButton
             android:id="@+id/cared_my_presciption"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:padding="10dp"
             android:background="@drawable/layout_border2"
             app:layout_constraintRight_toLeftOf="@id/cared_my_report"
@@ -141,12 +142,12 @@
             app:layout_constraintVertical_bias="0.2"
             android:text="처방노트"
             android:textStyle="bold"
-            android:textSize="20dp"/>
+            android:textSize="16sp"/>
 
         <ImageButton
             android:id="@+id/cared_my_report"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:padding="10dp"
             android:background="@drawable/layout_border2"
             app:layout_constraintTop_toTopOf="@id/cared_my_presciption"
@@ -164,7 +165,7 @@
             app:layout_constraintVertical_bias="0.2"
             android:text="건강 리포트"
             android:textStyle="bold"
-            android:textSize="20dp"/>
+            android:textSize="16sp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

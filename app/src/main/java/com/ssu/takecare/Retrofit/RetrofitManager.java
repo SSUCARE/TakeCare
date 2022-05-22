@@ -2,7 +2,6 @@ package com.ssu.takecare.Retrofit;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -10,7 +9,6 @@ import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Retrofit.GetReport.ResponseGetReport;
 import com.ssu.takecare.Retrofit.Info.RequestInfo;
 import com.ssu.takecare.Retrofit.Info.ResponseInfo;
-import com.ssu.takecare.Retrofit.InfoCheck.ResponseInfoCheck;
 import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
@@ -21,7 +19,6 @@ import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
-
 import java.util.List;
 
 public class RetrofitManager {
@@ -137,10 +134,10 @@ public class RetrofitManager {
             public void onResponse(@NonNull Call<ResponseGetUser> call, @NonNull Response<ResponseGetUser> response) {
                 if (response.isSuccessful()) {
                     ResponseGetUser body = response.body();
-                    Log.d("RetrofitManager_infoCheck", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_infoCheck", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_infoCheck", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess(body.message, body);
+                    callback.onSuccess(body.message, body.getData());
                 }
                 else {
                     Log.d("RetrofitManager_infoCheck", "onResponse : 실패, error code : " + response.code());
@@ -160,9 +157,9 @@ public class RetrofitManager {
 
     public void makeReport(int systolic, int diastolic, List<Integer> sugarLevels, int weight, RetrofitCallback callback) {
         RequestReport requestReport = new RequestReport();
+        requestReport.setSystolic(systolic);
         requestReport.setDiastolic(diastolic);
         requestReport.setSugarLevels(sugarLevels);
-        requestReport.setSystolic(systolic);
         requestReport.setWeight(weight);
 
         Call<ResponseReport> call = ApplicationClass.retrofit_api.reportRequest(requestReport);
@@ -194,7 +191,7 @@ public class RetrofitManager {
     }
 
     public void getReport(int path, int year, int month, int date, RetrofitCallback callback) {
-        Call<ResponseGetReport>call=ApplicationClass.retrofit_api.getReportRequest(path, year, month, date);
+        Call<ResponseGetReport> call = ApplicationClass.retrofit_api.getReportRequest(path, year, month, date);
 
         call.enqueue(new Callback<ResponseGetReport>() {
             @Override
@@ -204,8 +201,8 @@ public class RetrofitManager {
                     Log.d("RetrofitManager_getReport", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_getReport", "onResponse : status code is " + response.code());
 
-                    String data = "고혈압:"+body.getDataGetReport().diastolic;
-                    data += "저혈압:"+body.getDataGetReport().sytstolic;
+                    String data = "고혈압 : " + body.getData().diastolic;
+                    data += "저혈압 : " + body.getData().systolic;
 
                     callback.onSuccess(body.message, data);
                 }
@@ -226,7 +223,7 @@ public class RetrofitManager {
     }
 
     public void getCareDBMatchInfo(RetrofitCareCallback callback) {
-        Call<ResponseCare> call = ApplicationClass.retrofit_api.GetCareDBRequest();
+        Call<ResponseCare> call = ApplicationClass.retrofit_api.getCareDBRequest();
 
         call.enqueue(new Callback<ResponseCare>() {
             @Override
@@ -352,7 +349,7 @@ public class RetrofitManager {
                     Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess("searchByEmailRequest 호출:", body);
+                    callback.onSuccess("searchByEmailRequest 호출:", body.getData());
                 }
                 else {
                     Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 실패, error code : " + response.code());

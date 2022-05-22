@@ -54,8 +54,8 @@
             app:layout_constraintTop_toTopOf="@id/img_user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.2"
-            app:layout_constraintHorizontal_bias="0.2"
-            android:text="김민준 님"
+            app:layout_constraintHorizontal_bias="0.1"
+            android:text="_____"
             android:textSize="20sp"
             android:fontFamily="@font/font_normal"
             android:id="@+id/user_name"/>
@@ -63,16 +63,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/img_user"
+            app:layout_constraintLeft_toLeftOf="@id/user_name"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img_user"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintHorizontal_bias="0.22"
+            android:text=" 님"
+            android:textSize="20sp"
+            android:fontFamily="@font/font_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/user_name"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/user_name"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.4"
-            app:layout_constraintHorizontal_bias="0.3"
-            android:text="남 / 26세 / 보호자"
+            app:layout_constraintHorizontal_bias="0"
+            android:text="오늘도 행복한 하루 되세요~"
             android:textSize="20sp"
             android:fontFamily="@font/font_normal"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
@@ -120,6 +132,7 @@
                 android:fontFamily="@font/font_normal"/>
 
             <TextView
+                android:id="@+id/user_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"

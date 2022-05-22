@@ -2,14 +2,17 @@ package com.ssu.takecare.UI;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.AssistClass.ListView2MatchAdapter;
 import com.ssu.takecare.AssistClass.ListViewMatchAdapter;
+import com.ssu.takecare.Dialog.MatchDialog;
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
+import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
@@ -23,6 +26,7 @@ public class MatchActivity extends AppCompatActivity {
     Map<String, Integer> mArrData;
     Map<String, Integer> mArrData2;
 
+    private MatchDialog dialog;
     private ListViewMatchAdapter mAdapter;
     private ListView2MatchAdapter mAdapter2;
 
@@ -37,19 +41,28 @@ public class MatchActivity extends AppCompatActivity {
         mArrData = new HashMap<String, Integer>();
         mArrData2 = new HashMap<String, Integer>();
 
+        Button plus= findViewById(R.id.plus_icon_button);
+        plus.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog = new MatchDialog( MatchActivity.this);
+                dialog.showDialog();
+            }
+        });
+
         //get login user data (role data)
         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
+
             @Override
             public void onError(Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onSuccess(String message, ResponseGetUser data) {
-                Log.d("data : ", data.toString());
-
-                role = data.getData().getRole();
+            public void onSuccess(String message, DataResponseGetUser data) {
+                role = data.getRole();
+                Log.d("MatchActivity", "role : " + role);
             }
+
             @Override
             public void onFailure(int error_code) {
                 Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
@@ -57,6 +70,7 @@ public class MatchActivity extends AppCompatActivity {
         });
 
         ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
+
             @Override
             public void onError(Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
@@ -122,8 +136,7 @@ public class MatchActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void back_btn_event(View view) {
+        finish();
     }
 }

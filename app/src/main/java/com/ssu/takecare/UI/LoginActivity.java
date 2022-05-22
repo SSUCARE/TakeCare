@@ -31,11 +31,14 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.Ent
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Task;
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -273,8 +276,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         setPreference("password_login", password_str);
                         setPreference("accessToken", token);
 
-                        // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 MainActivity로 감
+                        // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 info 정보 조회한 뒤 MainActivity로 감
                         if (ApplicationClass.sharedPreferences.getInt(email_str, 0) != 0) {
+                            ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
+                                @Override
+                                public void onError(Throwable t) {
+                                    Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onSuccess(String message, DataResponseGetUser data) {
+                                    Toast.makeText(getApplicationContext(), "개인정보 저장완료", Toast.LENGTH_SHORT).show();
+
+                                    editor.putString("name", data.getName());
+                                    editor.putInt("age", data.getAge());
+                                    editor.putInt("height", data.getHeight());
+
+                                    if (data.getGender().equals("MALE"))
+                                        editor.putString("gender", "남성");
+                                    else
+                                        editor.putString("gender", "여성");
+
+                                    if (data.getRole().equals("ROLE_CARER"))
+                                        editor.putString("role", "보호자");
+                                    else
+                                        editor.putString("role", "피보호자");
+
+                                    editor.apply();
+                                }
+
+                                @Override
+                                public void onFailure(int error_code) {
+                                    Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }

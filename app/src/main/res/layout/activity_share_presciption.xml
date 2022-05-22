@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.PresciptionNoteActivity"
+    tools:context=".UI.PresciptionActivity"
     android:orientation="vertical">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/actionbar_color"
         android:layout_weight="1">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,15 +25,17 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@color/actionbar_color"
             android:src="@drawable/previous_white"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
             android:id="@+id/close_btn"
             android:onClick="back_btn_event"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -45,10 +50,12 @@
         android:paddingRight="15dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,6 +65,7 @@
                 android:text="최근 한달의 데이터를 참조해 전해드립니다."
                 android:textSize="20dp"
                 android:textStyle="bold"/>
+
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="40dp"
@@ -74,6 +82,7 @@
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:id="@+id/pressure_avg"/>
+
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="40dp"
@@ -87,6 +96,7 @@
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:id="@+id/diabetes_avg"/>
+
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="40dp"
@@ -100,8 +110,8 @@
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:id="@+id/weight_avg"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -109,35 +119,39 @@
             android:orientation="vertical"
             android:background="@drawable/layout_border3">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:text="한 달 동안 이학준님의 평균 최고 혈압은 ___이고 평균 최저 혈압은 ___으로 지난달보다 ___.합니다"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:textSize="20dp"
                     android:text="한 달 동안 이학준님의 평균 공복 혈당은 ___이고 평균 식후 혈당은 ___으로 지난달보다 ___합니다."/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:textSize="20dp"
                     android:text="과도한 나트륨 섭취는 혈관을 막히게 하여 혈압을 상승시키는 주원인이므로 평소 맵고 짜고 자극적인 음식은 피해서 관리해야 합니다. "/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:textSize="20dp"
                     android:text="코엔자임 섭취를 추천드립니다.코엔자임 Q10은 항산화 기능성을 인정받아 혈관을 공격하는 활성산소 제거게 탁월하며, 연구를 통해 심장 건강 및 혈압 감소에 도움되는 것으로 밝혀져 있습니다."/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

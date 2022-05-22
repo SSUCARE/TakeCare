@@ -45,13 +45,9 @@ public class DataInfoCheck {
         this.email = email;
     }
 
-    public String getGender() {
-        return gender;
-    }
+    public String getGender() { return gender; }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    public void setGender(String gender) { this.gender = gender; }
 
     public int getHeight() {
         return height;

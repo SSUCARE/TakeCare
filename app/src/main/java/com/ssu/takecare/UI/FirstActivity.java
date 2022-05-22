@@ -30,8 +30,8 @@ public class FirstActivity extends AppCompatActivity {
             String loginPwd = ApplicationClass.sharedPreferences.getString("password_login", "");
 
             if (!loginEmail.equals("") && !loginPwd.equals("")) {
-                Log.d("LoginActivity", "email : " + loginEmail);
-                Log.d("LoginActivity", "password : " + loginPwd);
+                Log.d("FirstActivity", "email : " + loginEmail);
+                Log.d("FirstActivity", "password : " + loginPwd);
 
                 ApplicationClass.retrofit_manager.login(loginEmail, loginPwd, new RetrofitCallback() {
                     @Override

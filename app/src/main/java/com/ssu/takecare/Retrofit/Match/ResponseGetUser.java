@@ -13,6 +13,7 @@ public class ResponseGetUser {
     public String getMessage() {
         return message;
     }
+
     public DataResponseGetUser getData() {
         return data;
     }

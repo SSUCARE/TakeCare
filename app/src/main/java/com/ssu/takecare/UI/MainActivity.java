@@ -25,7 +25,7 @@ import com.ssu.takecare.Fragment.MyPageFragment;
 import com.ssu.takecare.Fragment.RoleCaredFragment;
 import com.ssu.takecare.Fragment.ShareFragment;
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
+import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView bs_input, as_input;
     private TextView w_input;
 
-    private TextView user_name;
-
     private String ROLE_CARED_OR_ROLE_CARER;
 
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
@@ -53,33 +51,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ROLE_CARED_OR_ROLE_CARER = ApplicationClass.sharedPreferences.getString("role", "");
+
         tab_btn1 = findViewById(R.id.tab_btn1);
         tab_btn2 = findViewById(R.id.tab_btn2);
         tab_btn3 = findViewById(R.id.tab_btn3);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
-
-        CARED_OR_CARER_Temporaliy();
-    }
-
-    /*보호자 모드, 피보호자 모드 선택 위해 호출.
-       다음에 한번 SharedPreference에 /User 정보 한번 불러온다음 저장하는 것 통일하기 */
-    public void CARED_OR_CARER_Temporaliy(){
-        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
-            @Override
-            public void onError(Throwable t) {
-            }
-
-            @Override
-            public void onSuccess(String message, ResponseGetUser data) {
-                //우 선은 전역변수로 선언
-                ROLE_CARED_OR_ROLE_CARER = data.getData().getRole();
-            }
-
-            @Override
-            public void onFailure(int error_code) {
-            }
-        });
     }
 
     @Override
@@ -97,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputPressure(View view) {
-        hp_input = findViewById(R.id.high_pressure);
-        lp_input = findViewById(R.id.low_pressure);
-
         PressureDialog pDialog = new PressureDialog(this);
         pDialog.setPressureDialogListener(new PressureDialog.PressureDialogListener() {
             @Override
             public void okClicked(String high_pressure, String low_pressure) {
+                hp_input = findViewById(R.id.high_pressure);
+                lp_input = findViewById(R.id.low_pressure);
+
                 if (!high_pressure.equals(""))
                     hp_input.setText(high_pressure);
 
@@ -116,21 +94,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputSugar(View view) {
-        bs_input = findViewById(R.id.before_sugar);
-        as_input = findViewById(R.id.after_sugar);
-
         SugarDialog sDialog = new SugarDialog(this);
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
             public void okClicked(String before_sugar, String after_sugar, int input_hour, int input_minute) {
+                bs_input = findViewById(R.id.before_sugar);
+                as_input = findViewById(R.id.after_sugar);
+
                 if (!before_sugar.equals(""))
                     bs_input.setText(before_sugar);
 
                 if (!after_sugar.equals(""))
                     as_input.setText(after_sugar);
-
-                Log.d(TAG, "input_hour : " + input_hour);
-                Log.d(TAG, "input_minute : " + input_minute);
             }
         });
 
@@ -138,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputWeight(View view) {
-        w_input = findViewById(R.id.weight);
-
         WeightDialog wDialog = new WeightDialog(this);
         wDialog.setWeightDialogListener(new WeightDialog.WeightDialogListener() {
             @Override
             public void okClicked(String weight) {
+                w_input = findViewById(R.id.weight);
+
                 if (!weight.equals(""))
                     w_input.setText(weight);
             }
@@ -159,36 +134,38 @@ public class MainActivity extends AppCompatActivity {
         as_input = findViewById(R.id.after_sugar);
         w_input = findViewById(R.id.weight);
 
-        // 모든 값은 0으로 초기화하고 시작, sugarLevels에 값을 할당하지 않으면 Null Exception 발생.
         int systolic = 0;
         int diastolic = 0;
-        List<Integer> sugarLevels = new ArrayList<>(); sugarLevels.add(0); sugarLevels.add(0);
+        List<Integer> sugarLevels = new ArrayList<>();
         int weight = 0;
 
-        String num = hp_input.getText().toString();
-        Log.d("확인", num);
-
-        if (!hp_input.getText().toString().equals("____")){
+        if (!hp_input.getText().toString().equals("____")) {
             systolic = Integer.parseInt(hp_input.getText().toString());
+            Log.d(TAG, "systolic : " + systolic);
         }
 
-        if (!lp_input.getText().toString().equals("____")){
+        if (!lp_input.getText().toString().equals("____")) {
             diastolic = Integer.parseInt(lp_input.getText().toString());
+            Log.d(TAG, "diastolic : " + diastolic);
         }
 
-        if (!bs_input.getText().toString().equals("____")){
-            sugarLevels.add(Integer.parseInt(hp_input.getText().toString()));
+        if (!bs_input.getText().toString().equals("____")) {
+            sugarLevels.add(0, Integer.parseInt(bs_input.getText().toString()));
+            Log.d(TAG, "sugarLevels : " + sugarLevels);
         }
 
-        if (!as_input.getText().toString().equals("____")){
-            sugarLevels.add(Integer.parseInt(hp_input.getText().toString()));
+        if (!as_input.getText().toString().equals("____")) {
+            sugarLevels.add(1, Integer.parseInt(as_input.getText().toString()));
+            Log.d(TAG, "sugarLevels : " + sugarLevels);
         }
 
-        if (!w_input.getText().toString().equals("____")){
+        if (!w_input.getText().toString().equals("____")) {
             weight = Integer.parseInt(w_input.getText().toString());
+            Log.d(TAG, "weight : " + weight);
         }
 
-        Log.d("확인","최고 혈압 : " + systolic + "최저 혈압 : " + diastolic + "혈당:" + sugarLevels.get(0) + "몸무게 : " + weight);
+        Log.d(TAG,"최고 혈압 : " + systolic + ", 최저 혈압 : " + diastolic
+                + ", 혈당 : " + sugarLevels.get(0) + ", " + sugarLevels.get(1) + ", 몸무게 : " + weight);
 
         ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
             @Override
@@ -216,15 +193,13 @@ public class MainActivity extends AppCompatActivity {
                 setPreference("password_login", "");
                 setPreference("accessToken", "");
 
-                editor.putInt("flag_login", 0);
-                editor.apply();
+                clearInfo();
 
                 finish();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             case 2 :
-                editor.putInt("flag_login", 0);
-                editor.apply();
+                clearInfo();
 
                 GoogleSignInClient gsc = GoogleSignIn.getClient(getApplicationContext(), GoogleSignInOptions.DEFAULT_SIGN_IN);
 
@@ -246,8 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
             case 3 :
-                editor.putInt("flag_login", 0);
-                editor.apply();
+                clearInfo();
 
                 UserApiClient.getInstance().logout(error -> {
                     if (error != null) {
@@ -280,6 +254,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void clearInfo() {
+        editor.putString("name", "");
+        editor.putString("gender", "");
+        editor.putInt("age", 0);
+        editor.putInt("height", 0);
+        editor.putString("role", "");
+        editor.putInt("flag_login", 0);
+        editor.apply();
+    }
+
     public void click_event(View view) {
         switch (view.getId()) {
             case R.id.tab_btn1:
@@ -289,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 tab_btn3.setImageResource(R.drawable.tab_btn3);
                 break;
             case R.id.tab_btn2:
-                if (ROLE_CARED_OR_ROLE_CARER.equals("ROLE_CARER"))
+                if (ROLE_CARED_OR_ROLE_CARER.equals("보호자"))
                     getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment()).commit();
                 else
                     getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new RoleCaredFragment()).commit();

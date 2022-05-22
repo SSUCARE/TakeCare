@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
@@ -17,7 +18,7 @@ import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback
 public class MatchDialog {
     Integer userId;
 
-    private EditText edttxt;
+    private EditText txt;
     private Button btn;
     private Activity activity;
     private Dialog dialog;
@@ -43,15 +44,15 @@ public class MatchDialog {
     }
 
     private void findViews(){
-        edttxt = dialog.findViewById(R.id.email_match);
+        txt = dialog.findViewById(R.id.email_match);
         btn = dialog.findViewById(R.id.btn_ok_matching_email);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email= edttxt.getText().toString();
+                String email= txt.getText().toString();
 
-                if(!email.equals("")) {
+                if (email != null || !email.equals("")) {
                     ApplicationClass.retrofit_manager.getByEmailUserInfo(email, new RetrofitUserInfoCallback() {
 
                         @Override
@@ -59,8 +60,8 @@ public class MatchDialog {
                         }
 
                         @Override
-                        public void onSuccess(String message, ResponseGetUser data) {
-                            userId= data.getData().getId();
+                        public void onSuccess(String message, DataResponseGetUser data) {
+                            userId = data.getId();
                             Log.d("MatchDialog : ", "userId : " + userId.toString());
                             ApplicationClass.retrofit_manager.careRequest(userId, new RetrofitCallback() {
 

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.CalendarActivity;
-import com.ssu.takecare.UI.PresciptionNoteActivity;
+import com.ssu.takecare.UI.PresciptionActivity;
 import com.ssu.takecare.UI.ReportActivity;
 import com.ssu.takecare.UI.ShareGraph;
 
@@ -56,7 +56,7 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
             btn3.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(view.getContext(), PresciptionNoteActivity.class));
+                    mContext.startActivity(new Intent(view.getContext(), PresciptionActivity.class));
                 }
             });
 
