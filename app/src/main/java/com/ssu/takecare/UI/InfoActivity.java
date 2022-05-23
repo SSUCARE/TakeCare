@@ -1,14 +1,11 @@
 package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,11 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.Retrofit.RetrofitManager;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
 public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,16 +35,12 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button buttonInfo;
 
-    String email;
-
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-
-        email = ApplicationClass.sharedPreferences.getString("email_login", "");
 
         buttonInfo = (Button) findViewById(R.id.btn_info);
         buttonInfo.setOnClickListener(this);
@@ -139,12 +132,6 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 int age_int = Integer.parseInt(age_str);
                 int height_int = Integer.parseInt(height_str);
 
-                Log.d("InfoActivity", "name : " + name_str);
-                Log.d("InfoActivity", "gender : " + gender_register);
-                Log.d("InfoActivity", "age : " + age_int);
-                Log.d("InfoActivity", "height : " + height_int);
-                Log.d("InfoActivity", "role : " + role_register);
-
                 ApplicationClass.retrofit_manager.info(name_str, gender_register, age_int, height_int, role_register, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
@@ -155,22 +142,46 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                     public void onSuccess(String message, String token) {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
-                        editor.putInt(email, 1);
-                        editor.putString("name", name_str);
-                        editor.putInt("age", age_int);
-                        editor.putInt("height", height_int);
+                        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
+                            @Override
+                            public void onError(Throwable t) {
+                                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                            }
 
-                        if (gender_register.equals("MALE"))
-                            editor.putString("gender", "남성");
-                        else
-                            editor.putString("gender", "여성");
+                            @Override
+                            public void onSuccess(String message, DataResponseGetUser data) {
+                                Toast.makeText(getApplicationContext(), "개인정보 저장완료", Toast.LENGTH_SHORT).show();
 
-                        if (role_register.equals("ROLE_CARER"))
-                            editor.putString("role", "보호자");
-                        else
-                            editor.putString("role", "피보호자");
+                                editor.putInt("userId", data.getId());
+                                editor.putString("name", data.getName());
+                                editor.putInt("age", data.getAge());
+                                editor.putInt("height", data.getHeight());
 
-                        editor.apply();
+                                if (data.getGender().equals("MALE"))
+                                    editor.putString("gender", "남성");
+                                else
+                                    editor.putString("gender", "여성");
+
+                                // 실제 서버에서 사용
+                                if (data.getRole().equals("ROLE_CARER"))
+                                    editor.putString("role", "보호자");
+                                else
+                                    editor.putString("role", "피보호자");
+
+                                // 로컬에서 테스트할때만
+//                                if (role_register.equals("ROLE_CARER"))
+//                                    editor.putString("role", "보호자");
+//                                else
+//                                    editor.putString("role", "피보호자");
+
+                                editor.apply();
+                            }
+
+                            @Override
+                            public void onFailure(int error_code) {
+                                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));

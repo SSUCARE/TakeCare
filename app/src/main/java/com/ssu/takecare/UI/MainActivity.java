@@ -25,10 +25,10 @@ import com.ssu.takecare.Fragment.MyPageFragment;
 import com.ssu.takecare.Fragment.RoleCaredFragment;
 import com.ssu.takecare.Fragment.ShareFragment;
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
+import com.ssu.takecare.Retrofit.Match.DataResponseCare;
+import com.ssu.takecare.Retrofit.Match.ResponseCare;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
-
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         SugarDialog sDialog = new SugarDialog(this);
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
-            public void okClicked(String before_sugar, String after_sugar, int input_hour, int input_minute) {
+            public void okClicked(String before_sugar, String after_sugar) {
                 bs_input = findViewById(R.id.before_sugar);
                 as_input = findViewById(R.id.after_sugar);
 
@@ -141,31 +141,23 @@ public class MainActivity extends AppCompatActivity {
 
         if (!hp_input.getText().toString().equals("____")) {
             systolic = Integer.parseInt(hp_input.getText().toString());
-            Log.d(TAG, "systolic : " + systolic);
         }
 
         if (!lp_input.getText().toString().equals("____")) {
             diastolic = Integer.parseInt(lp_input.getText().toString());
-            Log.d(TAG, "diastolic : " + diastolic);
         }
 
         if (!bs_input.getText().toString().equals("____")) {
-            sugarLevels.add(0, Integer.parseInt(bs_input.getText().toString()));
-            Log.d(TAG, "sugarLevels : " + sugarLevels);
+            sugarLevels.add(Integer.parseInt(bs_input.getText().toString()));
         }
 
         if (!as_input.getText().toString().equals("____")) {
-            sugarLevels.add(1, Integer.parseInt(as_input.getText().toString()));
-            Log.d(TAG, "sugarLevels : " + sugarLevels);
+            sugarLevels.add(Integer.parseInt(as_input.getText().toString()));
         }
 
         if (!w_input.getText().toString().equals("____")) {
             weight = Integer.parseInt(w_input.getText().toString());
-            Log.d(TAG, "weight : " + weight);
         }
-
-        Log.d(TAG,"최고 혈압 : " + systolic + ", 최저 혈압 : " + diastolic
-                + ", 혈당 : " + sugarLevels.get(0) + ", " + sugarLevels.get(1) + ", 몸무게 : " + weight);
 
         ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
             @Override
@@ -176,6 +168,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String message, String token) {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+                String str = "____";
+                hp_input.setText(str);
+                lp_input.setText(str);
+                bs_input.setText(str);
+                as_input.setText(str);
+                w_input.setText(str);
             }
 
             @Override
@@ -255,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
+        editor.putInt("userId", 0);
         editor.putString("name", "");
         editor.putString("gender", "");
         editor.putInt("age", 0);
@@ -265,6 +265,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void click_event(View view) {
+        List<String> UserName = new ArrayList<>();
+        List<Integer> Id = new ArrayList<>();
+
         switch (view.getId()) {
             case R.id.tab_btn1:
                 getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
@@ -273,8 +276,36 @@ public class MainActivity extends AppCompatActivity {
                 tab_btn3.setImageResource(R.drawable.tab_btn3);
                 break;
             case R.id.tab_btn2:
-                if (ROLE_CARED_OR_ROLE_CARER.equals("보호자"))
-                    getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment()).commit();
+                if (ROLE_CARED_OR_ROLE_CARER.equals("보호자")) {
+                    ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
+
+                        @Override
+                        public void onError(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String message, ResponseCare data) {
+                            List<DataResponseCare> list = data.getData();
+                            Log.d(TAG,"맵핑된 수 : " + list.size());
+
+                            for (int i = 0; i < list.size(); i++){
+                                Log.d(TAG,"i : " + i + "status : " + list.get(i).getStatus());
+
+                                if (list.get(i).getStatus().equals("ACCEPTED")) {
+                                    UserName.add(list.get(i).getUserName());
+                                    Id.add(list.get(i).getId());
+                                }
+                            }
+
+                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment(UserName, Id)).commit();
+                        }
+
+                        @Override
+                        public void onFailure(int error_code) {
+                        }
+                    });
+                }
                 else
                     getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new RoleCaredFragment()).commit();
 

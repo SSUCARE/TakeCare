@@ -89,7 +89,7 @@
                     android:textColor="@color/black"
                     android:textSize="25dp"
                     android:textStyle="bold"
-                    android:text="님의 건강정보"
+                    android:text=" 님의 건강정보"
                     android:id="@+id/REPORT_NAME_ASSIT"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

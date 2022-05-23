@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-
 
 public class FirstActivity extends AppCompatActivity {
 
@@ -38,9 +36,9 @@ public class FirstActivity extends AppCompatActivity {
                     public void onError(Throwable t) {
                         Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
 
-                        // 로컬에서 테스트할 때 필요
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
+//                        // 로컬에서 테스트할 때 필요
+//                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                        startActivity(intent);
                     }
 
                     @Override
@@ -55,9 +53,9 @@ public class FirstActivity extends AppCompatActivity {
                     public void onFailure(int error_code) {
                         Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
 
-                        // 로컬에서 테스트할 때 필요
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
+//                        // 로컬에서 테스트할 때 필요
+//                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                        startActivity(intent);
                     }
                 });
             }

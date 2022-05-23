@@ -49,25 +49,7 @@ public class MatchActivity extends AppCompatActivity {
             }
         });
 
-        //get login user data (role data)
-        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
-
-            @Override
-            public void onError(Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSuccess(String message, DataResponseGetUser data) {
-                role = data.getRole();
-                Log.d("MatchActivity", "role : " + role);
-            }
-
-            @Override
-            public void onFailure(int error_code) {
-                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
-            }
-        });
+        role = ApplicationClass.sharedPreferences.getString("role", "");
 
         ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
 
@@ -78,8 +60,8 @@ public class MatchActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String message, ResponseCare data) {
-                if (role.equals("ROLE_CARER")) {
-                    Log.d("===============================================", "1");
+                if (role.equals("보호자")) {
+                    Log.d("MatchActivity", "보호자입니다");
 
                     int size = data.getData().size();
                     for (int i = 0; i < size; i++) {
@@ -103,8 +85,8 @@ public class MatchActivity extends AppCompatActivity {
                     mListview2.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
-                else if (role.equals("ROLE_CARED")) {
-                    Log.d("===============================================", "2");
+                else if (role.equals("피보호자")) {
+                    Log.d("MatchActivity", "피보호자입니다");
 
                     int size = data.getData().size();
                     for (int i = 0; i < size; i++) {

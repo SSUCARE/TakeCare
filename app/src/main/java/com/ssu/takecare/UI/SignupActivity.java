@@ -3,7 +3,6 @@ package com.ssu.takecare.UI;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,8 +17,6 @@ import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
-
-    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     private EditText email_register;
     private EditText password_register;
@@ -85,9 +82,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onSuccess(String message, String email) {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
-                        editor.putInt(email, 0);
-                        editor.apply();
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));

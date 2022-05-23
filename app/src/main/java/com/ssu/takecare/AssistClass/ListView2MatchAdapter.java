@@ -56,9 +56,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
         // get the reference of textView and button
         TextView txtListTitle = (TextView) view.findViewById(R.id.txtlistview2);
         Button btnAction = (Button) view.findViewById(R.id.btnAction1);
-
         Button btnAction2 = (Button) view.findViewById(R.id.btnAction2);
-
 
         String userName= getKeyByIndex(arrData, position);
         userId = getElementByIndex(arrData, position);

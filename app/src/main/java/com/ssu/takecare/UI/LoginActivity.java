@@ -161,53 +161,52 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //        updateUI(account);
     }
 
-    private void updateUI(GoogleSignInAccount account) {
-        if (account != null) {
-            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {   // 구글 로그인 인증을 요청했을 때 결과값을 되돌려 받는 곳
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQ_SIGN_GOOGLE) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            String idToken = account.getIdToken();
-
-            // TODO : send ID Token to server and validate
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("https://yourbackend.example.com/tokensignin");
-
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("idToken", idToken));
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpClient.execute(httpPost);
-                int statusCode = response.getStatusLine().getStatusCode();
-                final String responseBody = EntityUtils.toString(response.getEntity());
-                Log.i("handleSignInResult", "Signed in as: " + responseBody);
-            }
-            catch (IOException e) {
-                Log.e("handleSignInResult", "Error sending ID token to backend.", e);
-            }
-
-            updateUI(account);
-        } catch (ApiException e) {
-            Log.w("handleSignInResult", "handleSignInResult failed : code = " + e);
-            updateUI(null);
-        }
-    }
+//    private void updateUI(GoogleSignInAccount account) {
+//        if (account != null) {
+//            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {   // 구글 로그인 인증을 요청했을 때 결과값을 되돌려 받는 곳
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == REQ_SIGN_GOOGLE) {
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            handleSignInResult(task);
+//        }
+//    }
+//
+//    private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
+//        try {
+//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+//            String idToken = account.getIdToken();
+//
+//            HttpClient httpClient = new DefaultHttpClient();
+//            HttpPost httpPost = new HttpPost("https://yourbackend.example.com/tokensignin");
+//
+//            try {
+//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+//                nameValuePairs.add(new BasicNameValuePair("idToken", idToken));
+//                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//                HttpResponse response = httpClient.execute(httpPost);
+//                int statusCode = response.getStatusLine().getStatusCode();
+//                final String responseBody = EntityUtils.toString(response.getEntity());
+//                Log.i("handleSignInResult", "Signed in as: " + responseBody);
+//            }
+//            catch (IOException e) {
+//                Log.e("handleSignInResult", "Error sending ID token to backend.", e);
+//            }
+//
+//            updateUI(account);
+//        } catch (ApiException e) {
+//            Log.w("handleSignInResult", "handleSignInResult failed : code = " + e);
+//            updateUI(null);
+//        }
+//    }
 
     //화면 터치 시 키보드 내려감
     @Override
@@ -260,9 +259,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 dialog.dismiss();
             }
             else {
-                Log.d("LoginActivity", "email : " + email_str);
-                Log.d("LoginActivity", "password : " + password_str);
-
                 ApplicationClass.retrofit_manager.login(email_str, password_str, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
@@ -276,18 +272,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         setPreference("password_login", password_str);
                         setPreference("accessToken", token);
 
-                        // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 info 정보 조회한 뒤 MainActivity로 감
-                        if (ApplicationClass.sharedPreferences.getInt(email_str, 0) != 0) {
-                            ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
-                                @Override
-                                public void onError(Throwable t) {
-                                    Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-                                }
+                        // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 저장한 뒤 MainActivity로 감
+                        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
+                            @Override
+                            public void onError(Throwable t) {
+                                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                            }
 
-                                @Override
-                                public void onSuccess(String message, DataResponseGetUser data) {
-                                    Toast.makeText(getApplicationContext(), "개인정보 저장완료", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onSuccess(String message, DataResponseGetUser data) {
+                                Toast.makeText(getApplicationContext(), "개인정보 저장완료", Toast.LENGTH_SHORT).show();
 
+                                if (data.getName() != null || data.getGender() != null || data.getAge() != null || data.getHeight() != null || data.getRole() != null) {
+                                    editor.putInt("userId", data.getId());
                                     editor.putString("name", data.getName());
                                     editor.putInt("age", data.getAge());
                                     editor.putInt("height", data.getHeight());
@@ -297,27 +294,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     else
                                         editor.putString("gender", "여성");
 
+                                    // 실제 서버에서 사용
                                     if (data.getRole().equals("ROLE_CARER"))
                                         editor.putString("role", "보호자");
                                     else
                                         editor.putString("role", "피보호자");
 
+//                                    // 로컬에서 테스트할때만
+//                                    editor.putString("role", "보호자");
+
                                     editor.apply();
-                                }
 
-                                @Override
-                                public void onFailure(int error_code) {
-                                    Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }
-                            });
+                                else {
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), InfoActivity.class));
+                                }
+                            }
 
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }
-                        else {
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), InfoActivity.class));
-                        }
+                            @Override
+                            public void onFailure(int error_code) {
+                                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override

@@ -1,21 +1,24 @@
 package com.ssu.takecare.Retrofit.GetReport;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class ResponseGetReport {
     @SerializedName("data")
-    public DataGetReport data;
+    public List<DataGetReport> data;
 
     @SerializedName("message")
     public String message;
 
-    public void setData(DataGetReport data) { this.data = data; }
+    public void setData(List<DataGetReport> data) {
+        this.data = data;
+    }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
-    public DataGetReport getData() {
+    public List<DataGetReport> getData() {
         return data;
     }
 

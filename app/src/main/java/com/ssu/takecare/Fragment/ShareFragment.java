@@ -23,18 +23,19 @@ import java.util.List;
 
 public class ShareFragment extends Fragment {
 
-    List<String> name = new ArrayList<>();
     TextView tv_name;
+
+    List<String> UserName;
+    List<Integer> Id;
+
+    public ShareFragment(List<String> UserName, List<Integer> Id){
+        this.UserName = UserName;
+        this.Id = Id;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        name.add("홍길동");
-        name.add("김말숙");
-        name.add("이지은");
-        name.add("박지수");
-        name.add("나진우");
-
         View view=inflater.inflate(R.layout.fragment_share,container, false);
 
         String my_name = ApplicationClass.sharedPreferences.getString("name", "");
@@ -74,12 +75,13 @@ public class ShareFragment extends Fragment {
             }
         });
 
-        RecyclerView listview=(RecyclerView)view.findViewById(R.id.share_listview);
+        RecyclerView listview = view.findViewById(R.id.share_listview);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         listview.setLayoutManager(gridLayoutManager);
 
-        ShareGridAdapter adapter=new ShareGridAdapter(name, getActivity());
+        ShareGridAdapter adapter = new ShareGridAdapter(UserName, getActivity());
         listview.setAdapter(adapter);
+
         return view;
     }
 }
