@@ -33,11 +33,11 @@ public class ListViewMatchAdapter extends BaseAdapter {
         return arrData.size();
     }
 
-    public Integer getElementByIndex(Map<String, Integer> map,int index){
+    public Integer getElementByIndex(Map<String, Integer> map, int index){
         return map.get( (map.keySet().toArray())[index] );
     }
 
-    public String getKeyByIndex(Map<String, Integer> map,int index){
+    public String getKeyByIndex(Map<String, Integer> map, int index){
         return (String) map.keySet().toArray()[index];
     }
 

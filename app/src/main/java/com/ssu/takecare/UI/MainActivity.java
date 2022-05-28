@@ -267,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
     public void click_event(View view) {
         List<String> UserName = new ArrayList<>();
         List<Integer> Id = new ArrayList<>();
+        List<Integer> userId = new ArrayList<>();
 
         switch (view.getId()) {
             case R.id.tab_btn1:
@@ -278,10 +279,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tab_btn2:
                 if (ROLE_CARED_OR_ROLE_CARER.equals("보호자")) {
                     ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
-
                         @Override
                         public void onError(Throwable t) {
-
+                            Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "에러 : " + t);
                         }
 
                         @Override
@@ -295,6 +296,8 @@ public class MainActivity extends AppCompatActivity {
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
                                     Id.add(list.get(i).getId());
+                                    userId.add(list.get(i).getUserId());
+                                    Log.d(TAG, "이름 : " + list.get(i).getUserName() + ", id : " + list.get(i).getUserId() + ", careId : " + list.get(i).getId());
                                 }
                             }
 
@@ -303,6 +306,8 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int error_code) {
+                            Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "실패 : " + error_code);
                         }
                     });
                 }

@@ -47,7 +47,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintVertical_bias="0.05"
             android:includeFontPadding="false"
-            android:text="이학준"
+            android:text="____"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:fontFamily="@font/font_normal"
@@ -91,8 +91,9 @@
             app:layout_constraintBottom_toTopOf="@id/cared_my_presciption"
             app:layout_constraintVertical_bias="0.2"
             android:text="그래프"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
 
         <ImageButton
             android:id="@+id/cared_my_calendar"
@@ -115,8 +116,9 @@
             app:layout_constraintBottom_toTopOf="@id/cared_my_report"
             app:layout_constraintVertical_bias="0.2"
             android:text="캘린더"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
 
         <ImageButton
             android:id="@+id/cared_my_presciption"
@@ -141,8 +143,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.2"
             android:text="처방노트"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
 
         <ImageButton
             android:id="@+id/cared_my_report"
@@ -164,8 +167,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.2"
             android:text="건강 리포트"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

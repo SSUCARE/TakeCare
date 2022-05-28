@@ -2,6 +2,7 @@ package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -11,6 +12,8 @@ import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 
 public class FirstActivity extends AppCompatActivity {
+
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class FirstActivity extends AppCompatActivity {
                     public void onError(Throwable t) {
                         Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
 
-//                        // 로컬에서 테스트할 때 필요
+                        // 로컬에서 테스트할 때 필요
 //                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 //                        startActivity(intent);
                     }
@@ -44,6 +47,9 @@ public class FirstActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(String message, String token) {
                         Toast.makeText(getApplicationContext(), "자동 로그인 성공", Toast.LENGTH_SHORT).show();
+
+                        editor.putString("accessToken", token);
+                        editor.apply();
 
                         finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -53,7 +59,7 @@ public class FirstActivity extends AppCompatActivity {
                     public void onFailure(int error_code) {
                         Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
 
-//                        // 로컬에서 테스트할 때 필요
+                        // 로컬에서 테스트할 때 필요
 //                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 //                        startActivity(intent);
                     }

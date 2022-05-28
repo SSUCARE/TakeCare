@@ -63,12 +63,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="@id/user_name"
+            app:layout_constraintLeft_toRightOf="@id/user_name"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/img_user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.2"
-            app:layout_constraintHorizontal_bias="0.22"
+            app:layout_constraintHorizontal_bias="0.02"
             android:text=" 님"
             android:textSize="20sp"
             android:fontFamily="@font/font_normal" />

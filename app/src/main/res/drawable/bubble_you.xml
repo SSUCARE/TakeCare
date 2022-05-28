@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 내부 색깔, 앞의 두자리는 투명도, 뒤에 6자리는 rgb값 -->
+    <solid
+        android:color="#dae8f5"/>
+    <!--모서리 끝부분의 둥근정도 -->
+    <corners
+        android:radius="100dp"/>
+    <!-- padding 설정 -->
+    <padding android:left="10dip" android:top="10dip" android:right="10dip" android:bottom="10dip" />
+</shape>

@@ -1,5 +1,8 @@
 package com.ssu.takecare.Retrofit;
 
+import com.ssu.takecare.Retrofit.Comment.RequestComment;
+import com.ssu.takecare.Retrofit.Comment.ResponseComment;
+import com.ssu.takecare.Retrofit.Comment.ResponseGetComment;
 import com.ssu.takecare.Retrofit.GetReport.ResponseGetReport;
 import com.ssu.takecare.Retrofit.Info.RequestInfo;
 import com.ssu.takecare.Retrofit.Info.ResponseInfo;
@@ -54,7 +57,7 @@ public interface RetrofitAPI {
     // report 조회
     @Headers("Content-Type: application/json")
     @GET("/report/{userId}/")
-    Call<ResponseGetReport> getReportRequest(@Path("userId")int path, @Query("year")int year, @Query("month")int month, @Query("date")int date);
+    Call<ResponseGetReport> getReportRequest(@Path("userId") int path, @Query("year") int year, @Query("month") int month, @Query("date") int date);
 
     @Headers("Content-Type: application/json")
     @GET("/care")
@@ -71,4 +74,24 @@ public interface RetrofitAPI {
     @Headers("Content-Type: application/json")
     @DELETE("/care/{userId}")
     Call<Object> careDeleteRequest(@Path("userId") int path);
+
+    // comment 생성
+    @Headers("Content-Type: application/json")
+    @POST("/comment")
+    Call<ResponseComment> commentRequest(@Body RequestComment body);
+
+    // comment 불러오기
+    @Headers("Content-Type: application/json")
+    @GET("/comment/{reportId}")
+    Call<ResponseGetComment> getCommentRequest(@Path("reportId") int path);
+
+    // comment 삭제
+    @Headers("Content-Type: application/json")
+    @DELETE("/comment/{commentId}")
+    Call<Object> commentDeleteRequest(@Path("commentId") int path);
+
+    // comment 수정
+    @Headers("Content-Type: application/json")
+    @PUT("/comment/{commentId}")
+    Call<ResponseComment> commentUpdateRequest(@Path("commentId") int path, @Body String comment);
 }

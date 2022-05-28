@@ -6,6 +6,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.Retrofit.Comment.RequestComment;
+import com.ssu.takecare.Retrofit.Comment.ResponseComment;
+import com.ssu.takecare.Retrofit.Comment.ResponseGetComment;
 import com.ssu.takecare.Retrofit.GetReport.ResponseGetReport;
 import com.ssu.takecare.Retrofit.Info.RequestInfo;
 import com.ssu.takecare.Retrofit.Info.ResponseInfo;
@@ -16,6 +19,7 @@ import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
 import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
@@ -225,7 +229,7 @@ public class RetrofitManager {
 
         call.enqueue(new Callback<ResponseCare>() {
             @Override
-            public void onResponse( Call<ResponseCare> call,  Response<ResponseCare> response) {
+            public void onResponse(@NonNull Call<ResponseCare> call, @NonNull Response<ResponseCare> response) {
                 if (response.isSuccessful()) {
                     ResponseCare body = response.body();
                     Log.d("RetrofitManager_matchInfo", "onResponse : 성공, message : " + body.getMessage());
@@ -241,7 +245,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure( Call<ResponseCare> call,  Throwable t) {
+            public void onFailure(@NonNull Call<ResponseCare> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_matchInfo", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
@@ -268,7 +272,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_careRequest", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
@@ -287,7 +291,7 @@ public class RetrofitManager {
                     Log.d("RetrofitManager_careAcceptRequest", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_careAcceptRequest", "onResponse : status code is " + response.code());
                     
-                    callback.onSuccess("careAcceptRequest 호출:", body.toString());
+                    callback.onSuccess("careAcceptRequest 호출 : ", body.toString());
                 }
                 else {
                     Log.d("RetrofitManager_careAcceptRequest", "onResponse : 실패, error code : " + response.code());
@@ -297,7 +301,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(@NonNull Call<Object> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_careAcceptRequest", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
@@ -316,7 +320,7 @@ public class RetrofitManager {
                     Log.d("RetrofitManager_careDeleteRequest", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_careDeleteRequest", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess("careDeleteRequest 호출:", body.toString());
+                    callback.onSuccess("careDeleteRequest 호출 : ", body.toString());
                 }
                 else {
                     Log.d("RetrofitManager_careDeleteRequest", "onResponse : 실패, error code : " + response.code());
@@ -326,7 +330,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(@NonNull Call<Object> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_careDeleteRequest", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
@@ -345,7 +349,7 @@ public class RetrofitManager {
                     Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess("searchByEmailRequest 호출:", body.getData());
+                    callback.onSuccess("searchByEmailRequest 호출 : ", body.getData());
                 }
                 else {
                     Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 실패, error code : " + response.code());
@@ -357,6 +361,95 @@ public class RetrofitManager {
             @Override
             public void onFailure(@NonNull Call<ResponseGetUser> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_getByEmailUserInfo", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void makeComment(String content, int reportId, RetrofitCallback callback) {
+        RequestComment requestComment = new RequestComment();
+        requestComment.setContent(content);
+        requestComment.setReportId(reportId);
+
+        Call<ResponseComment> call = ApplicationClass.retrofit_api.commentRequest(requestComment);
+
+        call.enqueue(new Callback<ResponseComment>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseComment> call, @NonNull Response<ResponseComment> response) {
+                if (response.isSuccessful()) {
+                    ResponseComment body = response.body();
+                    Log.d("RetrofitManager_makeComment", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_makeComment", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess("makeComment 호출 : ", body.message);
+                } else {
+                    Log.d("RetrofitManager_makeComment", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseComment> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_makeComment", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void getComment(int reportId, RetrofitCommentCallback callback) {
+        Call<ResponseGetComment> call = ApplicationClass.retrofit_api.getCommentRequest(reportId);
+
+        call.enqueue(new Callback<ResponseGetComment>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseGetComment> call, @NonNull Response<ResponseGetComment> response) {
+                if (response.isSuccessful()) {
+                    ResponseGetComment body = response.body();
+                    Log.d("RetrofitManager_getComment", "onResponse : 성공, message : " + body.getMessage());
+                    Log.d("RetrofitManager_getComment", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess(body.message, body.data);
+                } else {
+                    Log.d("RetrofitManager_getComment", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseGetComment> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_getComment", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void deleteComment(int commentId, RetrofitCallback callback) {
+        Call<Object> call = ApplicationClass.retrofit_api.commentDeleteRequest(commentId);
+
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
+                if (response.isSuccessful()) {
+                    Object body = response.body();
+                    Log.d("RetrofitManager_deleteCommentRequest", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_deleteComentRequest", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess("deleteComment 호출 : ", body.toString());
+                }
+                else {
+                    Log.d("RetrofitManager_careDeleteRequest", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Object> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_careDeleteRequest", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }

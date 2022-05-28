@@ -300,7 +300,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     else
                                         editor.putString("role", "피보호자");
 
-//                                    // 로컬에서 테스트할때만
+                                    // 로컬에서 테스트할때만
 //                                    editor.putString("role", "보호자");
 
                                     editor.apply();
