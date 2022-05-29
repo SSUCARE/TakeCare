@@ -56,12 +56,6 @@ public class ShareInfoImageActivity extends AppCompatActivity {
     boolean fileReadPermission;
     boolean fileWritePermission;
 
-    public Bitmap loadBitmapFromView(View v) {
-        Bitmap b = Bitmap.createBitmap(160, 180, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.draw(c);
-        return b;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +66,10 @@ public class ShareInfoImageActivity extends AppCompatActivity {
         TextView sugar_txt = (TextView) view.findViewById(R.id.blood_sugar);
         TextView weight_txt = (TextView) view.findViewById(R.id.weight);
 
-//        setContentView(R.layout.activity_share_info_image);
 
         setContentView(view);
         int width=60;
         int height=80;
-        LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(width,height);
-//        view.setLayoutParams(parms);
 
         Date myDate = new Date();
         SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -131,25 +122,11 @@ public class ShareInfoImageActivity extends AppCompatActivity {
 
                         File file = new File(dir, "shareInfoImage.png");
 
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {            // things need to work on ui thread
-//                                Bitmap bitmap = loadBitmapFromView(view);
-//                                FileOutputStream fos;
-//                                try {
-//                                    fos = new FileOutputStream(file);
-//                                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
                         ImageView view2 = view.findViewById(R.id.image_share);
                         view2.buildDrawingCache();
                         Bitmap bmap = view2.getDrawingCache();
                         Canvas canvas = new Canvas(bmap);
                         canvas.drawARGB(50, 0, 0, 0);
-//                        canvas.drawColor(Color.WHITE);
 
 //                        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/SomeFont.ttf");
                         Paint textPaint = new Paint();
@@ -162,11 +139,6 @@ public class ShareInfoImageActivity extends AppCompatActivity {
 
                         view2.draw(canvas);
 
-//                        Canvas c= onDraw(bmap, pressure_txt.getText().toString(), sugar_txt.getText().toString(), weight_txt.getText().toString());
-//                        view2.draw(c);
-//
-//                        view2.buildDrawingCache();
-//                        bmap = view2.getDrawingCache();
 
                         OutputStream outputStream = null;
                         try{
@@ -192,13 +164,9 @@ public class ShareInfoImageActivity extends AppCompatActivity {
                             ActivityCompat.requestPermissions(ShareInfoImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
                         }
-                    //        //공유할 이미지 파일 불러오기
-                    //        Bitmap bitmap = BitmapFactory.decodeFile("./shareInfoImageFile");
 
-                                            // 안드로이드 상 공유할 수 있는 다른 앱을 선택하고, 이미지를 넘겨줄 수 있도록 할 수 있음.
-                                            // 이미지 공유.
-                    //        String pathURL = "shareInfoImage.jpg";
-                    //        Uri bmpUri = Uri.fromFile(file);
+                        // 안드로이드 상 공유할 수 있는 다른 앱을 선택하고, 이미지를 넘겨줄 수 있도록 할 수 있음.
+                        // 이미지 공유.
                         if(fileReadPermission && fileWritePermission) {
                             Uri imageUri = FileProvider.getUriForFile(
                                     ShareInfoImageActivity.this,
