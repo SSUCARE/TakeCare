@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#D5D5D5</color>
+    <color name="statusbar_color">#4994D0</color>
+    <color name="actionbar_color">#73BBEA</color>
+    <color name="btn_color">#7FB8DE</color>
+    <color name="tab_color">#FAFAFA</color>
+    <color name="bg_color">#EAEAEA</color>
+
+    <!--그래프랑 관련된 color -->
+    <color name="green">#2F9D27</color>
+    <color name="red">#FF0000</color>
+    <color name="sugar_chart_yellow">#FFE400</color>
+    <color name="sugar_gradeint_start">#1266FF</color>
+    <color name="sugar_gradient_end">#B4FFFF</color>
+    <color name="weight_chart">#00B4DB</color>
+
+    <!--Prescription 노트랑 관련된 color-->
+    <color name="pre_text">#8C000000</color>
+
+    <!--리포트 수치 박스 color-->
+    <color name="box_color">#1AD5D5D5</color>
+</resources>

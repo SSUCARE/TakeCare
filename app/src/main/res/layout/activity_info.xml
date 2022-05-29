@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/tab_color"
+    tools:context="com.ssu.takecare.UI.InfoActivity">
+
+    <TextView
+        android:text="개인정보을 입력해주세요"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/font_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp">
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_normal"
+                android:padding="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:text="닉네임"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="2~5자로 입력하세요"
+                android:fontFamily="@font/font_normal"
+                android:inputType="text"/>
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_normal"
+                android:padding="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:text="성별"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <RadioGroup
+                android:id="@+id/rg_gender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5sp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:text="남자"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/font_normal"
+                    android:id="@+id/rb_man"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:text="여자"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/font_normal"
+                    android:id="@+id/rb_woman"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"/>
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="30dp"
+                android:fontFamily="@font/font_normal"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="나이"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/et_age"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/font_normal"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="세"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/font_normal"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_normal"
+                android:padding="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:text="키"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+
+                <EditText
+                    android:id="@+id/et_height"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/font_normal"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cm"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/font_normal"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/tv_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_normal"
+                android:padding="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="30dp"
+                android:gravity="center"
+                android:text="역할"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
+
+            <RadioGroup
+                android:id="@+id/rg_role"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:text="보호자"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/font_normal"
+                    android:id="@+id/rb_caring"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:text="피보호자"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/font_normal"
+                    android:id="@+id/rb_cared"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/statusbar_color"/>
+            </RadioGroup>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:background="@color/btn_color"
+        android:text="등록"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:fontFamily="@font/font_normal"/>
+
+</LinearLayout>

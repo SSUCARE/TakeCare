@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid
+        android:color="@color/gray"/>
+    <corners
+        android:radius="10dp"/>
+</shape>
+    <!--그래프 액티비티에서, 혈당 혈압 체중 버튼 효과-->

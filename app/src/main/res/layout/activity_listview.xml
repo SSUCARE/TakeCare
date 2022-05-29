@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="7.5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="7.5dp">
+
+    <TextView
+        android:id="@+id/txtlistview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2dp"
+        android:paddingTop="4dp"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/btnAction"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="230dp"
+        android:layout_gravity="right"
+        android:textSize="10sp"
+        android:text="삭제" /> // 삭제, 취소, // 삭제, 수락+거절
+</LinearLayout>

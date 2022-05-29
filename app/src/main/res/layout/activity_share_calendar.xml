@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.CalendarActivity"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/actionbar_color"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일별 건강 리포트"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/font_normal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/actionbar_color"
+            android:src="@drawable/previous_white"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:id="@+id/close_btn"
+            android:onClick="back_btn_event"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionColor="@color/statusbar_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/layout_border1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/REPORT_NAME_ASSIT"
+                android:text="A"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:id="@+id/report_name"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/report_name"
+                app:layout_constraintLeft_toRightOf="@id/report_name"
+                app:layout_constraintRight_toRightOf="parent"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:text=" 님의 건강정보"
+                android:id="@+id/REPORT_NAME_ASSIT"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:id="@+id/Calendar_transfer_Report">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.15"
+                app:layout_constraintLeft_toLeftOf="@id/low_pressure_report"
+                app:layout_constraintRight_toRightOf="@id/low_pressure_report"
+                android:text="혈압"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:id="@+id/REPORT_PRESSRE"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/REPORT_PRESSRE"
+                app:layout_constraintLeft_toLeftOf="@id/before_sugar_report"
+                app:layout_constraintRight_toRightOf="@id/before_sugar_report"
+                android:text="혈당"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:id="@+id/REPORT_DIABETES"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/REPORT_PRESSRE"
+                app:layout_constraintRight_toRightOf="@id/weight_report"
+                app:layout_constraintLeft_toLeftOf="@id/weight_report"
+                android:text="몸무게"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:id="@+id/REPORT_WEIGHT"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toBottomOf="@id/REPORT_WEIGHT"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/before_sugar_report"
+                android:background="@drawable/layout_border4"
+                android:gravity="center"
+                android:text="/"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:id="@+id/low_pressure_report"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toTopOf="@id/low_pressure_report"
+                app:layout_constraintLeft_toRightOf="@id/low_pressure_report"
+                app:layout_constraintRight_toLeftOf="@id/weight_report"
+                android:text="/"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:background="@drawable/layout_border4"
+                android:id="@+id/before_sugar_report"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toTopOf="@id/low_pressure_report"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/before_sugar_report"
+                android:text="0"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                android:background="@drawable/layout_border4"
+                android:id="@+id/weight_report"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
