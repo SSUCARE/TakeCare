@@ -1,22 +1,16 @@
 package com.ssu.takecare.UI;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ShareCompat;
@@ -35,9 +28,7 @@ import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.BuildConfig;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
-import com.ssu.takecare.Retrofit.GetReport.ResponseGetReport;
 import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
-import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
