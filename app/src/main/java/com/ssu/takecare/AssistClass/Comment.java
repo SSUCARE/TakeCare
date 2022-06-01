@@ -1,4 +1,4 @@
-package com.ssu.takecare.Retrofit.Comment;
+package com.ssu.takecare.AssistClass;
 
 public class Comment {
     public boolean left;

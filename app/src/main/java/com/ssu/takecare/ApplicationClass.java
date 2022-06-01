@@ -2,7 +2,6 @@ package com.ssu.takecare;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import com.kakao.sdk.common.KakaoSdk;
 import com.ssu.takecare.Retrofit.RetrofitAPI;
 import com.ssu.takecare.Retrofit.RetrofitClient;
 import com.ssu.takecare.Retrofit.RetrofitManager;
@@ -28,9 +27,6 @@ public class ApplicationClass extends Application {
 
         retrofit_api = RetrofitClient.getClient(BASE_URL).create(RetrofitAPI.class);
         retrofit_manager = new RetrofitManager();
-
-        // Kakao SDK 초기화
-//        KakaoSdk.init(this, getResources().getString(R.string.native_key));
     }
 
     @Override

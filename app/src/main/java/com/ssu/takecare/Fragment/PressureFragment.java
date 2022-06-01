@@ -1,6 +1,7 @@
 package com.ssu.takecare.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,8 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.ssu.takecare.AssistClass.MyMarkerView;
 import com.ssu.takecare.R;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class PressureFragment extends Fragment {
 
@@ -26,51 +27,28 @@ public class PressureFragment extends Fragment {
     ArrayList<Entry> systolic_blood_pressure_list = new ArrayList<>(); //수축 혈압(최고혈압), (날짜, 최고혈압)
     ArrayList<Entry> diastolic_blood_pressure_list= new ArrayList<>(); //이완 혈압(최저 혈압),(날짜, 최저혈압)
 
+    /* 그래프에 뿌릴 최고 혈압과 최저 혈압 데이터를 생성자에서 만들어준다.. */
+    /* x값으로는 날짜를, y값으로는 혈압을 준다. */
+    public PressureFragment(List<Integer> systolic_list, List<Integer> systolic_list_date, List<Integer> diastolic_list, List<Integer> diastolic_list_date) {
+        for(int i=0; i<systolic_list.size(); i++)
+            systolic_blood_pressure_list.add(new Entry(systolic_list_date.get(i), systolic_list.get(i)));
+
+        for(int i=0; i<diastolic_list.size(); i++)
+            diastolic_blood_pressure_list.add(new Entry(diastolic_list_date.get(i),diastolic_list.get(i)));
+
+        for(int i=0; i<systolic_blood_pressure_list.size(); i++){
+            Log.d("디버그, PressureFragment->sys","x축:"+systolic_blood_pressure_list.get(i).getX()+" y축:"+systolic_blood_pressure_list.get(i).getY());
+            Log.d("디버그, PressureFragment->dys","x축:"+diastolic_blood_pressure_list.get(i).getX()+" y축:"+diastolic_blood_pressure_list.get(i).getY());
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.linechart_graph, container, false);
-        make_graph(view.findViewById(R.id.linechart), get_systolic_blood_pressure(systolic_blood_pressure_list), get_diastolic_blood_pressure(diastolic_blood_pressure_list));
-
+        make_graph(view.findViewById(R.id.linechart), systolic_blood_pressure_list, diastolic_blood_pressure_list);
         return view;
     }
-
-    /* 최고 혈압과 최저 혈압 데이터를 따로 만들어야한다. */
-    /* x값으로는 날짜를, y값으로는 혈압을 준다. */
-    /* 최고혈압 데이터 가공 */
-    public ArrayList<Entry> get_systolic_blood_pressure(ArrayList<Entry> systolic_blood_pressure_list){
-        systolic_blood_pressure_list.add(new Entry(1, 100));
-        systolic_blood_pressure_list.add(new Entry(2, 117));
-        systolic_blood_pressure_list.add(new Entry(5, 113));
-        systolic_blood_pressure_list.add(new Entry(7, 111));
-        systolic_blood_pressure_list.add(new Entry(9, 126));
-        systolic_blood_pressure_list.add(new Entry(11, 142));
-        systolic_blood_pressure_list.add(new Entry(13, 131));
-        systolic_blood_pressure_list.add(new Entry(15, 121));
-        systolic_blood_pressure_list.add(new Entry(17, 110));
-        systolic_blood_pressure_list.add(new Entry(21, 115));
-        systolic_blood_pressure_list.add(new Entry(24, 120));
-
-        return systolic_blood_pressure_list;
-    }
-
-    /* 최저혈압 데이터 가공 */
-    public ArrayList<Entry> get_diastolic_blood_pressure(ArrayList<Entry> diastolic_blood_pressure_list){
-        diastolic_blood_pressure_list.add(new Entry(1, 70));
-        diastolic_blood_pressure_list.add(new Entry(2, 71));
-        diastolic_blood_pressure_list.add(new Entry(5, 72));
-        diastolic_blood_pressure_list.add(new Entry(7, 73));
-        diastolic_blood_pressure_list.add(new Entry(9, 74));
-        diastolic_blood_pressure_list.add(new Entry(11, 76));
-        diastolic_blood_pressure_list.add(new Entry(13, 77));
-        diastolic_blood_pressure_list.add(new Entry(15, 78));
-        diastolic_blood_pressure_list.add(new Entry(17, 92));
-        diastolic_blood_pressure_list.add(new Entry(21, 77));
-        diastolic_blood_pressure_list.add(new Entry(24, 79));
-
-        return diastolic_blood_pressure_list;
-    }
-
 
     /* LineChart 만들기 */
     public void make_graph(LineChart lineChart,ArrayList<Entry> systolic_blood_pressure_list,ArrayList<Entry> diastolic_blood_pressure_list){

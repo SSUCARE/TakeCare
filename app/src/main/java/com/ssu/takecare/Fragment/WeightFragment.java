@@ -1,6 +1,7 @@
 package com.ssu.takecare.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,28 +18,28 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.ssu.takecare.R;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WeightFragment extends Fragment {
 
     /* Entry는 (x축,y축)형태이며 MPAndroidChart라이브러리에서 지원하는 자료구조이다. */
     ArrayList<Entry> weight_list = new ArrayList<>(); //몸무게, (날짜, 몸무게)
 
+    public WeightFragment(List<Integer> weight_list, List<Integer> weight_list_date){
+        for(int i=0; i<weight_list.size(); i++)
+            this.weight_list.add(new Entry(weight_list_date.get(i), weight_list.get(i)));
+
+        for(int i=0; i<this.weight_list.size(); i++)
+            Log.d("디버그,WeightFragment->weights:","x축:"+this.weight_list.get(i).getX()+" y축:"+this.weight_list.get(i).getY());
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.linechart_graph, container, false);
-        make_graph(view.findViewById(R.id.linechart),get_weight(weight_list));
+        make_graph(view.findViewById(R.id.linechart), weight_list);
 
         return view;
-    }
-
-    /* 몸무게 데이터 가공하기: 첫번재로는 날짜, 두번째로는 몸무게 넣기 */
-    public ArrayList<Entry> get_weight(ArrayList<Entry> weight_list){
-        weight_list.add(new Entry(3, 76));
-        weight_list.add(new Entry(9, 74));
-        weight_list.add(new Entry(15, 75));
-        weight_list.add(new Entry(24, 77));
-        return weight_list;
     }
 
     /* LineChart 만들기 */
@@ -96,9 +97,13 @@ public class WeightFragment extends Fragment {
 
         /*왼쪽 y축값 표현 방법: list.get(0)의 값이 중앙에 오도록 그래프 구현*/
         //왼쪽 y축 라벨 최소값(해당 달의 처음 입력된 값-10을 최소값으로 두기, 단 짝수로)
-        int YLabelMin=((int)weight_list.get(0).getY())-10;
-        if(weight_list.get(0).getY()%2!=0)
-            YLabelMin=+1;
+        int YLabelMin=60;
+        if(weight_list.size()!=0){
+            YLabelMin=((int)weight_list.get(0).getY())-10;
+            if(weight_list.get(0).getY()%2!=0)
+                YLabelMin=+1;
+        }
+
         yAxisLeft.setAxisMinimum(YLabelMin);
 
         //왼쪽 y축 라벨 최대값(최소값과 20만큼 차이가 나도록하기)

@@ -20,6 +20,7 @@ import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentIdCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
@@ -224,6 +225,34 @@ public class RetrofitManager {
         });
     }
 
+    // 월별 리포트 조회
+    public void getReport_Month(int path, int year, int month, RetrofitReportCallback callback) {
+        Call<ResponseGetReport> call = ApplicationClass.retrofit_api.getReportRequest_Month(path, year, month);
+
+        call.enqueue(new Callback<ResponseGetReport>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseGetReport> call, @NonNull Response<ResponseGetReport> response) {
+                if (response.isSuccessful()) {
+                    ResponseGetReport body = response.body();
+                    Log.d("RetrofitManager_getReport_Month", "onResponse : 성공, message : " + body.getMessage());
+                    Log.d("RetrofitManager_getReport_Month", "onResponse : status code is " + response.code());
+                    callback.onSuccess(body.message, body.getData());
+
+                }
+                else {
+                    Log.d("디버그,RetrofitManager_getReport_Month", "onResponse : 실패, error code : " + response.code());
+                    Log.d("디버그,RetrofitManager_getReport_Month","메세지:"+response.message());
+                    callback.onFailure(response.code());
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ResponseGetReport> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_getReport_Month", "onFailure : " + t.getLocalizedMessage());
+                callback.onError(t);
+            }
+        });
+    }
+
     public void getCareDBMatchInfo(RetrofitCareCallback callback) {
         Call<ResponseCare> call = ApplicationClass.retrofit_api.getCareDBRequest();
 
@@ -367,7 +396,7 @@ public class RetrofitManager {
         });
     }
 
-    public void makeComment(String content, int reportId, RetrofitCallback callback) {
+    public void makeComment(String content, int reportId, RetrofitCommentIdCallback callback) {
         RequestComment requestComment = new RequestComment();
         requestComment.setContent(content);
         requestComment.setReportId(reportId);
@@ -382,7 +411,7 @@ public class RetrofitManager {
                     Log.d("RetrofitManager_makeComment", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_makeComment", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess("makeComment 호출 : ", body.message);
+                    callback.onSuccess(body.message, body.commentId);
                 } else {
                     Log.d("RetrofitManager_makeComment", "onResponse : 실패, error code : " + response.code());
 

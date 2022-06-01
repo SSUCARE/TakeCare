@@ -67,60 +67,34 @@
             android:textColor="@color/black"
             android:padding="10dp"
             android:fontFamily="@font/font_normal" />
+    </LinearLayout>
 
-        <RelativeLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:text="신규 회원가입"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/font_normal"/>
 
-            <ImageView
-                android:id="@+id/btn_google"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/login_google" />
-
-            <ImageView
-                android:id="@+id/btn_kakao"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:scaleType="fitXY"
-                android:layout_below="@+id/btn_google"
-                android:src="@drawable/login_kakao" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_find"
+            android:text="비밀번호 찾기"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:id="@+id/tv_register"
-                android:text="신규 회원가입"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/font_normal"/>
-
-            <TextView
-                android:id="@+id/tv_find"
-                android:text="비밀번호 찾기"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/font_normal"/>
-
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/font_normal"/>
     </LinearLayout>
-
 </LinearLayout>

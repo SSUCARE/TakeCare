@@ -38,10 +38,6 @@ public class FirstActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable t) {
                         Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-
-                        // 로컬에서 테스트할 때 필요
-//                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                        startActivity(intent);
                     }
 
                     @Override
@@ -58,10 +54,6 @@ public class FirstActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(int error_code) {
                         Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
-
-                        // 로컬에서 테스트할 때 필요
-//                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                        startActivity(intent);
                     }
                 });
             }

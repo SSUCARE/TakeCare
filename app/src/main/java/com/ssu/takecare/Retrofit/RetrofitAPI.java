@@ -59,6 +59,11 @@ public interface RetrofitAPI {
     @GET("/report/{userId}/")
     Call<ResponseGetReport> getReportRequest(@Path("userId") int path, @Query("year") int year, @Query("month") int month, @Query("date") int date);
 
+    // 월별 report 조회
+    @Headers("Content-Type: application/json")
+    @GET("/report/{userId}/")
+    Call<ResponseGetReport> getReportRequest_Month(@Path("userId")int path, @Query("year")int year, @Query("month")int month);
+
     @Headers("Content-Type: application/json")
     @GET("/care")
     Call<ResponseCare> getCareDBRequest();

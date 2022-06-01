@@ -8,6 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.ssu.takecare.AssistClass.ViewPagerAdapter;
 import com.ssu.takecare.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,6 +29,11 @@ public class HomeFragment extends Fragment {
 
         TextView today_date = view.findViewById(R.id.tv_date);
         today_date.setText(date);
+
+        ViewPager viewPager=(ViewPager)view.findViewById(R.id.viewPager);
+
+        ViewPagerAdapter adapter=new ViewPagerAdapter(getActivity());
+        viewPager.setAdapter(adapter);
 
         return view;
     }

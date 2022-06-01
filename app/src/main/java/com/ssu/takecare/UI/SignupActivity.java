@@ -2,9 +2,12 @@ package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
+import com.ssu.takecare.Runnable.SignupRunnable;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,6 +27,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button buttonRegister;
     private TextView textViewLogin;
+
+    Handler Handler_Signup;
+    ProgressDialog Circle_Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,25 +80,25 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 dialog.dismiss();
             }
             else {
-                ApplicationClass.retrofit_manager.signup(email_str, password_str, new RetrofitCallback() {
-                    @Override
-                    public void onError(Throwable t) {
-                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-                    }
+                //스레드기능
+                Circle_Dialog = new ProgressDialog(this);
+                Circle_Dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                Circle_Dialog.setMessage("로딩중입니다...");
+                Circle_Dialog.show();
 
+                Handler_Signup = new Handler() {
                     @Override
-                    public void onSuccess(String message, String email) {
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    public void handleMessage(Message msg) {
+                        if (msg.arg1 == 1) {
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            finish();
+                        }
+                        Circle_Dialog.dismiss();
                     }
+                };
 
-                    @Override
-                    public void onFailure(int error_code) {
-                        Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Thread st=new Thread(new SignupRunnable(Handler_Signup,getApplicationContext(),email_str,password_str));
+                st.start();
             }
         }
         else if (view == textViewLogin) {

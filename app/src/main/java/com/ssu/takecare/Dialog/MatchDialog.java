@@ -16,8 +16,11 @@ import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
 public class MatchDialog {
-    Integer userId;
 
+    private Integer userId;
+    private String userName;
+    private String userGender;
+    private Integer userAge;
     private EditText txt;
     private Button btn;
     private Activity activity;
@@ -52,7 +55,7 @@ public class MatchDialog {
             public void onClick(View view) {
                 String email= txt.getText().toString();
 
-                if (email != null || !email.equals("")) {
+                if (!email.equals("")) {
                     ApplicationClass.retrofit_manager.getByEmailUserInfo(email, new RetrofitUserInfoCallback() {
 
                         @Override
@@ -62,22 +65,17 @@ public class MatchDialog {
                         @Override
                         public void onSuccess(String message, DataResponseGetUser data) {
                             userId = data.getId();
-                            Log.d("MatchDialog : ", "userId : " + userId.toString());
-                            ApplicationClass.retrofit_manager.careRequest(userId, new RetrofitCallback() {
+                            userName = data.getName();
+                            userGender = data.getGender();
+                            userAge = data.getAge();
 
-                                @Override
-                                public void onError(Throwable t) {
-                                }
+                            Log.d("MatchDialog : ", "userId : " + userId);
+                            Log.d("MatchDialog : ", "userName : " + userName);
+                            Log.d("MatchDialog : ", "userGender : " + userGender);
+                            Log.d("MatchDialog : ", "userAge : " + userAge);
 
-                                @Override
-                                public void onSuccess(String message, String data) {
-                                    Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onFailure(int error_code) {
-                                }
-                            });
+                            MatchFindUserDialog dialog2 = new MatchFindUserDialog(activity, userId, userName, userGender, userAge);
+                            dialog2.showDialog();
                         }
 
                         @Override
@@ -86,7 +84,7 @@ public class MatchDialog {
                     });
                 }
 
-                dialog.dismiss();
+                dismiss();
             }
         });
     }

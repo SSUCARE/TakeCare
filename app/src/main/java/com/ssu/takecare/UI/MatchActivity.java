@@ -12,10 +12,8 @@ import com.ssu.takecare.AssistClass.ListView2MatchAdapter;
 import com.ssu.takecare.AssistClass.ListViewMatchAdapter;
 import com.ssu.takecare.Dialog.MatchDialog;
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
-import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +29,6 @@ public class MatchActivity extends AppCompatActivity {
     private ListView2MatchAdapter mAdapter2;
 
     private String role;
-    private Integer userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +41,7 @@ public class MatchActivity extends AppCompatActivity {
         Button plus= findViewById(R.id.plus_icon_button);
         plus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dialog = new MatchDialog( MatchActivity.this);
+                dialog = new MatchDialog(MatchActivity.this);
                 dialog.showDialog();
             }
         });
@@ -64,6 +61,8 @@ public class MatchActivity extends AppCompatActivity {
                     Log.d("MatchActivity", "보호자입니다");
 
                     int size = data.getData().size();
+                    Log.d("MatchActivity", "size : " + size);
+
                     for (int i = 0; i < size; i++) {
                         // status = PENDING, ACCEPTED
                         // user name
@@ -76,12 +75,12 @@ public class MatchActivity extends AppCompatActivity {
                     }
 
                     mListview = (ListView) findViewById(R.id.list_match_waiting);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData, "PENDING"); //취소
+                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData, "PENDING"); // 취소
                     mListview.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
 
                     mListview2 = (ListView) findViewById(R.id.list_match_connected);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED"); //석제
+                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED"); // 삭제
                     mListview2.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }

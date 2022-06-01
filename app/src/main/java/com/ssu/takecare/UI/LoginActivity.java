@@ -1,49 +1,23 @@
 package com.ssu.takecare.UI;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.entity.UrlEncodedFormEntity;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpPost;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.DefaultHttpClient;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.message.BasicNameValuePair;
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EntityUtils;
-import com.kakao.sdk.auth.model.OAuthToken;
-import com.kakao.sdk.user.UserApiClient;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.Task;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function2;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,9 +25,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private long backKeyPressedTime = 0;
 
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
-
-    private GoogleSignInClient googleSignInClient;
-    private static final int REQ_SIGN_GOOGLE = 1234;         // 구글 로그인 결과 코드
 
     private EditText email_login;
     private EditText password_login;
@@ -76,139 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
         textViewFind.setOnClickListener(this);
-
-        /*
-        // 구글 로그인
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_id))
-                .requestEmail()
-                .build();
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        googleSignInClient.silentSignIn().addOnCompleteListener(this, new OnCompleteListener<GoogleSignInAccount>() {
-            @Override
-            public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
-                handleSignInResult(task);
-            }
-        });
-
-        ImageView googleLogin = findViewById(R.id.btn_google);
-        googleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editor.putInt("flag_login", 2);
-                editor.apply();
-
-                Intent intent = googleSignInClient.getSignInIntent();
-                startActivityForResult(intent, REQ_SIGN_GOOGLE);
-            }
-        });
-
-        Function2<OAuthToken, Throwable, Unit> callback = (oAuthToken, throwable) -> {
-            if (oAuthToken != null) {
-                Log.i(TAG, "카카오계정으로 로그인 성공 : " + oAuthToken.getAccessToken());
-            }
-
-            if (throwable != null) {
-                Log.e(TAG, "카카오계정으로 로그인 실패 : " + throwable.getLocalizedMessage());
-            }
-
-            return null;
-        };
-
-        ImageView kakaoLogin = findViewById(R.id.btn_kakao);
-        kakaoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editor.putInt("flag_login", 3);
-                editor.apply();
-
-                // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-                if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(LoginActivity.this)) {
-                    UserApiClient.getInstance().loginWithKakaoTalk(LoginActivity.this, (oAuthToken, error) -> {
-                        if (error != null) {
-                            Log.e(TAG, "카카오톡으로 로그인 실패 : ", error);
-
-                            // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
-                            UserApiClient.getInstance().loginWithKakaoAccount(LoginActivity.this, callback);
-                        }
-                        else if (oAuthToken != null) {
-                            Log.i(TAG, "카카오톡으로 로그인 성공 : " + oAuthToken.getAccessToken());
-                        }
-
-                        return null;
-                    });
-                }
-                else {
-                    UserApiClient.getInstance().loginWithKakaoAccount(LoginActivity.this, callback);
-                }
-            }
-        });
-        */
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//        updateUI(account);
-    }
-
-//    private void updateUI(GoogleSignInAccount account) {
-//        if (account != null) {
-//            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {   // 구글 로그인 인증을 요청했을 때 결과값을 되돌려 받는 곳
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == REQ_SIGN_GOOGLE) {
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            handleSignInResult(task);
-//        }
-//    }
-//
-//    private void handleSignInResult(@NonNull Task<GoogleSignInAccount> completedTask) {
-//        try {
-//            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-//            String idToken = account.getIdToken();
-//
-//            HttpClient httpClient = new DefaultHttpClient();
-//            HttpPost httpPost = new HttpPost("https://yourbackend.example.com/tokensignin");
-//
-//            try {
-//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-//                nameValuePairs.add(new BasicNameValuePair("idToken", idToken));
-//                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//
-//                HttpResponse response = httpClient.execute(httpPost);
-//                int statusCode = response.getStatusLine().getStatusCode();
-//                final String responseBody = EntityUtils.toString(response.getEntity());
-//                Log.i("handleSignInResult", "Signed in as: " + responseBody);
-//            }
-//            catch (IOException e) {
-//                Log.e("handleSignInResult", "Error sending ID token to backend.", e);
-//            }
-//
-//            updateUI(account);
-//        } catch (ApiException e) {
-//            Log.w("handleSignInResult", "handleSignInResult failed : code = " + e);
-//            updateUI(null);
-//        }
-//    }
-
-    //화면 터치 시 키보드 내려감
+    // 화면 터치 시 키보드 내려감
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();
@@ -242,9 +83,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == buttonLogin) {
-            editor.putInt("flag_login", 1);
-            editor.apply();
-
             String email_str = email_login.getText().toString();
             String password_str = password_login.getText().toString();
 
@@ -281,8 +119,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             @Override
                             public void onSuccess(String message, DataResponseGetUser data) {
-                                Toast.makeText(getApplicationContext(), "개인정보 저장완료", Toast.LENGTH_SHORT).show();
-
                                 if (data.getName() != null || data.getGender() != null || data.getAge() != null || data.getHeight() != null || data.getRole() != null) {
                                     editor.putInt("userId", data.getId());
                                     editor.putString("name", data.getName());
@@ -294,19 +130,74 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     else
                                         editor.putString("gender", "여성");
 
-                                    // 실제 서버에서 사용
                                     if (data.getRole().equals("ROLE_CARER"))
                                         editor.putString("role", "보호자");
                                     else
                                         editor.putString("role", "피보호자");
 
-                                    // 로컬에서 테스트할때만
-//                                    editor.putString("role", "보호자");
-
                                     editor.apply();
 
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                                    // 보호자이면 매칭된 사용자 정보 불러오기
+//                                    if (data.getRole().equals("ROLE_CARER")) {
+//                                        ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
+//                                            @Override
+//                                            public void onError(Throwable t) {
+//                                                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+//                                                Log.d(TAG, "에러 : " + t);
+//                                            }
+//
+//                                            @Override
+//                                            public void onSuccess(String message, ResponseCare data) {
+//                                                ArrayList<DataResponseCare> list = data.getData();
+//
+//                                                editor.putInt("match_num", list.size());
+//                                                Log.d(TAG, "맵핑된 수 : " + list.size());
+//
+//                                                JSONArray array_name = new JSONArray();
+//                                                JSONArray array_careId = new JSONArray();
+//                                                JSONArray array_userId = new JSONArray();
+//
+//                                                for (int i = 0; i < list.size(); i++) {
+//                                                    Log.d(TAG, "i : " + i + ", status : " + list.get(i).getStatus());
+//
+//                                                    if (list.get(i).getStatus().equals("ACCEPTED")) {
+//                                                        Log.d(TAG, "이름 : " + list.get(i).getUserName() + ", careId : " + list.get(i).getId() + ", userId : " + list.get(i).getUserId());
+//                                                        array_name.put(list.get(i).getUserName());
+//                                                        array_careId.put(list.get(i).getId());
+//                                                        array_userId.put(list.get(i).getUserId());
+//                                                    }
+//
+//                                                    if (!list.isEmpty()) {
+//                                                        editor.putString("match_name", array_name.toString());
+//                                                        editor.putString("match_careId", array_careId.toString());
+//                                                        editor.putString("match_userId", array_userId.toString());
+//                                                    } else {
+//                                                        editor.putString("match_name", null);
+//                                                        editor.putString("match_careId", null);
+//                                                        editor.putString("match_userId", null);
+//                                                    }
+//                                                }
+//
+//                                                editor.apply();
+//
+//                                                finish();
+//                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                                            }
+//
+//                                            @Override
+//                                            public void onFailure(int error_code) {
+//                                                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+//                                                Log.d(TAG, "실패 : " + error_code);
+//                                            }
+//                                        });
+//                                    }
+//                                    else {
+//                                        finish();
+//                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                                    }
                                 }
                                 else {
                                     finish();
@@ -341,9 +232,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void setPreference(String flag, String value) {
         editor.putString(flag, value);
         editor.apply();
-    }
-
-    public String getPreference(String flag) {
-        return ApplicationClass.sharedPreferences.getString(flag, "");
     }
 }

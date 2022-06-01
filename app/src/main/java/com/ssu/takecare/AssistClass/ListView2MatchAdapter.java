@@ -52,7 +52,6 @@ public class ListView2MatchAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.activity_listview2, parent, false);
 
-
         // get the reference of textView and button
         TextView txtListTitle = (TextView) view.findViewById(R.id.txtlistview2);
         Button btnAction = (Button) view.findViewById(R.id.btnAction1);
@@ -90,7 +89,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
         // Click listener of button
         btnAction2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 // 거절
                 ApplicationClass.retrofit_manager.careDeleteRequest(userId, new RetrofitCallback() {
 
@@ -100,7 +99,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
-                        Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), data, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

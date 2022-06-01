@@ -33,7 +33,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="5dp"
             android:id="@+id/close_btn"
             android:onClick="back_btn_event"/>
@@ -66,26 +66,26 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/REPORT_NAME_ASSIT"
-                android:text="A"
+                app:layout_constraintRight_toLeftOf="@id/calendar_name_assist"
+                android:text="____"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                android:id="@+id/report_name"/>
+                android:id="@+id/calendar_name"/>
 
             <TextView
+                android:id="@+id/calendar_name_assist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/report_name"
-                app:layout_constraintLeft_toRightOf="@id/report_name"
-                app:layout_constraintRight_toRightOf="parent"
-                android:textColor="@color/black"
-                android:textSize="20sp"
                 android:fontFamily="@font/font_normal"
                 android:text=" 님의 건강정보"
-                android:id="@+id/REPORT_NAME_ASSIT"/>
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toRightOf="@id/calendar_name"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/calendar_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,76 +99,105 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.15"
-                app:layout_constraintLeft_toLeftOf="@id/low_pressure_report"
-                app:layout_constraintRight_toRightOf="@id/low_pressure_report"
+                app:layout_constraintVertical_bias="0.1"
+                app:layout_constraintLeft_toLeftOf="@id/high_pressure_calendar"
+                app:layout_constraintRight_toRightOf="@id/high_pressure_calendar"
                 android:text="혈압"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/font_normal"
-                android:id="@+id/REPORT_PRESSRE"/>
+                android:id="@+id/REPORT_PRESSURE"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/REPORT_PRESSRE"
-                app:layout_constraintLeft_toLeftOf="@id/before_sugar_report"
-                app:layout_constraintRight_toRightOf="@id/before_sugar_report"
+                app:layout_constraintTop_toTopOf="@id/REPORT_PRESSURE"
+                app:layout_constraintLeft_toLeftOf="@id/before_sugar_calendar"
+                app:layout_constraintRight_toRightOf="@id/before_sugar_calendar"
                 android:text="혈당"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/font_normal"
                 android:id="@+id/REPORT_DIABETES"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/REPORT_PRESSRE"
-                app:layout_constraintRight_toRightOf="@id/weight_report"
-                app:layout_constraintLeft_toLeftOf="@id/weight_report"
-                android:text="몸무게"
-                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="@id/REPORT_PRESSURE"
+                app:layout_constraintRight_toRightOf="@id/weight_calendar"
+                app:layout_constraintLeft_toLeftOf="@id/weight_calendar"
+                android:text="체중"
+                android:textSize="18sp"
                 android:fontFamily="@font/font_normal"
                 android:id="@+id/REPORT_WEIGHT"/>
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                app:layout_constraintTop_toBottomOf="@id/REPORT_WEIGHT"
+                app:layout_constraintTop_toBottomOf="@id/REPORT_PRESSURE"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.3"
+                app:layout_constraintVertical_bias="0.1"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/before_sugar_report"
+                app:layout_constraintRight_toLeftOf="@id/before_sugar_calendar"
                 android:background="@drawable/layout_border4"
                 android:gravity="center"
-                android:text="/"
-                android:textSize="20sp"
+                android:text="____ mmHg"
+                android:textSize="16sp"
                 android:fontFamily="@font/font_normal"
-                android:id="@+id/low_pressure_report"/>
+                android:id="@+id/high_pressure_calendar"/>
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="@id/low_pressure_report"
-                app:layout_constraintLeft_toRightOf="@id/low_pressure_report"
-                app:layout_constraintRight_toLeftOf="@id/weight_report"
-                android:text="/"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:fontFamily="@font/font_normal"
+                app:layout_constraintTop_toBottomOf="@id/high_pressure_calendar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/after_sugar_calendar"
                 android:background="@drawable/layout_border4"
-                android:id="@+id/before_sugar_report"/>
+                android:gravity="center"
+                android:text="____ mmHg"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_normal"
+                android:id="@+id/low_pressure_calendar"/>
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="@id/low_pressure_report"
+                app:layout_constraintTop_toTopOf="@id/high_pressure_calendar"
+                app:layout_constraintLeft_toRightOf="@id/high_pressure_calendar"
+                app:layout_constraintRight_toLeftOf="@id/weight_calendar"
+                android:text="____ mg/dL"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_normal"
+                android:background="@drawable/layout_border4"
+                android:id="@+id/before_sugar_calendar"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toBottomOf="@id/before_sugar_calendar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/low_pressure_calendar"
+                app:layout_constraintRight_toLeftOf="@id/weight_calendar"
+                android:text="____ mg/dL"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_normal"
+                android:background="@drawable/layout_border4"
+                android:id="@+id/after_sugar_calendar"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toTopOf="@id/high_pressure_calendar"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/before_sugar_report"
-                android:text="0"
+                app:layout_constraintLeft_toRightOf="@id/before_sugar_calendar"
+                android:text="____ kg"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:fontFamily="@font/font_normal"
                 android:background="@drawable/layout_border4"
-                android:id="@+id/weight_report"/>
+                android:id="@+id/weight_calendar"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </LinearLayout>

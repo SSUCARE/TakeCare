@@ -55,7 +55,6 @@ public class ListViewMatchAdapter extends BaseAdapter {
         TextView txtListTitle = (TextView) view.findViewById(R.id.txtlistview);
         Button btnAction = (Button) view.findViewById(R.id.btnAction);
 
-
         String userName= getKeyByIndex(arrData, position);
         userId = getElementByIndex(arrData, position);
 
@@ -64,14 +63,14 @@ public class ListViewMatchAdapter extends BaseAdapter {
         if (acceptedOrNot.equals("PENDING")) {
             btnAction.setText("취소");
         }
-        else if (acceptedOrNot.equals("ACCEPTED")){
+        else if (acceptedOrNot.equals("ACCEPTED")) {
             btnAction.setText("삭제");
         }
 
         // Click listener of button
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 ApplicationClass.retrofit_manager.careDeleteRequest(userId, new RetrofitCallback() {
 
                     @Override
@@ -80,7 +79,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
-                        Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), data, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

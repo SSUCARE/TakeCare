@@ -1,4 +1,4 @@
-package com.ssu.takecare.Retrofit.Comment;
+package com.ssu.takecare.AssistClass;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -6,20 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ssu.takecare.AssistClass.Comment;
 import com.ssu.takecare.R;
-
 import java.util.ArrayList;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
 
-    private TextView comment;
+    private TextView name, comment;
     private ArrayList<Comment> commentList = new ArrayList<>();
     private ArrayList<Integer> commentIdList = new ArrayList<>();
-    private ArrayList<String> commentAuthorList = new ArrayList<>();
+    private ArrayList<String> AuthorNameList = new ArrayList<>();
     private LinearLayout messageContainer;
 
     public CommentAdapter(Context context, int textViewResourceId) {
@@ -29,6 +28,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     public void remove(int position) {
         commentList.remove(position);
         commentIdList.remove(position);
+        AuthorNameList.remove(position);
     }
 
     public void addCommentId(int commentId) {
@@ -37,6 +37,10 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
     public int getCommentId(int position) {
         return commentIdList.get(position);
+    }
+
+    public void addAuthorNameList(String name) {
+        AuthorNameList.add(name);
     }
 
     @Override
@@ -65,11 +69,13 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
             row = inflater.inflate(R.layout.activity_comment, parent, false);
         }
 
+        name = (TextView) row.findViewById(R.id.tv_comment_name);
         comment = (TextView) row.findViewById(R.id.tv_comment);
         messageContainer = (LinearLayout) row.findViewById(R.id.your_message_container);
 
         // ArrayList에 들어 있는 채팅 문자열을 읽어들여 inflater를 이용해서 생성한 View에 ChatMessage를 삽입한다.
         Comment commentObj = getItem(position);
+        name.setText(AuthorNameList.get(position));
         comment.setText(commentObj.message);
 
         // 경우에 따라 두 가지로 나눠 나타낼 수 있다.

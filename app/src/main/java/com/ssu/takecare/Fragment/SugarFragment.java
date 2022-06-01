@@ -2,6 +2,7 @@ package com.ssu.takecare.Fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,29 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.ssu.takecare.AssistClass.MyMarkerView;
+import com.ssu.takecare.AssistClass.SugarLevelsGraph;
 import com.ssu.takecare.R;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SugarFragment extends Fragment {
+
+    ArrayList<Entry>data=new ArrayList<>();
+
+    /* 혈당 데이터: 첫번째는 날짜와 관련된 값, 두번째에는 혈당 값을 넣는다. */
+    public SugarFragment(List<SugarLevelsGraph> sugarlevels_list, List<Integer> sugarlevels_list_date){
+        for(int i=0; i<sugarlevels_list.size(); i++){
+            int sugar_size = sugarlevels_list.get(i).getSugarLevels_list().size();
+            Log.d("디버그, SugarFragment","sugar_size:"+sugar_size);
+            float divide=(1/(float)sugar_size);
+            Log.d("디버그, SugarFragment","divide:"+divide);
+            for(int j=0; j<sugar_size; j++){
+                data.add(new Entry((float)sugarlevels_list_date.get(i)+(divide*j),sugarlevels_list.get(i).getSugarLevels_list().get(j)));
+            }
+        }
+        for(int i=0; i<data.size(); i++)
+            Log.d("디버그, SugarFragment->sugar","x축:"+data.get(i).getX()+"y축:"+data.get(i).getY());
+    }
 
     @Nullable
     @Override
@@ -34,14 +54,6 @@ public class SugarFragment extends Fragment {
     void make_graph(LineChart lineChart){
         lineChart.invalidate();
         lineChart.clear();
-
-        /* 혈당 데이터: 첫번째는 날짜와 관련된 값, 두번째에는 혈당 값을 넣는다. */
-        ArrayList<Entry>data=new ArrayList<>();
-        data.add(new Entry(3,120));
-        data.add(new Entry(3.1f,130));
-        data.add(new Entry(3.5f,130));
-        data.add(new Entry(4,140));
-
 
         //LineDataSet에 데이터를 넣어서 직선 구현하기
         LineDataSet lineDataSet = new LineDataSet(data, "혈당");

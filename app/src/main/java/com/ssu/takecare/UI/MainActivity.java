@@ -8,14 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.kakao.sdk.user.UserApiClient;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Dialog.PressureDialog;
 import com.ssu.takecare.Dialog.SugarDialog;
@@ -79,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         pDialog.setPressureDialogListener(new PressureDialog.PressureDialogListener() {
             @Override
             public void okClicked(String high_pressure, String low_pressure) {
-                hp_input = findViewById(R.id.high_pressure);
-                lp_input = findViewById(R.id.low_pressure);
+                hp_input = findViewById(R.id.input_high_pressure);
+                lp_input = findViewById(R.id.input_low_pressure);
 
                 if (!high_pressure.equals(""))
                     hp_input.setText(high_pressure);
@@ -98,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
             public void okClicked(String before_sugar, String after_sugar) {
-                bs_input = findViewById(R.id.before_sugar);
-                as_input = findViewById(R.id.after_sugar);
+                bs_input = findViewById(R.id.input_before_sugar);
+                as_input = findViewById(R.id.input_after_sugar);
 
                 if (!before_sugar.equals(""))
                     bs_input.setText(before_sugar);
@@ -117,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         wDialog.setWeightDialogListener(new WeightDialog.WeightDialogListener() {
             @Override
             public void okClicked(String weight) {
-                w_input = findViewById(R.id.weight);
+                w_input = findViewById(R.id.input_weight);
 
                 if (!weight.equals(""))
                     w_input.setText(weight);
@@ -128,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makeReport(View view) {
-        hp_input = findViewById(R.id.high_pressure);
-        lp_input = findViewById(R.id.low_pressure);
-        bs_input = findViewById(R.id.before_sugar);
-        as_input = findViewById(R.id.after_sugar);
-        w_input = findViewById(R.id.weight);
+        hp_input = findViewById(R.id.input_high_pressure);
+        lp_input = findViewById(R.id.input_low_pressure);
+        bs_input = findViewById(R.id.input_before_sugar);
+        as_input = findViewById(R.id.input_after_sugar);
+        w_input = findViewById(R.id.input_weight);
 
         int systolic = 0;
         int diastolic = 0;
@@ -185,90 +178,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
-        int flag_login = ApplicationClass.sharedPreferences.getInt("flag_login",0);
-        switch (flag_login) {
-            case 1 :
-                setPreference("email_login", "");
-                setPreference("password_login", "");
-                setPreference("accessToken", "");
+        clearInfo();
 
-                clearInfo();
-
-                finish();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                break;
-            case 2 :
-                clearInfo();
-
-                GoogleSignInClient gsc = GoogleSignIn.getClient(getApplicationContext(), GoogleSignInOptions.DEFAULT_SIGN_IN);
-
-                gsc.signOut().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG,"SignOut : Google Logout");
-                    }
-                });
-
-                gsc.revokeAccess().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG,"RevokeAccess : Google Logout");
-                    }
-                });
-
-                finish();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                break;
-            case 3 :
-                clearInfo();
-
-                UserApiClient.getInstance().logout(error -> {
-                    if (error != null) {
-                        Log.e(TAG, "카카로 로그아웃 실패, SDK에서 토큰 삭제됨", error);
-                    }
-                    else {
-                        Log.i(TAG, "카카오 로그아웃 성공, SDK에서 토큰 삭제됨");
-                    }
-
-                    return null;
-                });
-
-                // 연결 끊기
-                UserApiClient.getInstance().unlink(error -> {
-                    if (error != null) {
-                        Log.e(TAG, "카카오 연결 끊기 실패", error);
-                    }
-                    else {
-                        Log.i(TAG, "카카오 연결 끊기 성공. SDK에서 토큰 삭제 됨");
-                    }
-
-                    return null;
-                });
-
-                finish();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                break;
-            default:
-                break;
-        }
+        finish();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
 
     public void clearInfo() {
+        editor.putString("email_login", "");
+        editor.putString("password_login", "");
+        editor.putString("accessToken", "");
         editor.putInt("userId", 0);
         editor.putString("name", "");
         editor.putString("gender", "");
         editor.putInt("age", 0);
         editor.putInt("height", 0);
         editor.putString("role", "");
-        editor.putInt("flag_login", 0);
+
         editor.apply();
     }
 
     public void click_event(View view) {
-        List<String> UserName = new ArrayList<>();
-        List<Integer> Id = new ArrayList<>();
-        List<Integer> userId = new ArrayList<>();
-
         switch (view.getId()) {
             case R.id.tab_btn1:
                 getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
@@ -287,21 +217,23 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(String message, ResponseCare data) {
+                            List<String> UserName = new ArrayList<>();
+                            List<Integer> UserId = new ArrayList<>();
+
                             List<DataResponseCare> list = data.getData();
                             Log.d(TAG,"맵핑된 수 : " + list.size());
 
                             for (int i = 0; i < list.size(); i++){
-                                Log.d(TAG,"i : " + i + "status : " + list.get(i).getStatus());
+                                Log.d(TAG,"i : " + i + ", status : " + list.get(i).getStatus());
 
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
-                                    Id.add(list.get(i).getId());
-                                    userId.add(list.get(i).getUserId());
-                                    Log.d(TAG, "이름 : " + list.get(i).getUserName() + ", id : " + list.get(i).getUserId() + ", careId : " + list.get(i).getId());
+                                    UserId.add(list.get(i).getUserId());
+                                    Log.d(TAG, "userName : " + list.get(i).getUserName() + ", userId : " + list.get(i).getUserId());
                                 }
                             }
 
-                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment(UserName, Id)).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment(UserName, UserId)).commit();
                         }
 
                         @Override
@@ -311,8 +243,42 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-                else
-                    getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new RoleCaredFragment()).commit();
+                else {
+                    ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
+                        @Override
+                        public void onError(Throwable t) {
+                            Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "에러 : " + t);
+                        }
+
+                        @Override
+                        public void onSuccess(String message, ResponseCare data) {
+                            List<String> UserName = new ArrayList<>();
+                            List<Integer> UserId = new ArrayList<>();
+
+                            List<DataResponseCare> list = data.getData();
+                            Log.d(TAG,"맵핑된 수 : " + list.size());
+
+                            for (int i = 0; i < list.size(); i++){
+                                Log.d(TAG,"i : " + i + ", status : " + list.get(i).getStatus());
+
+                                if (list.get(i).getStatus().equals("ACCEPTED")) {
+                                    UserName.add(list.get(i).getUserName());
+                                    UserId.add(list.get(i).getUserId());
+                                    Log.d(TAG, "userName : " + list.get(i).getUserName() + ", userId : " + list.get(i).getUserId());
+                                }
+                            }
+
+                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new RoleCaredFragment(UserName, UserId)).commit();
+                        }
+
+                        @Override
+                        public void onFailure(int error_code) {
+                            Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "실패 : " + error_code);
+                        }
+                    });
+                }
 
                 tab_btn1.setImageResource(R.drawable.tab_btn1);
                 tab_btn2.setImageResource(R.drawable.tab_btn2_select);
@@ -327,19 +293,5 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    public void setPreference(String flag, String value) {
-        editor.putString(flag, value);
-        editor.apply();
-    }
-
-    public String getPreference(String flag) {
-        return ApplicationClass.sharedPreferences.getString(flag, "");
     }
 }

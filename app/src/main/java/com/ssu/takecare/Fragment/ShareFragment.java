@@ -15,22 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.CalendarActivity;
-import com.ssu.takecare.UI.PresciptionActivity;
+import com.ssu.takecare.UI.PrescriptionActivity;
 import com.ssu.takecare.UI.ReportActivity;
 import com.ssu.takecare.UI.ShareGraph;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShareFragment extends Fragment {
 
+    Intent intent;
     TextView tv_name;
+    List<String> Match_UserName_list;
+    List<Integer> Match_UserId_list;
+    HashMap<Integer, String> ID_NAME = new HashMap<Integer, String>();
 
-    List<String> UserName;
-    List<Integer> Id;
-
-    public ShareFragment(List<String> UserName, List<Integer> Id){
-        this.UserName = UserName;
-        this.Id = Id;
+    public ShareFragment(List<String> UserName, List<Integer> UserId){
+        this.Match_UserName_list = UserName;
+        this.Match_UserId_list = UserId;
     }
 
     @Nullable
@@ -42,6 +43,9 @@ public class ShareFragment extends Fragment {
         tv_name = view.findViewById(R.id.share_my_name);
         tv_name.setText(my_name);
 
+        for (int i = 0; i < Match_UserId_list.size(); i++)
+            ID_NAME.put(Match_UserId_list.get(i), Match_UserName_list.get(i));
+
         ImageButton btn1=(ImageButton) view.findViewById(R.id.share_my_graph);
         ImageButton btn2=(ImageButton) view.findViewById(R.id.share_my_calendar);
         ImageButton btn3=(ImageButton) view.findViewById(R.id.share_my_presciption);
@@ -50,28 +54,36 @@ public class ShareFragment extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(view.getContext(), ShareGraph.class));
+                intent=new Intent(getActivity(), ShareGraph.class);
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                startActivity(intent);
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(view.getContext(), CalendarActivity.class));
+                intent=new Intent(getActivity(),CalendarActivity.class);
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                startActivity(intent);
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(view.getContext(), PresciptionActivity.class));
+                getActivity().startActivity(new Intent(view.getContext(), PrescriptionActivity.class));
             }
         });
 
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(view.getContext(), ReportActivity.class));
+                intent=new Intent(getActivity(), ReportActivity.class);
+                intent.putExtra("USER_ID", ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("ID_NAME", ID_NAME);
+                startActivity(intent);
             }
         });
 
@@ -79,7 +91,7 @@ public class ShareFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         listview.setLayoutManager(gridLayoutManager);
 
-        ShareGridAdapter adapter = new ShareGridAdapter(UserName, getActivity());
+        ShareGridAdapter adapter = new ShareGridAdapter(Match_UserName_list, Match_UserId_list, getActivity());
         listview.setAdapter(adapter);
 
         return view;

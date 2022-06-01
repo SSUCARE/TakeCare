@@ -3,7 +3,6 @@ package com.ssu.takecare.UI;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -20,23 +19,27 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
-import com.ssu.takecare.Retrofit.Comment.Comment;
-import com.ssu.takecare.Retrofit.Comment.CommentAdapter;
+import com.ssu.takecare.AssistClass.Comment;
+import com.ssu.takecare.AssistClass.CommentAdapter;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.Comment.DataGetComment;
 import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentIdCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+/*
+해당 Activity는 Fragment Share, RoleCaredFragment, ShareGridAdapter 로부터는 Intent를 통해 USER_ID를 받아야하고,
+CalendarActivity 에서는 'USER_ID','YEAR', 'MONTH', 'DAY' 를 Intent를 통해서 받아야한다.
+*/
 public class ReportActivity extends AppCompatActivity {
-
-    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     Date currentTime = Calendar.getInstance().getTime();
     String date_year = new SimpleDateFormat("yyyy", Locale.getDefault()).format((currentTime));
@@ -50,16 +53,16 @@ public class ReportActivity extends AppCompatActivity {
     int userId;
     int reportId;
 
-    TextView user_name, low_pressure, high_pressure, before_sugar, after_sugar, weight;
-
-    private boolean side = false;
-
     CommentAdapter commentAdapter;
 
+    TextView user_name, low_pressure, high_pressure, before_sugar, after_sugar, weight;
+
+    HashMap<Integer, String> User_id_name;
+
+    private boolean side = false;
     private ListView listView;
     private EditText comment;
     private Button buttonSend;
-    private Button buttonEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,8 @@ public class ReportActivity extends AppCompatActivity {
         this.user_name = findViewById(R.id.report_name);
         this.user_name.setText(my_name);
 
-        low_pressure = findViewById(R.id.low_pressure_report);
         high_pressure = findViewById(R.id.high_pressure_report);
+        low_pressure = findViewById(R.id.low_pressure_report);
         before_sugar = findViewById(R.id.before_sugar_report);
         after_sugar = findViewById(R.id.after_sugar_report);
         weight = findViewById(R.id.weight_report);
@@ -83,7 +86,20 @@ public class ReportActivity extends AppCompatActivity {
         commentAdapter = new CommentAdapter(getApplicationContext(), R.layout.activity_comment);
         listView.setAdapter(commentAdapter);
 
-        userId = ApplicationClass.sharedPreferences.getInt("userId", 0);
+        userId = getIntent().getIntExtra("USER_ID",-1);
+        User_id_name = (HashMap<Integer, String>) getIntent().getSerializableExtra("ID_NAME");
+
+        // CalendarActivity 로부터 넘어옴
+        int cal_year=getIntent().getIntExtra("YEAR",-1);
+        int cal_month=getIntent().getIntExtra("MONTH",-1);
+        int cal_day=getIntent().getIntExtra("DAY",-1);
+
+        if (cal_year != -1 && cal_month != -1 && cal_day != -1) {
+            Log.d("ReportActivity","바뀌기전,"+" find_year:"+find_year+" find_month:"+find_month+" find_day:"+find_day);
+            find_year=cal_year; find_month=cal_month; find_day=cal_day;
+            Log.d("ReportActivity","바뀐 후,"+" find_year:"+find_year+" find_month:"+find_month+" find_day:"+find_day);
+        }
+        Log.d("ReportActivity","find_year : " + find_year+", find_month : " + find_month + ", find_day : " + find_day);
         ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
             @Override
             public void onError(Throwable t) {
@@ -105,8 +121,8 @@ public class ReportActivity extends AppCompatActivity {
 
                     reportId = data.get(0).getReportId();
 
-                    String str_low_pressure = data.get(0).getDiastolic() + " mmHg";
                     String str_high_pressure = data.get(0).getSystolic() + " mmHg";
+                    String str_low_pressure = data.get(0).getDiastolic() + " mmHg";
                     String str_before_sugar = data.get(0).getSugarLevels().get(0) + " mg/dL";
                     String str_after_sugar = data.get(0).getSugarLevels().get(1) + " mg/dL";
                     String str_weight = data.get(0).getWeight() + " kg";
@@ -137,11 +153,14 @@ public class ReportActivity extends AppCompatActivity {
                                 Log.d("ReportActivity", "data - Content : " + data.get(0).getContent());
 
                                 for (int i = 0; i < data.size(); i++) {
-                                    if (data.get(i).getAuthorId() == getPreference("userId")) {
+                                    // 나 자신이 쓴 채팅 구별
+                                    if (data.get(i).getAuthorId() == getIntPreference("userId")) {
                                         commentAdapter.add(new Comment(false, data.get(i).getContent()));
+                                        commentAdapter.addAuthorNameList(getStringPreference("name"));
                                     }
                                     else {
                                         commentAdapter.add(new Comment(true, data.get(i).getContent()));
+                                        commentAdapter.addAuthorNameList(User_id_name.get(data.get(i).getAuthorId()));
                                     }
 
                                     commentAdapter.addCommentId(data.get(i).getCommentId());
@@ -200,16 +219,7 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
 
-        // 해당 메세지를 짧게 누르면 메세지 수정 버튼이 보이게 됨
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                buttonEdit = view.findViewById(R.id.btn_edit);
-//                buttonEdit.setVisibility(View.VISIBLE);
-            }
-        });
-        
-        // 해당 메세지를 길게 누르면 메세지 삭제됨
+        // 해당 메세지를 길게 누르면 메세지 수정 또는 삭제를 선택할 수 있다
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -220,6 +230,7 @@ public class ReportActivity extends AppCompatActivity {
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
+                        Log.d("ReportActivity", "position : " + position);
                         int delete_commentId = commentAdapter.getCommentId(position);
                         ApplicationClass.retrofit_manager.deleteComment(delete_commentId, new RetrofitCallback() {
                             @Override
@@ -258,7 +269,7 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private boolean sendComment() {
-        ApplicationClass.retrofit_manager.makeComment(comment.getText().toString(), reportId, new RetrofitCallback() {
+        ApplicationClass.retrofit_manager.makeComment(comment.getText().toString(), reportId, new RetrofitCommentIdCallback() {
             @Override
             public void onError(Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
@@ -266,13 +277,14 @@ public class ReportActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSuccess(String message, String data) {
-                Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
-                Log.d("ReportActivity", message + data);
+            public void onSuccess(String message, int commentId) {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                Log.d("ReportActivity", "message : " + message + ", commentId : " + commentId);
 
+                commentAdapter.addAuthorNameList(getStringPreference("name"));
+                commentAdapter.addCommentId(commentId);
                 commentAdapter.add(new Comment(side, comment.getText().toString()));
                 comment.setText("");
-                //side = !side;
             }
 
             @Override
@@ -307,7 +319,11 @@ public class ReportActivity extends AppCompatActivity {
         finish();
     }
 
-    public int getPreference(String flag) {
+    public int getIntPreference(String flag) {
         return ApplicationClass.sharedPreferences.getInt(flag, 0);
+    }
+
+    public String getStringPreference(String flag) {
+        return ApplicationClass.sharedPreferences.getString(flag, "");
     }
 }

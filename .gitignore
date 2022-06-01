@@ -130,4 +130,3 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # User defined
-/app/src/main/res/values/secret.xml

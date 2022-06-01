@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
+            android:layout_weight="8"
             android:textAlignment="center"
             android:text="공복 혈당"
             android:textSize="18sp"
@@ -50,7 +50,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
+            android:layout_weight="8"
             android:textAlignment="center"
             android:text="식후 혈당"
             android:textSize="18sp"

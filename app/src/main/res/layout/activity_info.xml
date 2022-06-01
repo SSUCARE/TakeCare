@@ -21,7 +21,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp">
+        android:layout_margin="30dp">
 
         <TableRow>
             <TextView
@@ -40,7 +40,7 @@
 
             <EditText
                 android:id="@+id/et_name"
-                android:layout_width="180dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:hint="2~5자로 입력하세요"

@@ -49,13 +49,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/card_news" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <View
@@ -81,12 +78,14 @@
             android:layout_marginBottom="10dp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_pressure"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/layout_border1">
+            android:background="@drawable/layout_border1"
+            android:onClick="inputPressure">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,7 +101,7 @@
                 android:fontFamily="@font/font_normal"/>
 
             <TextView
-                android:id="@+id/high_pressure"
+                android:id="@+id/input_high_pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_pressure"
@@ -119,14 +118,14 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_pressure"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/high_pressure"
+                app:layout_constraintStart_toEndOf="@+id/input_high_pressure"
                 android:text=" / "
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"/>
 
             <TextView
-                android:id="@+id/low_pressure"
+                android:id="@+id/input_low_pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_pressure"
@@ -143,36 +142,32 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_pressure"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/low_pressure"
+                app:layout_constraintStart_toEndOf="@+id/input_low_pressure"
                 android:text=" mmHg"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"/>
 
-            <Button
-                android:id="@+id/btn_pressure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/gray"
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:text="입력"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"
-                android:onClick="inputPressure"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_bias="0.99"
+                android:src="@drawable/next"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_sugar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/layout_border1">
+            android:background="@drawable/layout_border1"
+            android:onClick="inputSugar">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -188,7 +183,7 @@
                 android:fontFamily="@font/font_normal"/>
 
             <TextView
-                android:id="@+id/before_sugar"
+                android:id="@+id/input_before_sugar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_sugar"
@@ -205,14 +200,14 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_sugar"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/before_sugar"
+                app:layout_constraintStart_toEndOf="@+id/input_before_sugar"
                 android:text=" / "
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"/>
 
             <TextView
-                android:id="@+id/after_sugar"
+                android:id="@+id/input_after_sugar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_sugar"
@@ -229,35 +224,31 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_sugar"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/after_sugar"
+                app:layout_constraintStart_toEndOf="@+id/input_after_sugar"
                 android:text=" mg/dL"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"/>
 
-            <Button
-                android:id="@+id/btn_sugar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/gray"
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:text="입력"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"
-                android:onClick="inputSugar"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_bias="0.99"
+                android:src="@drawable/next"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_weight"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:padding="10dp"
-            android:background="@drawable/layout_border1">
+            android:background="@drawable/layout_border1"
+            android:onClick="inputWeight">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -273,7 +264,7 @@
                 android:fontFamily="@font/font_normal"/>
 
             <TextView
-                android:id="@+id/weight"
+                android:id="@+id/input_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_weight"
@@ -290,27 +281,21 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_weight"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/weight"
+                app:layout_constraintStart_toEndOf="@+id/input_weight"
                 android:text=" kg"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"/>
 
-            <Button
-                android:id="@+id/btn_weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/gray"
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:text="입력"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"
-                android:onClick="inputWeight"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_bias="0.99"
+                android:src="@drawable/next"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
@@ -325,7 +310,5 @@
             android:textColor="@color/black"
             android:fontFamily="@font/font_normal"
             android:onClick="makeReport"/>
-
     </LinearLayout>
-
 </LinearLayout>

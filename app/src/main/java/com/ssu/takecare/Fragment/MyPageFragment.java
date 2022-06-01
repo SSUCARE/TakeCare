@@ -5,18 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.MatchActivity;
 import com.ssu.takecare.UI.ProfileActivity;
+import com.ssu.takecare.UI.ShareInfoImageActivity;
 
 public class MyPageFragment extends Fragment {
 
@@ -31,10 +29,12 @@ public class MyPageFragment extends Fragment {
         tv_name = view.findViewById(R.id.user_name);
         tv_name.setText(my_name);
 
-        ConstraintLayout my_profile = (ConstraintLayout) view.findViewById(R.id.my_info);
-        ImageView match_setting = (ImageView) view.findViewById(R.id.btn_match);
+        ConstraintLayout profile_setting = (ConstraintLayout) view.findViewById(R.id.layout_profile);
+        ConstraintLayout match_setting = (ConstraintLayout) view.findViewById(R.id.layout_match);
+        ConstraintLayout alarm_setting = (ConstraintLayout) view.findViewById(R.id.layout_alarm);
+        ConstraintLayout share_setting = (ConstraintLayout) view.findViewById(R.id.layout_share);
 
-        my_profile.setOnClickListener(new View.OnClickListener() {
+        profile_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
@@ -46,6 +46,21 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(), MatchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        alarm_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        share_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), ShareInfoImageActivity.class);
                 startActivity(intent);
             }
         });

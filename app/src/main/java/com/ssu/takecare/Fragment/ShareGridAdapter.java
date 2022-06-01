@@ -2,6 +2,7 @@ package com.ssu.takecare.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.CalendarActivity;
-import com.ssu.takecare.UI.PresciptionActivity;
+import com.ssu.takecare.UI.PrescriptionActivity;
 import com.ssu.takecare.UI.ReportActivity;
 import com.ssu.takecare.UI.ShareGraph;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.ViewHolder>{
 
     Context mContext;
-    List<String> list;
+    List<String> Match_UserName_list;
+    List<Integer> Match_UserId_list;
+    HashMap<Integer, String> ID_NAME = new HashMap<Integer, String>();
+    Intent intent;
 
-    public ShareGridAdapter(List<String>list, Context context) {
+    public ShareGridAdapter(List<String> name_list, List<Integer> id_list, Context context) {
+        this.Match_UserName_list = name_list;
+        this.Match_UserId_list = id_list;
         this.mContext = context;
-        this.list = list;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -33,6 +39,10 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            for (int i = 0; i < Match_UserId_list.size(); i++)
+                ID_NAME.put(Match_UserId_list.get(i), Match_UserName_list.get(i));
+
             name=itemView.findViewById(R.id.share_list_name);
             btn1=itemView.findViewById(R.id.share_list_graph);
             btn2=itemView.findViewById(R.id.share_list_calendar);
@@ -42,28 +52,44 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(view.getContext(), ShareGraph.class));
+                    int match_userid=Search_UserId(name.getText().toString());
+                    if(match_userid!=-1){
+                        intent=new Intent(view.getContext(), ShareGraph.class);
+                        intent.putExtra("USER_ID", match_userid);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
 
             btn2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(view.getContext(), CalendarActivity.class));
+                    int match_userid=Search_UserId(name.getText().toString());
+                    if(match_userid!=-1){
+                        intent=new Intent(view.getContext(), CalendarActivity.class);
+                        intent.putExtra("USER_ID", match_userid);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
 
             btn3.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(view.getContext(), PresciptionActivity.class));
+                    mContext.startActivity(new Intent(view.getContext(), PrescriptionActivity.class));
                 }
             });
 
             btn4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(view.getContext(), ReportActivity.class));
+                    int match_userid=Search_UserId(name.getText().toString());
+                    if(match_userid!=-1){
+                        intent=new Intent(view.getContext(), ReportActivity.class);
+                        intent.putExtra("USER_ID", match_userid);
+                        intent.putExtra("ID_NAME", ID_NAME);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
         }
@@ -81,12 +107,24 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String name=list.get(position);
+        String name=Match_UserName_list.get(position);
         holder.name.setText(name);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return Match_UserName_list.size();
+    }
+
+    // name에 대응되는 id값을 찾아준다.
+    public int Search_UserId(String Match_Name){
+        int number = -1;
+        for (int i = 0; i < Match_UserName_list.size(); i++){
+            if (Match_UserName_list.get(i).equals(Match_Name)){
+                number = Match_UserId_list.get(i);
+                break;
+            }
+        }
+        return number;
     }
 }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="230dp"
+        android:layout_height="220dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="유저 이름 :"/>
+
+            <TextView
+                android:id="@+id/user_name_by_email"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="____"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="유저 성별 :"/>
+
+            <TextView
+                android:id="@+id/user_gender_by_email"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="____"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="유저 나이 :"/>
+
+            <TextView
+                android:id="@+id/user_age_by_email"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="____"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/OK_button"
+                android:text="OK"
+                android:textSize="18sp"
+                android:fontFamily="@font/font_normal"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@color/gray"
+                android:layout_width="60dp"
+                android:layout_height="40dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/NO_button"
+                android:text="NO"
+                android:textSize="18sp"
+                android:fontFamily="@font/font_normal"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@color/gray"
+                android:layout_width="60dp"
+                android:layout_height="40dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
