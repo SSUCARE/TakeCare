@@ -14,10 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Runnable.SignupRunnable;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -80,7 +77,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 dialog.dismiss();
             }
             else {
-                //스레드기능
+                // 스레드기능
                 Circle_Dialog = new ProgressDialog(this);
                 Circle_Dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 Circle_Dialog.setMessage("로딩중입니다...");

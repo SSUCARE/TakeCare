@@ -2,13 +2,11 @@ package com.ssu.takecare.Dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
@@ -65,7 +63,7 @@ public class MatchFindUserDialog {
 
                     @Override
                     public void onSuccess(String message, String data) {
-                        Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "요청 완료", Toast.LENGTH_SHORT).show();
                         dismiss();
                     }
 

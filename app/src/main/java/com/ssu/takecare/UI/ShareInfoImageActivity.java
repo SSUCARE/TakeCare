@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +50,14 @@ public class ShareInfoImageActivity extends AppCompatActivity {
 
         view =  (LinearLayout)getLayoutInflater().inflate(R.layout.activity_share_info_image,null);
         setContentView(view);
+
+        ImageButton imageButton = (ImageButton) view.findViewById(R.id.back_btn);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         TextView pressure_txt = (TextView) view.findViewById(R.id.share_pressure);
         TextView sugar_txt = (TextView) view.findViewById(R.id.share_sugar);
@@ -158,7 +167,7 @@ public class ShareInfoImageActivity extends AppCompatActivity {
                     startActivity(Intent.createChooser(share, "share image"));
                 }
                 else {
-                    showToast("permission 이 부여 안되어 기능 실행이 안됩니다.");
+                    showToast("permission이 부여되지 않아서 기능 실행이 안됩니다.");
                 }
             }
             @Override
@@ -172,7 +181,7 @@ public class ShareInfoImageActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public Canvas onDraw (Bitmap bitmap, String txt, String txt2, String txt3) {
+    public Canvas onDraw(Bitmap bitmap, String txt, String txt2, String txt3) {
 
         try {
             Canvas canvas= null;

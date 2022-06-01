@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.animation.Easing.EasingFunction;

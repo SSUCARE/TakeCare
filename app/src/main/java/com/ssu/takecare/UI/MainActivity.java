@@ -155,13 +155,11 @@ public class MainActivity extends AppCompatActivity {
         ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
             @Override
             public void onError(Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onSuccess(String message, String token) {
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
                 String str = "____";
                 hp_input.setText(str);
                 lp_input.setText(str);
@@ -172,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int error_code) {
-                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -211,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
                     ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
                         @Override
                         public void onError(Throwable t) {
-                            Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "에러 : " + t);
                         }
 
@@ -238,7 +235,6 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int error_code) {
-                            Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "실패 : " + error_code);
                         }
                     });
@@ -247,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
                     ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
                         @Override
                         public void onError(Throwable t) {
-                            Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "에러 : " + t);
                         }
 
@@ -274,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int error_code) {
-                            Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "실패 : " + error_code);
                         }
                     });

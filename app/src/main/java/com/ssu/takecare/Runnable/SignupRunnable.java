@@ -1,14 +1,10 @@
 package com.ssu.takecare.Runnable;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.UI.LoginActivity;
 
 public class SignupRunnable implements Runnable{
     Handler handler;
@@ -29,21 +25,18 @@ public class SignupRunnable implements Runnable{
             public void onError(Throwable t) {
                 Hmessage.arg1=-1;
                 handler.sendMessage(Hmessage);
-                Toast.makeText(context.getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onSuccess(String message, String email) {
                 Hmessage.arg1=1;
                 handler.sendMessage(Hmessage);
-                Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int error_code) {
                 Hmessage.arg1=0;
                 handler.sendMessage(Hmessage);
-                Toast.makeText(context.getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
             }
         });
     }

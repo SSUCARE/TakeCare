@@ -7,12 +7,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
-import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
-import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
 public class MatchDialog {

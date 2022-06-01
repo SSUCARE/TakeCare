@@ -135,23 +135,19 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 ApplicationClass.retrofit_manager.info(name_str, gender_register, age_int, height_int, role_register, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
-                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
                     public void onSuccess(String message, String token) {
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
                         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
                             @Override
                             public void onError(Throwable t) {
-                                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+
                             }
 
                             @Override
                             public void onSuccess(String message, DataResponseGetUser data) {
-                                Toast.makeText(getApplicationContext(), "개인정보 저장완료", Toast.LENGTH_SHORT).show();
-
                                 editor.putInt("userId", data.getId());
                                 editor.putString("name", data.getName());
                                 editor.putInt("age", data.getAge());
@@ -162,24 +158,17 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                                 else
                                     editor.putString("gender", "여성");
 
-                                // 실제 서버에서 사용
                                 if (data.getRole().equals("ROLE_CARER"))
                                     editor.putString("role", "보호자");
                                 else
                                     editor.putString("role", "피보호자");
-
-                                // 로컬에서 테스트할때만
-//                                if (role_register.equals("ROLE_CARER"))
-//                                    editor.putString("role", "보호자");
-//                                else
-//                                    editor.putString("role", "피보호자");
 
                                 editor.apply();
                             }
 
                             @Override
                             public void onFailure(int error_code) {
-                                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+
                             }
                         });
 
@@ -189,7 +178,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onFailure(int error_code) {
-                        Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }

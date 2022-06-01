@@ -464,13 +464,13 @@ public class RetrofitManager {
             public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
                 if (response.isSuccessful()) {
                     Object body = response.body();
-                    Log.d("RetrofitManager_deleteCommentRequest", "onResponse : 성공, message : " + body.toString());
-                    Log.d("RetrofitManager_deleteComentRequest", "onResponse : status code is " + response.code());
+                    Log.d("RetrofitManager_deleteComment", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_deleteComment", "onResponse : status code is " + response.code());
 
                     callback.onSuccess("deleteComment 호출 : ", body.toString());
                 }
                 else {
-                    Log.d("RetrofitManager_careDeleteRequest", "onResponse : 실패, error code : " + response.code());
+                    Log.d("RetrofitManager_deleteComment", "onResponse : 실패, error code : " + response.code());
 
                     callback.onFailure(response.code());
                 }
@@ -478,7 +478,36 @@ public class RetrofitManager {
 
             @Override
             public void onFailure(@NonNull Call<Object> call, @NonNull Throwable t) {
-                Log.e("RetrofitManager_careDeleteRequest", "onFailure : " + t.getLocalizedMessage());
+                Log.e("RetrofitManager_deleteComment", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void updateComment(int commentId, String content, RetrofitCommentIdCallback callback) {
+        Call<ResponseComment> call = ApplicationClass.retrofit_api.commentUpdateRequest(commentId, content);
+
+        call.enqueue(new Callback<ResponseComment>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseComment> call, @NonNull Response<ResponseComment> response) {
+                if (response.isSuccessful()) {
+                   ResponseComment body = response.body();
+                    Log.d("RetrofitManager_updateComment", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_updateComment", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess(body.message, body.commentId);
+                }
+                else {
+                    Log.d("RetrofitManager_updateComment", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseComment> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_updateComment", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }

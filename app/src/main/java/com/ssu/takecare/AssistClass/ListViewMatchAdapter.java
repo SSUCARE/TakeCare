@@ -67,7 +67,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
             btnAction.setText("삭제");
         }
 
-        // Click listener of button
+        // 삭제
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +79,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
-                        Toast.makeText(v.getContext(), data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

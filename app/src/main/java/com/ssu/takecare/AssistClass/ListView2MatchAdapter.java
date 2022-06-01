@@ -66,7 +66,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
         // Click listener of button
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 // 수락
                 ApplicationClass.retrofit_manager.careAcceptRequest(userId, new RetrofitCallback() {
 
@@ -76,7 +76,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
-                        Toast.makeText(view.getContext(), data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "수락 완료", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -99,7 +99,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
-                        Toast.makeText(v.getContext(), data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "거절 완료", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

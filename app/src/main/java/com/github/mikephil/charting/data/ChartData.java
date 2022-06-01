@@ -3,12 +3,10 @@ package com.github.mikephil.charting.data;
 
 import android.graphics.Typeface;
 import android.util.Log;
-
 import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
-
 import java.util.ArrayList;
 import java.util.List;
 

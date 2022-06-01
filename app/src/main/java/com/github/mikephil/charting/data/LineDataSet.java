@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.util.Log;
-
 import com.github.mikephil.charting.formatter.DefaultFillFormatter;
 import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;

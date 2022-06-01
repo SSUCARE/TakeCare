@@ -15,7 +15,6 @@ import com.ssu.takecare.UI.CalendarActivity;
 import com.ssu.takecare.UI.PrescriptionActivity;
 import com.ssu.takecare.UI.ReportActivity;
 import com.ssu.takecare.UI.ShareGraph;
-
 import java.util.HashMap;
 import java.util.List;
 

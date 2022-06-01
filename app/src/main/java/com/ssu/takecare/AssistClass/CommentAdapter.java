@@ -31,6 +31,10 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         AuthorNameList.remove(position);
     }
 
+    public void edit(int position, Comment comment) {
+        commentList.set(position, comment);
+    }
+
     public void addCommentId(int commentId) {
         commentIdList.add(commentId);
     }
@@ -39,8 +43,12 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         return commentIdList.get(position);
     }
 
-    public void addAuthorNameList(String name) {
+    public void addAuthorName(String name) {
         AuthorNameList.add(name);
+    }
+
+    public String getAuthorName(int position) {
+        return AuthorNameList.get(position);
     }
 
     @Override

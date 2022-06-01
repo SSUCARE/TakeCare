@@ -4,10 +4,8 @@ package com.github.mikephil.charting.utils;
 import android.content.res.AssetManager;
 import android.os.Environment;
 import android.util.Log;
-
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

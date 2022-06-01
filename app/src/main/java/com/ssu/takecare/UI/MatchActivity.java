@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.AssistClass.ListView2MatchAdapter;
@@ -49,10 +48,9 @@ public class MatchActivity extends AppCompatActivity {
         role = ApplicationClass.sharedPreferences.getString("role", "");
 
         ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
-
             @Override
             public void onError(Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -112,7 +110,6 @@ public class MatchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int error_code) {
-                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
             }
         });
     }

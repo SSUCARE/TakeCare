@@ -4,12 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
-
 import java.util.List;
 
 public class GetReport_Month_Runnable implements Runnable {
@@ -35,7 +32,6 @@ public class GetReport_Month_Runnable implements Runnable {
 
             @Override
             public void onError(Throwable t) {
-                Toast.makeText(context.getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                 Log.d("디버그, ShareGraph->getMonthData", "에러 : " + t.toString());
                 Hmessage.arg1=-1;
                 handler.sendMessage(Hmessage);
@@ -43,7 +39,6 @@ public class GetReport_Month_Runnable implements Runnable {
 
             @Override
             public void onSuccess(String message, List<DataGetReport> data) {
-                Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 if(data.size()>0){
                     Log.d("디버그, GetReport_month_runnable",  data.get(0).getCreatedAt());
                     Log.d("디버그, GetReport_month_runnable",  ""+data.get(0).getReportId());
@@ -60,7 +55,6 @@ public class GetReport_Month_Runnable implements Runnable {
 
             @Override
             public void onFailure(int error_code) {
-                Toast.makeText(context.getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
                 Log.d("ReportActivity", "실패 : " + error_code);
                 Hmessage.arg1=0;
                 handler.sendMessage(Hmessage);

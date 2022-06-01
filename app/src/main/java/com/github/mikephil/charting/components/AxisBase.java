@@ -4,11 +4,9 @@ package com.github.mikephil.charting.components;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.util.Log;
-
 import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
 

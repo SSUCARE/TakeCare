@@ -4,7 +4,6 @@ package com.github.mikephil.charting.renderer;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.ScatterData;
@@ -17,7 +16,6 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-
 import java.util.List;
 
 public class ScatterChartRenderer extends LineScatterCandleRadarRenderer {

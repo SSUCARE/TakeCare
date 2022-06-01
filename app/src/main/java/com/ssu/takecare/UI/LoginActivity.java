@@ -100,12 +100,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 ApplicationClass.retrofit_manager.login(email_str, password_str, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
-                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(String message, String token) {
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                         setPreference("email_login", email_str);
                         setPreference("password_login", password_str);
                         setPreference("accessToken", token);
@@ -114,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
                             @Override
                             public void onError(Throwable t) {
-                                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
+
                             }
 
                             @Override
@@ -139,65 +137,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-                                    // 보호자이면 매칭된 사용자 정보 불러오기
-//                                    if (data.getRole().equals("ROLE_CARER")) {
-//                                        ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
-//                                            @Override
-//                                            public void onError(Throwable t) {
-//                                                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-//                                                Log.d(TAG, "에러 : " + t);
-//                                            }
-//
-//                                            @Override
-//                                            public void onSuccess(String message, ResponseCare data) {
-//                                                ArrayList<DataResponseCare> list = data.getData();
-//
-//                                                editor.putInt("match_num", list.size());
-//                                                Log.d(TAG, "맵핑된 수 : " + list.size());
-//
-//                                                JSONArray array_name = new JSONArray();
-//                                                JSONArray array_careId = new JSONArray();
-//                                                JSONArray array_userId = new JSONArray();
-//
-//                                                for (int i = 0; i < list.size(); i++) {
-//                                                    Log.d(TAG, "i : " + i + ", status : " + list.get(i).getStatus());
-//
-//                                                    if (list.get(i).getStatus().equals("ACCEPTED")) {
-//                                                        Log.d(TAG, "이름 : " + list.get(i).getUserName() + ", careId : " + list.get(i).getId() + ", userId : " + list.get(i).getUserId());
-//                                                        array_name.put(list.get(i).getUserName());
-//                                                        array_careId.put(list.get(i).getId());
-//                                                        array_userId.put(list.get(i).getUserId());
-//                                                    }
-//
-//                                                    if (!list.isEmpty()) {
-//                                                        editor.putString("match_name", array_name.toString());
-//                                                        editor.putString("match_careId", array_careId.toString());
-//                                                        editor.putString("match_userId", array_userId.toString());
-//                                                    } else {
-//                                                        editor.putString("match_name", null);
-//                                                        editor.putString("match_careId", null);
-//                                                        editor.putString("match_userId", null);
-//                                                    }
-//                                                }
-//
-//                                                editor.apply();
-//
-//                                                finish();
-//                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                                            }
-//
-//                                            @Override
-//                                            public void onFailure(int error_code) {
-//                                                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
-//                                                Log.d(TAG, "실패 : " + error_code);
-//                                            }
-//                                        });
-//                                    }
-//                                    else {
-//                                        finish();
-//                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                                    }
                                 }
                                 else {
                                     finish();
@@ -207,14 +146,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             @Override
                             public void onFailure(int error_code) {
-                                Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+
                             }
                         });
                     }
 
                     @Override
                     public void onFailure(int error_code) {
-                        Toast.makeText(getApplicationContext(), "error code : " + error_code, Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
