@@ -67,6 +67,7 @@ public class RoleCaredFragment extends Fragment implements View.OnClickListener 
                 intent=new Intent(getActivity(),CalendarActivity.class);
                 intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
                 intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
                 break;
             case R.id.cared_my_presciption:

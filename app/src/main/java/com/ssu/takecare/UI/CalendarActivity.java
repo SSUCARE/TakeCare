@@ -25,6 +25,8 @@ import java.util.List;
 //해결할 것: 현재 달에서 다음달로 넘어갈때, 현재달에서 눌린 원 없어지도록 못하나?
 public class CalendarActivity extends AppCompatActivity {
 
+    HashMap<Integer, String> ID_NAME;
+
     ConstraintLayout layout;
     TextView cal_name;
     MaterialCalendarView materialCalendarView;
@@ -57,12 +59,12 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_calendar);
 
+        ID_NAME = (HashMap<Integer, String>) getIntent().getSerializableExtra("ID_NAME");
+
         Init_Data_Setting();
         view_init();
         view_listener();
-
     }
-
 
     //view setting하기
     void view_init(){
@@ -82,7 +84,6 @@ public class CalendarActivity extends AppCompatActivity {
         after_sugar_calendar=(TextView)findViewById(R.id.after_sugar_calendar);
         weight_calendar=(TextView)findViewById(R.id.weight_calendar);
     }
-
 
     //view event listener정의
     void view_listener(){
@@ -124,13 +125,12 @@ public class CalendarActivity extends AppCompatActivity {
                 intent.putExtra("YEAR", now_year);
                 intent.putExtra("MONTH", now_month);
                 intent.putExtra("DAY", now_day);
+                intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
                 finish();
             }
         });
-
     }
-
 
     //UserId, UserName, 오늘날짜등을 얻어서 저장한다.
     void Init_Data_Setting(){

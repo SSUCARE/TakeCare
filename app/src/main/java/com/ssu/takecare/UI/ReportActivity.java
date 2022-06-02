@@ -166,12 +166,12 @@ public class ReportActivity extends AppCompatActivity {
                                 for (int i = 0; i < data.size(); i++) {
                                     // 나 자신이 쓴 채팅 구별
                                     if (data.get(i).getAuthorId() == getIntPreference("userId")) {
-//                                        commentAdapter.add(new Comment(false, data.get(i).getContent()));
-//                                        commentAdapter.addAuthorName(getStringPreference("name"));
+                                        commentAdapter.add(new Comment(false, data.get(i).getContent()));
+                                        commentAdapter.addAuthorName(getStringPreference("name"));
                                     }
                                     else {
-//                                        commentAdapter.add(new Comment(true, data.get(i).getContent()));
-//                                        commentAdapter.addAuthorName(User_id_name.get(data.get(i).getAuthorId()));
+                                        commentAdapter.add(new Comment(true, data.get(i).getContent()));
+                                        commentAdapter.addAuthorName(User_id_name.get(data.get(i).getAuthorId()));
                                     }
 
                                     commentAdapter.addCommentId(data.get(i).getCommentId());

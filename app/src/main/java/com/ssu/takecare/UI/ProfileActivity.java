@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         int match_count=ApplicationClass.sharedPreferences.getInt("Mapping_Count",0);
         tv_match_count=findViewById(R.id.profile_matchcounting_tv);
-        tv_match_count.setText(Integer.toString(match_count));
+        tv_match_count.setText(String.valueOf(match_count));
 
         String my_name = ApplicationClass.sharedPreferences.getString("name", "");
         tv_name = findViewById(R.id.profile_name);
@@ -51,42 +51,6 @@ public class ProfileActivity extends AppCompatActivity {
         String my_role = ApplicationClass.sharedPreferences.getString("role", "");
         tv_role = findViewById(R.id.profile_role);
         tv_role.setText(my_role);
-    }
-
-    public void refresh() {
-        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onSuccess(String message, DataResponseGetUser data) {
-                editor.putInt("userId", data.getId());
-                editor.putString("name", data.getName());
-                editor.putInt("age", data.getAge());
-                editor.putInt("height", data.getHeight());
-
-                if (data.getGender().equals("MALE"))
-                    editor.putString("gender", "남성");
-                else
-                    editor.putString("gender", "여성");
-
-                if (data.getRole().equals("ROLE_CARER"))
-                    editor.putString("role", "보호자");
-                else
-                    editor.putString("role", "피보호자");
-
-                editor.apply();
-
-
-            }
-
-            @Override
-            public void onFailure(int error_code) {
-
-            }
-        });
     }
 
     public void click_event(View view) {

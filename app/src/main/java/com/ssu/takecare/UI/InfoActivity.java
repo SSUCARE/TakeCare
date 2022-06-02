@@ -213,6 +213,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
                                 if (ExistingUser_flag == 2) {
                                     finish();
+                                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                                 }
                                 else {
                                     finish();

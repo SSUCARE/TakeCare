@@ -66,6 +66,7 @@ public class ShareFragment extends Fragment {
                 intent=new Intent(getActivity(),CalendarActivity.class);
                 intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
                 intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
             }
         });
