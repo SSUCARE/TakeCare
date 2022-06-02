@@ -73,7 +73,10 @@ public class ShareFragment extends Fragment {
         btn3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(view.getContext(), PrescriptionActivity.class));
+                intent=new Intent(getActivity(),PrescriptionActivity.class);
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                startActivity(intent);
             }
         });
 

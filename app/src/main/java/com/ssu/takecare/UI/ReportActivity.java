@@ -112,6 +112,8 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String message, List<DataGetReport> data) {
                 if (data.size() != 0) {
+                    String str_high_pressure, str_low_pressure, str_before_sugar, str_after_sugar, str_weight;
+
                     Log.d("ReportActivity", "data - CreatedAt : " + data.get(0).getCreatedAt());
                     Log.d("ReportActivity", "data - ReportId : " + data.get(0).getReportId());
                     Log.d("ReportActivity", "data - Systolic : " + data.get(0).getSystolic());
@@ -121,11 +123,23 @@ public class ReportActivity extends AppCompatActivity {
 
                     reportId = data.get(0).getReportId();
 
-                    String str_high_pressure = data.get(0).getSystolic() + " mmHg";
-                    String str_low_pressure = data.get(0).getDiastolic() + " mmHg";
-                    String str_before_sugar = data.get(0).getSugarLevels().get(0) + " mg/dL";
-                    String str_after_sugar = data.get(0).getSugarLevels().get(1) + " mg/dL";
-                    String str_weight = data.get(0).getWeight() + " kg";
+                    str_high_pressure = data.get(0).getSystolic() + " mmHg";
+                    str_low_pressure = data.get(0).getDiastolic() + " mmHg";
+
+                    if (data.get(0).getSugarLevels().size() == 0) {
+                        str_before_sugar = "____ mg/dL";
+                        str_after_sugar = "____ mg/dL";
+                    }
+                    else if (data.get(0).getSugarLevels().size() == 1) {
+                        str_before_sugar = data.get(0).getSugarLevels().get(0) + " mg/dL";
+                        str_after_sugar = "____ mg/dL";
+                    }
+                    else {
+                        str_before_sugar = data.get(0).getSugarLevels().get(0) + " mg/dL";
+                        str_after_sugar = data.get(0).getSugarLevels().get(1) + " mg/dL";
+                    }
+
+                    str_weight = data.get(0).getWeight() + " kg";
 
                     low_pressure.setText(str_low_pressure);
                     high_pressure.setText(str_high_pressure);
@@ -152,12 +166,12 @@ public class ReportActivity extends AppCompatActivity {
                                 for (int i = 0; i < data.size(); i++) {
                                     // 나 자신이 쓴 채팅 구별
                                     if (data.get(i).getAuthorId() == getIntPreference("userId")) {
-                                        commentAdapter.add(new Comment(false, data.get(i).getContent()));
-                                        commentAdapter.addAuthorName(getStringPreference("name"));
+//                                        commentAdapter.add(new Comment(false, data.get(i).getContent()));
+//                                        commentAdapter.addAuthorName(getStringPreference("name"));
                                     }
                                     else {
-                                        commentAdapter.add(new Comment(true, data.get(i).getContent()));
-                                        commentAdapter.addAuthorName(User_id_name.get(data.get(i).getAuthorId()));
+//                                        commentAdapter.add(new Comment(true, data.get(i).getContent()));
+//                                        commentAdapter.addAuthorName(User_id_name.get(data.get(i).getAuthorId()));
                                     }
 
                                     commentAdapter.addCommentId(data.get(i).getCommentId());

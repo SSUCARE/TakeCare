@@ -24,6 +24,7 @@ public class RoleCaredFragment extends Fragment implements View.OnClickListener 
 
     View view;
     TextView tv_name;
+    Intent intent;
 
     List<String> Match_UserName_list;
     List<Integer> Match_UserId_list;
@@ -58,13 +59,21 @@ public class RoleCaredFragment extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.cared_my_graph:
-                startActivity(new Intent(getActivity(), ShareGraph.class));
+                intent=new Intent(getActivity(), ShareGraph.class);
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                startActivity(intent);
                 break;
             case R.id.cared_my_calendar:
-                startActivity(new Intent(getActivity(), CalendarActivity.class));
+                intent=new Intent(getActivity(),CalendarActivity.class);
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                startActivity(intent);
                 break;
             case R.id.cared_my_presciption:
-                startActivity(new Intent(getActivity(), PrescriptionActivity.class));
+                intent=new Intent(getActivity(),PrescriptionActivity.class);
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                startActivity(intent);
                 break;
             case R.id.cared_my_report:
                 Intent intent=new Intent(getActivity(), ReportActivity.class);

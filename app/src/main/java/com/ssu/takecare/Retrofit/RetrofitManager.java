@@ -196,8 +196,8 @@ public class RetrofitManager {
         });
     }
 
-    public void getReport(int path, int year, int month, int date, RetrofitReportCallback callback) {
-        Call<ResponseGetReport> call = ApplicationClass.retrofit_api.getReportRequest(path, year, month, date);
+    public void getReport(int path, int year, int month, int day, RetrofitReportCallback callback) {
+        Call<ResponseGetReport> call = ApplicationClass.retrofit_api.getReportRequest(path, year, month, day);
 
         call.enqueue(new Callback<ResponseGetReport>() {
             @Override

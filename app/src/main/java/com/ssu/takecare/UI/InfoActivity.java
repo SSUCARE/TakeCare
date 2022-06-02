@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
@@ -34,6 +37,9 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     private String role_register = "ROLE_CARER";
 
     private Button buttonInfo;
+
+    int ExistingUser_flag = 0; // ProfileActivity에서 넘어왔으면 2, 아니면 1
+    TextView tv_role;
 
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
@@ -78,6 +84,46 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
+        Check_ExistingUser();
+    }
+
+    void Check_ExistingUser() {
+        ExistingUser_flag = getIntent().getIntExtra("EXISTING_USER",1);
+        Log.d("InfoActivity","flag : " + ExistingUser_flag);
+
+        if (ExistingUser_flag == 2) {    // 기존 유저
+            tv_role = findViewById(R.id.tv_role);
+            RadioButton rb_man = findViewById(R.id.rb_man);
+            RadioButton rb_woman = findViewById(R.id.rb_woman);
+
+            role_rg.setVisibility(View.GONE);
+            tv_role.setVisibility(View.GONE);
+
+            if (ApplicationClass.sharedPreferences.getString("role", "").equals("보호자")) {
+                role_register = "ROLE_CARER";
+            }
+            else
+            {
+                role_register = "ROLE_CARED";
+            }
+
+            if (ApplicationClass.sharedPreferences.getString("gender", "").equals("남성")) {
+                rb_man.setChecked(true);
+                rb_woman.setChecked(false);
+            }
+            else
+            {
+                rb_man.setChecked(false);
+                rb_woman.setChecked(true);
+            }
+
+            name_register.setText(ApplicationClass.sharedPreferences.getString("name", ""));
+            age_register.setText(String.valueOf(ApplicationClass.sharedPreferences.getInt("age", 0)));
+            height_register.setText(String.valueOf(ApplicationClass.sharedPreferences.getInt("height", 0)));
+
+            buttonInfo.setText("수정");
+        }
     }
 
     @Override
@@ -164,6 +210,14 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                                     editor.putString("role", "피보호자");
 
                                 editor.apply();
+
+                                if (ExistingUser_flag == 2) {
+                                    finish();
+                                }
+                                else {
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                }
                             }
 
                             @Override
@@ -171,9 +225,6 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
                             }
                         });
-
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }
 
                     @Override

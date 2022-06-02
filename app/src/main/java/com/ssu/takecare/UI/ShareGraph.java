@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.ssu.takecare.AssistClass.SugarLevelsGraph;
+import com.ssu.takecare.AssistClass.SugarLevels_Graph;
 import com.ssu.takecare.Fragment.PressureFragment;
 import com.ssu.takecare.Fragment.SugarFragment;
 import com.ssu.takecare.Fragment.WeightFragment;
@@ -38,7 +38,7 @@ public class ShareGraph extends AppCompatActivity {
     List<Integer> systolic_list_date;
     List<Integer> diastolic_list;
     List<Integer> diastolic_list_date;
-    List<SugarLevelsGraph> sugarlevels_list;
+    List<SugarLevels_Graph> sugarlevels_list;
     List<Integer> sugarlevels_list_date;
     List<Integer> weight_list;
     List<Integer> weight_list_date;
@@ -113,7 +113,7 @@ public class ShareGraph extends AppCompatActivity {
             }
 
             if(data.get(i).getSugarLevels().size()!=0){
-                sugarlevels_list.add(new SugarLevelsGraph(data.get(i).getSugarLevels()));
+                sugarlevels_list.add(new SugarLevels_Graph(data.get(i).getSugarLevels()));
                 sugarlevels_list_date.add(day);
             }
 

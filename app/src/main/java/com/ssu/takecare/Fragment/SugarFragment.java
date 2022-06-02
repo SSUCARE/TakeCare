@@ -18,7 +18,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.ssu.takecare.AssistClass.MyMarkerView;
-import com.ssu.takecare.AssistClass.SugarLevelsGraph;
+import com.ssu.takecare.AssistClass.SugarLevels_Graph;
 import com.ssu.takecare.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class SugarFragment extends Fragment {
     ArrayList<Entry>data=new ArrayList<>();
 
     /* 혈당 데이터: 첫번째는 날짜와 관련된 값, 두번째에는 혈당 값을 넣는다. */
-    public SugarFragment(List<SugarLevelsGraph> sugarlevels_list, List<Integer> sugarlevels_list_date){
+    public SugarFragment(List<SugarLevels_Graph> sugarlevels_list, List<Integer> sugarlevels_list_date){
         for(int i=0; i<sugarlevels_list.size(); i++){
             int sugar_size = sugarlevels_list.get(i).getSugarLevels_list().size();
             Log.d("디버그, SugarFragment","sugar_size:"+sugar_size);

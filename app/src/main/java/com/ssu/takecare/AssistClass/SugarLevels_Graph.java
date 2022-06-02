@@ -3,10 +3,10 @@ package com.ssu.takecare.AssistClass;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SugarLevelsGraph {
+public class SugarLevels_Graph {
     List<Integer> SugarLevels_list=new ArrayList<>();
 
-    public SugarLevelsGraph(List<Integer> SugarLevels_list){
+    public SugarLevels_Graph(List<Integer> SugarLevels_list){
         this.SugarLevels_list=SugarLevels_list;
 
     }

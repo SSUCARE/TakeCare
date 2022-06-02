@@ -37,8 +37,8 @@ public class PressureFragment extends Fragment {
             diastolic_blood_pressure_list.add(new Entry(diastolic_list_date.get(i),diastolic_list.get(i)));
 
         for(int i=0; i<systolic_blood_pressure_list.size(); i++){
-            Log.d("디버그, PressureFragment->sys","x축:"+systolic_blood_pressure_list.get(i).getX()+" y축:"+systolic_blood_pressure_list.get(i).getY());
-            Log.d("디버그, PressureFragment->dys","x축:"+diastolic_blood_pressure_list.get(i).getX()+" y축:"+diastolic_blood_pressure_list.get(i).getY());
+//            Log.d("디버그, PressureFragment->sys","x축:"+systolic_blood_pressure_list.get(i).getX()+" y축:"+systolic_blood_pressure_list.get(i).getY());
+//            Log.d("디버그, PressureFragment->dys","x축:"+diastolic_blood_pressure_list.get(i).getX()+" y축:"+diastolic_blood_pressure_list.get(i).getY());
         }
     }
 

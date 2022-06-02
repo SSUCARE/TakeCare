@@ -66,6 +66,7 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
                     int match_userid=Search_UserId(name.getText().toString());
                     if(match_userid!=-1){
                         intent=new Intent(view.getContext(), CalendarActivity.class);
+                        intent.putExtra("USER_NAME",name.getText().toString());
                         intent.putExtra("USER_ID", match_userid);
                         mContext.startActivity(intent);
                     }
@@ -75,7 +76,11 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
             btn3.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(view.getContext(), PrescriptionActivity.class));
+                    int match_userid=Search_UserId(name.getText().toString());
+                    intent=new Intent(view.getContext(), PrescriptionActivity.class);
+                    intent.putExtra("USER_NAME",name.getText().toString());
+                    intent.putExtra("USER_ID", match_userid);
+                    mContext.startActivity(intent);
                 }
             });
 

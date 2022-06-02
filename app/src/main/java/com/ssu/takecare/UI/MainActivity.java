@@ -220,6 +220,9 @@ public class MainActivity extends AppCompatActivity {
                             List<DataResponseCare> list = data.getData();
                             Log.d(TAG,"맵핑된 수 : " + list.size());
 
+                            editor.putInt("Mapping_Count", list.size());
+                            editor.apply();
+
                             for (int i = 0; i < list.size(); i++){
                                 Log.d(TAG,"i : " + i + ", status : " + list.get(i).getStatus());
 
@@ -253,6 +256,9 @@ public class MainActivity extends AppCompatActivity {
 
                             List<DataResponseCare> list = data.getData();
                             Log.d(TAG,"맵핑된 수 : " + list.size());
+
+                            editor.putInt("Mapping_Count", list.size());
+                            editor.apply();
 
                             for (int i = 0; i < list.size(); i++){
                                 Log.d(TAG,"i : " + i + ", status : " + list.get(i).getStatus());
