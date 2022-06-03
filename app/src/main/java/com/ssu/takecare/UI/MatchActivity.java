@@ -37,15 +37,20 @@ public class MatchActivity extends AppCompatActivity {
         mArrData = new HashMap<String, Integer>();
         mArrData2 = new HashMap<String, Integer>();
 
-        Button plus= findViewById(R.id.plus_icon_button);
-        plus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dialog = new MatchDialog(MatchActivity.this);
-                dialog.showDialog();
-            }
-        });
-
         role = ApplicationClass.sharedPreferences.getString("role", "");
+
+        Button plus = findViewById(R.id.plus_icon_button);
+
+        if (role.equals("피보호자"))
+            plus.setVisibility(View.GONE);
+        else {
+            plus.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialog = new MatchDialog(MatchActivity.this);
+                    dialog.showDialog();
+                }
+            });
+        }
 
         ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
             @Override

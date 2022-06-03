@@ -166,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 bs_input.setText(str);
                 as_input.setText(str);
                 w_input.setText(str);
+
+                Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
             }
 
             @Override

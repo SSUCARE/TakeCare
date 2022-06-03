@@ -86,8 +86,12 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         name.setText(AuthorNameList.get(position));
         comment.setText(commentObj.message);
 
+        boolean flag = false;
+        if (name.getText().equals("다른 보호자"))
+            flag = true;
+
         // 경우에 따라 두 가지로 나눠 나타낼 수 있다.
-        comment.setBackgroundResource(commentObj.left ? R.drawable.bubble_you : R.drawable.bubble_me);
+        comment.setBackgroundResource(commentObj.left ? (flag ? R.drawable.bubble_other : R.drawable.bubble_you) : R.drawable.bubble_me);
         messageContainer.setGravity(commentObj.left ? Gravity.LEFT : Gravity.RIGHT);
 
         return row;

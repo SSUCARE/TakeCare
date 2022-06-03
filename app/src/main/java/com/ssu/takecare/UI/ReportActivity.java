@@ -102,6 +102,7 @@ public class ReportActivity extends AppCompatActivity {
             find_year=cal_year; find_month=cal_month; find_day=cal_day;
             Log.d("ReportActivity","바뀐 후,"+" find_year:"+find_year+" find_month:"+find_month+" find_day:"+find_day);
         }
+
         Log.d("ReportActivity","find_year : " + find_year+", find_month : " + find_month + ", find_day : " + find_day);
         ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
             @Override
@@ -171,7 +172,13 @@ public class ReportActivity extends AppCompatActivity {
                                     }
                                     else {
                                         commentAdapter.add(new Comment(true, data.get(i).getContent()));
-                                        commentAdapter.addAuthorName(User_id_name.get(data.get(i).getAuthorId()));
+
+                                        if (User_id_name.containsKey(data.get(i).getAuthorId()))
+                                            commentAdapter.addAuthorName(User_id_name.get(data.get(i).getAuthorId()));
+                                        else {
+                                            Log.d("ReportActivity", "해당하는 id(" + data.get(i).getAuthorId() + ")의 정보가 없습니다.");
+                                            commentAdapter.addAuthorName("다른 보호자");
+                                        }
                                     }
 
                                     commentAdapter.addCommentId(data.get(i).getCommentId());
