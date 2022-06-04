@@ -27,4 +27,5 @@
 
     <!--리포트 수치 박스 color-->
     <color name="box_color">#1AD5D5D5</color>
+    <color name="calendar_report">#FFCD12</color>
 </resources>

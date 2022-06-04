@@ -1,7 +1,6 @@
 package com.ssu.takecare.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +34,6 @@ public class PressureFragment extends Fragment {
 
         for(int i=0; i<diastolic_list.size(); i++)
             diastolic_blood_pressure_list.add(new Entry(diastolic_list_date.get(i),diastolic_list.get(i)));
-
-        for(int i=0; i<systolic_blood_pressure_list.size(); i++){
-//            Log.d("디버그, PressureFragment->sys","x축:"+systolic_blood_pressure_list.get(i).getX()+" y축:"+systolic_blood_pressure_list.get(i).getY());
-//            Log.d("디버그, PressureFragment->dys","x축:"+diastolic_blood_pressure_list.get(i).getX()+" y축:"+diastolic_blood_pressure_list.get(i).getY());
-        }
     }
 
     @Nullable
@@ -79,6 +73,7 @@ public class PressureFragment extends Fragment {
         lineDataSet.setCircleRadius(4f);
 
 
+        //-----------------------------------------------------여기서 부터는 최고혈압
         // LineDataSet에 데이터를 넣어서 직선 구현하기 (최고혈압)
         LineDataSet lineDataSet2 = new LineDataSet(systolic_blood_pressure_list, "최고혈압");
 

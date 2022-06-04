@@ -14,6 +14,8 @@ import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
+import com.ssu.takecare.Retrofit.UpdateReport.ResponseUpdateReport;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -53,6 +55,11 @@ public interface RetrofitAPI {
     @Headers("Content-Type: application/json")
     @POST("/report")
     Call<ResponseReport> reportRequest(@Body RequestReport body);
+
+    //report 수정
+    @Headers("Content-Type: application/json")
+    @PUT("/report/{reportId}/")
+    Call<ResponseUpdateReport> update_reportRequest(@Path("reportId")int path, @Body RequestReport body);
 
     // report 조회
     @Headers("Content-Type: application/json")

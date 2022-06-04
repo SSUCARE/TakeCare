@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,12 @@ public class HomeFragment extends Fragment {
     Date currentTime = Calendar.getInstance().getTime();
     String date = new SimpleDateFormat("M월 d일 E요일", Locale.getDefault()).format((currentTime));
 
+    Boolean REPORT_FLAG;
+
+    public HomeFragment(Boolean REPORT_FLAG){
+        this.REPORT_FLAG=REPORT_FLAG;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,6 +36,11 @@ public class HomeFragment extends Fragment {
 
         TextView today_date = view.findViewById(R.id.tv_date);
         today_date.setText(date);
+
+        if(REPORT_FLAG){
+            Button btn1=(Button)view.findViewById(R.id.btn_report);
+            btn1.setText("레포트 수정");
+        }
 
         ViewPager viewPager=(ViewPager)view.findViewById(R.id.viewPager);
 

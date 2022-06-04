@@ -17,12 +17,14 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.ssu.takecare.AssistClass.CalendarDecorator;
 import com.ssu.takecare.AssistClass.Calendar_Day;
+import com.ssu.takecare.AssistClass.ReportDecorator;
+import com.ssu.takecare.AssistClass.SaturdayDecorator;
+import com.ssu.takecare.AssistClass.SundayDecorator;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Runnable.GetCalendar_Month_Runnable;
 import java.util.HashMap;
 import java.util.List;
 
-//해결할 것: 현재 달에서 다음달로 넘어갈때, 현재달에서 눌린 원 없어지도록 못하나?
 public class CalendarActivity extends AppCompatActivity {
 
     HashMap<Integer, String> ID_NAME;
@@ -71,10 +73,8 @@ public class CalendarActivity extends AppCompatActivity {
         cal_name=(TextView)findViewById(R.id.calendar_name);
         cal_name.setText(userName);
 
-        calendarDecorator=new CalendarDecorator();
         materialCalendarView = findViewById(R.id.calendar_view);
         materialCalendarView.setSelectedDate(CalendarDay.today());
-        materialCalendarView.addDecorators(calendarDecorator);
 
         layout=(ConstraintLayout)findViewById(R.id.Calendar_transfer_Report);
 
@@ -179,6 +179,8 @@ public class CalendarActivity extends AppCompatActivity {
                     finish();
                     //error발생한 경우
                 }
+
+                materialCalendarView.addDecorators(new CalendarDecorator(),new SaturdayDecorator(),new SundayDecorator(),new ReportDecorator(hash_map,cal_year,cal_month));
             }
         };
         Runnable_gc=new GetCalendar_Month_Runnable(Handler_Calendar,getApplicationContext(),user_id,year,month);
@@ -188,6 +190,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     //밑에 있는 report 작성하기
     public void write_report(int day){
+        init_report();
         Calendar_Day data=hash_map.get(day);
         if (data!=null){
             if(data.getSystolic()>0)

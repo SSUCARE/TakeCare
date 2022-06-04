@@ -16,9 +16,4 @@
         android:fontWeight = "400"
         android:font = "@font/font_merienda_bold"/>
 
-    <font
-        android:fontStyle = "normal"
-        android:fontWeight = "400"
-        android:font = "@font/font_noto_sans"/>
-
 </font-family>

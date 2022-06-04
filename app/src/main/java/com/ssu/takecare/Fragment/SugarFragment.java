@@ -2,7 +2,6 @@ package com.ssu.takecare.Fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.ssu.takecare.AssistClass.MyMarkerView;
 import com.ssu.takecare.AssistClass.SugarLevels_Graph;
 import com.ssu.takecare.R;
 import java.util.ArrayList;
@@ -31,15 +29,11 @@ public class SugarFragment extends Fragment {
     public SugarFragment(List<SugarLevels_Graph> sugarlevels_list, List<Integer> sugarlevels_list_date){
         for(int i=0; i<sugarlevels_list.size(); i++){
             int sugar_size = sugarlevels_list.get(i).getSugarLevels_list().size();
-            Log.d("디버그, SugarFragment","sugar_size:"+sugar_size);
             float divide=(1/(float)sugar_size);
-            Log.d("디버그, SugarFragment","divide:"+divide);
             for(int j=0; j<sugar_size; j++){
                 data.add(new Entry((float)sugarlevels_list_date.get(i)+(divide*j),sugarlevels_list.get(i).getSugarLevels_list().get(j)));
             }
         }
-        for(int i=0; i<data.size(); i++)
-            Log.d("디버그, SugarFragment->sugar","x축:"+data.get(i).getX()+"y축:"+data.get(i).getY());
     }
 
     @Nullable
@@ -60,7 +54,7 @@ public class SugarFragment extends Fragment {
         //선 굵기
         lineDataSet.setLineWidth(1.5f);
         //Value는 Y값이고, value의 크기를 조정한다. 0으로 할 경우 ValueText를 띄우지 않는다.
-        lineDataSet.setValueTextSize(0f);
+        lineDataSet.setValueTextSize(12);
         //선 색깔
         lineDataSet.setColor(ContextCompat.getColor(getActivity(),R.color.sugar_chart_yellow));
         //동그라미 외부 색깔
@@ -147,13 +141,7 @@ public class SugarFragment extends Fragment {
         lineChart.setExtraOffsets(5,5,5,15);
         lineChart.setBorderWidth(1500);
 
-
-        //MarkerView 구현하기
-        MyMarkerView myMarkerView=new MyMarkerView(getActivity(),R.layout.markerview);
-        lineChart.setMarker(myMarkerView);
-
-
-        /*Legend 설정(Legend는 LineChart하단에 있는 직선의 구분을 위한 text*/
+        /*Legend 설정(Legend는 LineChart 하단에 있는 직선의 구분을 위한 text*/
         Legend i=lineChart.getLegend();
         i.setEnabled(false);
     }

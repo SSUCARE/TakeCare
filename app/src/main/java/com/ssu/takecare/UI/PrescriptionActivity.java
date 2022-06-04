@@ -259,8 +259,8 @@ public class PrescriptionActivity extends AppCompatActivity {
     //str2, 3, 4 각각은 혈압, 혈당, 몸무게에 대한 한마디씩 하기.
     void write_prescription(){
         str1=last_month+"월 한달 동안 "+userName+"님의 평균 혈압은 "+avg_systolic+"이고, 평균 혈당은 "+avg_sugarlevels+"이고, BMI 수치는 "+BMI+"입니다.";
-
-        String final_str=str1+"\n\n\n"+str2+"\n\n\n"+str3+"\n\n\n"+str4;
+        String str4="여름철에는 냉방병과 일사병, 열사병 등 온열질환, 급성 장염 등이 생기기 쉽습니다. 그러니 몸에 이상이 느껴진다면 지체하지 말고 바로 병원에 방문하세요. 조기 진단과 적합한 치료가 여름 질병에서 가장 빨리 벗어나는 방법입니다.";
+        String final_str=last_month+"월 한달 동안 "+userName+"님의 평균 혈압은 "+avg_systolic+"이고, 평균 혈당은 "+avg_sugarlevels+"이고, BMI 수치는 "+BMI+"입니다."+"\n\n"+str2+"\n\n"+str3+"\n\n"+str4+"\n\n"+str4;
         presciption_tv0.setText("최근 한달의 데이터를 분석해 전해드립니다.");
         presciption_tv1.setText(final_str);
 

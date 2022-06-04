@@ -31,6 +31,9 @@ import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentIdCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
+
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,10 +75,10 @@ public class ReportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_report);
 
-        String my_name = ApplicationClass.sharedPreferences.getString("name", "");
-        this.user_name = findViewById(R.id.report_name);
-        this.user_name.setText(my_name);
+        userId = getIntent().getIntExtra("USER_ID",-1);
+        User_id_name = (HashMap<Integer, String>) getIntent().getSerializableExtra("ID_NAME");
 
+        user_name = findViewById(R.id.report_name);
         high_pressure = findViewById(R.id.high_pressure_report);
         low_pressure = findViewById(R.id.low_pressure_report);
         before_sugar = findViewById(R.id.before_sugar_report);
@@ -89,8 +92,13 @@ public class ReportActivity extends AppCompatActivity {
         commentAdapter = new CommentAdapter(getApplicationContext(), R.layout.activity_comment);
         listView.setAdapter(commentAdapter);
 
-        userId = getIntent().getIntExtra("USER_ID",-1);
-        User_id_name = (HashMap<Integer, String>) getIntent().getSerializableExtra("ID_NAME");
+        if (userId == ApplicationClass.sharedPreferences.getInt("userId", 0)) {
+            String my_name = ApplicationClass.sharedPreferences.getString("name", "");
+            user_name.setText(my_name);
+        }
+        else {
+            user_name.setText(User_id_name.get(userId));
+        }
 
         // CalendarActivity 로부터 넘어옴
         int cal_year=getIntent().getIntExtra("YEAR",-1);

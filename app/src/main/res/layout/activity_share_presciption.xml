@@ -60,7 +60,6 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/presciption_tv0"
-                android:fontFamily="@font/font_noto_sans"
                 android:textSize="20sp" />
 
             <TextView
@@ -73,7 +72,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.65"
-                android:fontFamily="@font/font_noto_sans"
                 android:textColor="@color/pre_text"
                 android:text=""
                 android:textSize="18sp"
@@ -90,7 +88,6 @@
                 android:textColor="@color/pre_text"
                 android:textStyle="bold"
                 android:text=""
-                android:fontFamily="@font/font_noto_sans"
                 android:textSize="18sp"
                 android:id="@+id/presciption_sugar_avg"/>
 
@@ -104,11 +101,10 @@
                 android:textColor="@color/pre_text"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:fontFamily="@font/font_noto_sans"
                 android:id="@+id/presciption_bmi"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="16"
@@ -126,11 +122,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:id="@+id/presciption_tv1"
-                    android:fontFamily="@font/font_noto_sans"
                     android:text=""/>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,12 +19,19 @@ import com.ssu.takecare.Fragment.MyPageFragment;
 import com.ssu.takecare.Fragment.RoleCaredFragment;
 import com.ssu.takecare.Fragment.ShareFragment;
 import com.ssu.takecare.R;
+import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
 import com.ssu.takecare.Retrofit.Match.DataResponseCare;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +47,22 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
+    Date currentTime = Calendar.getInstance().getTime();
+    String date_year = new SimpleDateFormat("yyyy", Locale.getDefault()).format((currentTime));
+    String date_month = new SimpleDateFormat("MM", Locale.getDefault()).format((currentTime));
+    String date_day = new SimpleDateFormat("dd", Locale.getDefault()).format((currentTime));
+
+    int find_year = Integer.parseInt(date_year);
+    int find_month = Integer.parseInt(date_month);
+    int find_day = Integer.parseInt(date_day);
+
+    int userId;
+    int reportId;
+
+    Boolean REPORT_FLAG=false;
+    int r_systolic=0; int r_diastolic=0; int r_weight=0;
+    List<Integer> r_sugarLevels = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +74,56 @@ public class MainActivity extends AppCompatActivity {
         tab_btn2 = findViewById(R.id.tab_btn2);
         tab_btn3 = findViewById(R.id.tab_btn3);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
+        init_getReport();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
+    }
+
+    public void init_getReport(){
+        userId=ApplicationClass.sharedPreferences.getInt("userId",-1);
+        if(userId!=-1){
+            ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
+                @Override
+                public void onError(Throwable t) {
+                    Log.d("ReportActivity", "에러 : " + t);
+                }
+
+                @Override
+                public void onSuccess(String message, List<DataGetReport> data) {
+                    if (data.size() != 0) {
+                        Log.d("ReportActivity", "data - CreatedAt : " + data.get(0).getCreatedAt());
+                        Log.d("ReportActivity", "data - ReportId : " + data.get(0).getReportId());
+                        Log.d("ReportActivity", "data - Systolic : " + data.get(0).getSystolic());
+                        Log.d("ReportActivity", "data - Diastolic : " + data.get(0).getDiastolic());
+                        Log.d("ReportActivity", "data - SugarLevels : " + data.get(0).getSugarLevels());
+                        Log.d("ReportActivity", "data - Weight : " + data.get(0).getWeight());
+
+                        reportId = data.get(0).getReportId();
+                        r_systolic=data.get(0).getSystolic();
+                        r_diastolic=data.get(0).getDiastolic();
+                        r_weight=data.get(0).getWeight();
+                        r_sugarLevels=data.get(0).getSugarLevels();
+
+                        REPORT_FLAG=true;
+                        Button btn1=(Button)findViewById(R.id.btn_report);
+                        btn1.setText("레포트 수정");
+                        Log.d("확인, 디버그","통과1");
+                    }
+                    else {
+                        REPORT_FLAG=false;
+                        Log.d("확인, 디버그","통과2");
+                    }
+                }
+                @Override
+                public void onFailure(int error_code) {
+                    Log.d("ReportActivity", "실패 : " + error_code);
+                }
+            });
+        }
+        else{
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -152,34 +225,65 @@ public class MainActivity extends AppCompatActivity {
             weight = Integer.parseInt(w_input.getText().toString());
         }
 
-        ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
-            @Override
-            public void onError(Throwable t) {
+        //------------여기까지 하면 넣을 값 정해짐
+        if (REPORT_FLAG){
+            for(int i=0; i<sugarLevels.size(); i++)
+                r_sugarLevels.add(sugarLevels.get(i));
 
-            }
+            //reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight 기존값들 어떻게 사용할지는 조금 생각해보기
+            //수정하기 API만들기
+            ApplicationClass.retrofit_manager.updateReport(reportId,systolic, diastolic,r_sugarLevels, weight, new RetrofitCallback() {
+                @Override
+                public void onError(Throwable t) {
+                    Log.d("디버그, MainActivity","업데이트 에러");
+                }
+                @Override
+                public void onSuccess(String message, String token) {
+                    Log.d("디버그, MainActivity","업데이트 성공");
+                    String str = "____";
+                    hp_input.setText(str);
+                    lp_input.setText(str);
+                    bs_input.setText(str);
+                    as_input.setText(str);
+                    w_input.setText(str);
+                }
+                @Override
+                public void onFailure(int error_code) {
+                    Log.d("디버그, MainActivity","업데이트 실패");
+                }
+            });
+            REPORT_FLAG=true;
+            Button btn1=(Button)findViewById(R.id.btn_report);
+            btn1.setText("레포트 수정");
 
-            @Override
-            public void onSuccess(String message, String token) {
-                String str = "____";
-                hp_input.setText(str);
-                lp_input.setText(str);
-                bs_input.setText(str);
-                as_input.setText(str);
-                w_input.setText(str);
-
-                Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(int error_code) {
-
-            }
-        });
+        }
+        else {
+            ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
+                @Override
+                public void onError(Throwable t) {
+                }
+                @Override
+                public void onSuccess(String message, String token) {
+                    String str = "____";
+                    hp_input.setText(str);
+                    lp_input.setText(str);
+                    bs_input.setText(str);
+                    as_input.setText(str);
+                    w_input.setText(str);
+                    Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onFailure(int error_code) {
+                }
+            });
+            REPORT_FLAG=true;
+            Button btn1=(Button)findViewById(R.id.btn_report);
+            btn1.setText("레포트 수정");
+        }
     }
 
     public void logout(View view) {
         clearInfo();
-
         finish();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
@@ -194,14 +298,13 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("age", 0);
         editor.putInt("height", 0);
         editor.putString("role", "");
-
         editor.apply();
     }
 
     public void click_event(View view) {
         switch (view.getId()) {
             case R.id.tab_btn1:
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
                 tab_btn1.setImageResource(R.drawable.tab_btn1_select);
                 tab_btn2.setImageResource(R.drawable.tab_btn2);
                 tab_btn3.setImageResource(R.drawable.tab_btn3);

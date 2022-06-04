@@ -25,6 +25,8 @@ import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
+import com.ssu.takecare.Retrofit.UpdateReport.ResponseUpdateReport;
+
 import java.util.List;
 
 public class RetrofitManager {
@@ -191,6 +193,39 @@ public class RetrofitManager {
             public void onFailure(@NonNull Call<ResponseReport> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_makeReport", "onFailure : " + t.getLocalizedMessage());
 
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void updateReport(int reportId,int systolic, int diastolic, List<Integer> sugarLevels, int weight, RetrofitCallback callback) {
+        RequestReport requestReport = new RequestReport();
+        requestReport.setSystolic(systolic);
+        requestReport.setDiastolic(diastolic);
+        requestReport.setSugarLevels(sugarLevels);
+        requestReport.setWeight(weight);
+
+        Call<ResponseUpdateReport> call = ApplicationClass.retrofit_api.update_reportRequest(reportId,requestReport);
+
+        call.enqueue(new Callback<ResponseUpdateReport>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseUpdateReport> call, @NonNull Response<ResponseUpdateReport> response) {
+                if (response.isSuccessful()) {
+                    ResponseUpdateReport body = response.body();
+                    Log.d("RetrofitManager_updateReport", "onResponse : 성공, message : " + body.getMessage());
+                    Log.d("RetrofitManager_updateReport", "onResponse : status code is " + response.code());
+                    callback.onSuccess(body.message, body.message);
+                }
+                else {
+                    Log.d("RetrofitManager_updateReport", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseUpdateReport> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_updateReport", "onFailure : " + t.getLocalizedMessage());
                 callback.onError(t);
             }
         });
