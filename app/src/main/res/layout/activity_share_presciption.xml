@@ -46,10 +46,7 @@
         android:layout_weight="11"
         android:background="@color/tab_color"
         android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:padding="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -63,9 +60,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/presciption_tv0"
-                android:fontFamily="@font/font_normal"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/font_noto_sans"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="120dp"
@@ -77,11 +73,11 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.65"
-                android:fontFamily="@font/font_normal"
+                android:fontFamily="@font/font_noto_sans"
                 android:textColor="@color/pre_text"
                 android:text=""
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textSize="20sp"
                 android:id="@+id/presciption_pressure_avg"/>
 
             <TextView
@@ -92,10 +88,10 @@
                 app:layout_constraintRight_toLeftOf="@id/presciption_bmi"
                 app:layout_constraintTop_toTopOf="@id/presciption_pressure_avg"
                 android:textColor="@color/pre_text"
-                android:text=""
-                android:fontFamily="@font/font_normal"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:text=""
+                android:fontFamily="@font/font_noto_sans"
+                android:textSize="18sp"
                 android:id="@+id/presciption_sugar_avg"/>
 
             <TextView
@@ -107,8 +103,8 @@
                 app:layout_constraintTop_toTopOf="@id/presciption_pressure_avg"
                 android:textColor="@color/pre_text"
                 android:textStyle="bold"
-                android:textSize="20sp"
-                android:fontFamily="@font/font_normal"
+                android:textSize="18sp"
+                android:fontFamily="@font/font_noto_sans"
                 android:id="@+id/presciption_bmi"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -132,7 +128,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:textSize="20sp"
                     android:id="@+id/presciption_tv1"
-                    android:fontFamily="@font/font_normal"
+                    android:fontFamily="@font/font_noto_sans"
                     android:text=""/>
             </LinearLayout>
         </LinearLayout>

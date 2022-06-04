@@ -68,6 +68,7 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
                         intent=new Intent(view.getContext(), CalendarActivity.class);
                         intent.putExtra("USER_NAME",name.getText().toString());
                         intent.putExtra("USER_ID", match_userid);
+                        intent.putExtra("ID_NAME", ID_NAME);
                         mContext.startActivity(intent);
                     }
                 }
