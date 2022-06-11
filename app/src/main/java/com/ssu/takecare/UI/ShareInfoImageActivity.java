@@ -72,108 +72,113 @@ public class ShareInfoImageActivity extends AppCompatActivity {
         Log.d("ShareInfoImageActivity","userId :" + userId);
 
         // login된 user의 건강정보 레포트 불러오기 - 정보 image 생성/공유를 위해.
-        ApplicationClass.retrofit_manager.getReport(userId, Integer.parseInt(time[0]),Integer.parseInt(time[1]),Integer.parseInt(time[2]),new RetrofitReportCallback() {
-            @Override
-            public void onError(Throwable t) {
-            }
-
-            @Override
-            public void onSuccess(String message, List<DataGetReport> data) {
-                if (!pressure_txt.getText().equals("")) {
-                    String text_pressure = "혈압 (" + String.valueOf(data.get(0).getSystolic()) + " / " + String.valueOf(data.get(0).getDiastolic()) + " mmHg)";
-                    pressure_txt.setText(text_pressure);
+        try {
+            ApplicationClass.retrofit_manager.getReport(userId, Integer.parseInt(time[0]), Integer.parseInt(time[1]), Integer.parseInt(time[2]), new RetrofitReportCallback() {
+                @Override
+                public void onError(Throwable t) {
                 }
 
-                if (!sugar_txt.getText().equals("")) {
-                    String text_sugar = "혈당 (" + String.valueOf(data.get(0).getSugarLevels()) + " mg/dL)";
-                    sugar_txt.setText(text_sugar);
-                }
+                @Override
+                public void onSuccess(String message, List<DataGetReport> data) {
+                    if (!pressure_txt.getText().equals("")) {
+                        String text_pressure = "혈압 (" + String.valueOf(data.get(0).getSystolic()) + " / " + String.valueOf(data.get(0).getDiastolic()) + " mmHg)";
+                        pressure_txt.setText(text_pressure);
+                    }
 
-                if (!weight_txt.getText().equals("")) {
-                    String text_weight = "체중 (" + String.valueOf(data.get(0).getWeight()) + " kg)";
-                    weight_txt.setText(text_weight);
-                }
+                    if (!sugar_txt.getText().equals("")) {
+                        String text_sugar = "혈당 (" + String.valueOf(data.get(0).getSugarLevels()) + " mg/dL)";
+                        sugar_txt.setText(text_sugar);
+                    }
 
-                // 생성된 xml 파일을 이미지 파일로 저장하기.
-                File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"Android/data/com.ssu.takecare/files");
+                    if (!weight_txt.getText().equals("")) {
+                        String text_weight = "체중 (" + String.valueOf(data.get(0).getWeight()) + " kg)";
+                        weight_txt.setText(text_weight);
+                    }
 
-                if (!dir.exists())
-                    dir.mkdirs();
+                    // 생성된 xml 파일을 이미지 파일로 저장하기.
+                    File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "Android/data/com.ssu.takecare/files");
 
-                File file = new File(dir, "shareInfoImage.png");
+                    if (!dir.exists())
+                        dir.mkdirs();
 
-                ImageView view2 = view.findViewById(R.id.image_share);
-                view2.buildDrawingCache();
-                Bitmap bmap = view2.getDrawingCache();
-                Canvas canvas = new Canvas(bmap);
-                canvas.drawARGB(50, 0, 0, 0);
+                    File file = new File(dir, "shareInfoImage.png");
+
+                    ImageView view2 = view.findViewById(R.id.image_share);
+                    view2.buildDrawingCache();
+                    Bitmap bmap = view2.getDrawingCache();
+                    Canvas canvas = new Canvas(bmap);
+                    canvas.drawARGB(50, 0, 0, 0);
 
 //                        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/SomeFont.ttf");
-                Paint textPaint = new Paint();
-                textPaint.setTextSize(60);
+                    Paint textPaint = new Paint();
+                    textPaint.setTextSize(60);
 //                        textPaint.setTypeface(typeface);
-                canvas.drawText("당신의 건강정보 데이터는...", 200, 900, textPaint);
-                canvas.drawText(pressure_txt.getText().toString(), 200, 1000, textPaint);
-                canvas.drawText(sugar_txt.getText().toString(), 200, 1100, textPaint);
-                canvas.drawText(weight_txt.getText().toString(), 200, 1200, textPaint);
+                    canvas.drawText("당신의 건강정보 데이터는...", 200, 900, textPaint);
+                    canvas.drawText(pressure_txt.getText().toString(), 200, 1000, textPaint);
+                    canvas.drawText(sugar_txt.getText().toString(), 200, 1100, textPaint);
+                    canvas.drawText(weight_txt.getText().toString(), 200, 1200, textPaint);
 
-                view2.draw(canvas);
+                    view2.draw(canvas);
 
-                OutputStream outputStream = null;
-                try {
-                    outputStream = new FileOutputStream(file);
-                    bmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                    outputStream.close();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
+                    OutputStream outputStream = null;
+                    try {
+                        outputStream = new FileOutputStream(file);
+                        bmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                        outputStream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    if (ContextCompat.checkSelfPermission(ShareInfoImageActivity.this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        fileReadPermission = true;
+                    }
+                    if (ContextCompat.checkSelfPermission(ShareInfoImageActivity.this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        fileWritePermission = true;
+                    }
+
+                    if (!fileReadPermission || !fileWritePermission) {
+                        ActivityCompat.requestPermissions(ShareInfoImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
+                    }
+
+                    // 안드로이드 상 공유할 수 있는 다른 앱을 선택하고, 이미지를 넘겨줄 수 있도록 할 수 있음.
+                    // 이미지 공유.
+                    if (fileReadPermission && fileWritePermission) {
+                        Uri imageUri = FileProvider.getUriForFile(
+                                ShareInfoImageActivity.this,
+                                BuildConfig.APPLICATION_ID,
+                                file);
+                        //            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                        //            shareIntent.setType("image/png");
+                        //            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                        //            startActivity(Intent.createChooser(shareIntent, "Share Image"));
+
+                        //            Uri uri = FileProvider.getUriForFile(this, "com.example.provider",file);
+                        Intent share = ShareCompat.IntentBuilder.from(ShareInfoImageActivity.this)
+                                .setStream(imageUri) // uri from FileProvider
+                                .setType("image/png")
+                                .getIntent()
+                                .setAction(Intent.ACTION_SEND) //Change if needed
+                                .setDataAndType(imageUri, "image/*")
+                                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                        startActivity(Intent.createChooser(share, "share image"));
+                    } else {
+                        showToast("permission이 부여되지 않아서 기능 실행이 안됩니다.");
+                    }
                 }
 
-                if (ContextCompat.checkSelfPermission(ShareInfoImageActivity.this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    fileReadPermission=true;
+                @Override
+                public void onFailure(int error_code) {
                 }
-                if (ContextCompat.checkSelfPermission(ShareInfoImageActivity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                    fileWritePermission=true;
-                }
-
-                if (!fileReadPermission || !fileWritePermission) {
-                    ActivityCompat.requestPermissions(ShareInfoImageActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, 200);
-                }
-
-                // 안드로이드 상 공유할 수 있는 다른 앱을 선택하고, 이미지를 넘겨줄 수 있도록 할 수 있음.
-                // 이미지 공유.
-                if (fileReadPermission && fileWritePermission) {
-                    Uri imageUri = FileProvider.getUriForFile (
-                            ShareInfoImageActivity.this,
-                            BuildConfig.APPLICATION_ID ,
-                            file);
-                    //            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    //            shareIntent.setType("image/png");
-                    //            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                    //            startActivity(Intent.createChooser(shareIntent, "Share Image"));
-
-                    //            Uri uri = FileProvider.getUriForFile(this, "com.example.provider",file);
-                    Intent share = ShareCompat.IntentBuilder.from(ShareInfoImageActivity.this)
-                            .setStream(imageUri) // uri from FileProvider
-                            .setType("image/png")
-                            .getIntent()
-                            .setAction(Intent.ACTION_SEND) //Change if needed
-                            .setDataAndType(imageUri, "image/*")
-                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                    startActivity(Intent.createChooser(share, "share image"));
-                }
-                else {
-                    showToast("permission이 부여되지 않아서 기능 실행이 안됩니다.");
-                }
-            }
-            @Override
-            public void onFailure(int error_code) {
-            }
-        });
+            });
+        }
+        catch ( Exception | Error e ) {
+            e.printStackTrace();
+            showToast("리포트가 생성되어있지 않습니다");
+        }
     }
 
     private void showToast(String message){
@@ -182,7 +187,6 @@ public class ShareInfoImageActivity extends AppCompatActivity {
     }
 
     public Canvas onDraw(Bitmap bitmap, String txt, String txt2, String txt3) {
-
         try {
             Canvas canvas= null;
             canvas.drawBitmap ( bitmap , 0 , 0 , null ) ;

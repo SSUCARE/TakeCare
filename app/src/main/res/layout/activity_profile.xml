@@ -47,10 +47,7 @@
         android:layout_weight="10"
         android:background="@color/tab_color"
         android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:padding="15dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
