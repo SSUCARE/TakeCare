@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txtlistview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:fontFamily="@font/font_normal"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btnAction"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="삭제"
+        android:fontFamily="@font/font_normal"/>
+</LinearLayout>

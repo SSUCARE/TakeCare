@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.ShareGraph"
+    android:background="@color/tab_color"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@color/actionbar_color"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그래프"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/font_normal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/actionbar_color"
+            android:src="@drawable/previous_white"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="5dp"
+            android:id="@+id/close_btn"
+            android:onClick="close_btn_event"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="____"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"
+            android:id="@+id/year_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/year_fixed_text"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="년 "
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"
+            android:id="@+id/year_fixed_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/year_text"
+            app:layout_constraintRight_toLeftOf="@id/month_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="__"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"
+            android:id="@+id/month_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/year_fixed_text"
+            app:layout_constraintRight_toLeftOf="@id/month_fixed_text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"
+            android:id="@+id/month_fixed_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/month_text"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/previous"
+            android:scaleType="centerCrop"
+            android:id="@+id/previous_month_btn"
+            android:backgroundTint="@color/tab_color"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            android:onClick="month_btn_click"/>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/next"
+            android:scaleType="centerCrop"
+            android:id="@+id/next_month_btn"
+            android:backgroundTint="@color/tab_color"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
+            android:onClick="month_btn_click"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="15dp">
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="혈압"
+            android:textSize="16dp"
+            android:fontFamily="@font/font_normal"
+            android:id="@+id/pressure_btn"
+            android:background="@drawable/graph_thumb_up"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintRight_toLeftOf="@id/sugar_btn"
+            android:onClick="graph_btn_click"/>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="혈당"
+            android:textSize="16dp"
+            android:fontFamily="@font/font_normal"
+            android:id="@+id/sugar_btn"
+            android:background="@drawable/graph_thumb_up"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/pressure_btn"
+            app:layout_constraintRight_toLeftOf="@id/weight_btn"
+            android:onClick="graph_btn_click"/>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="체중"
+            android:textSize="16dp"
+            android:fontFamily="@font/font_normal"
+            android:id="@+id/weight_btn"
+            android:background="@drawable/graph_thumb_up"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/sugar_btn"
+            app:layout_constraintRight_toRightOf="parent"
+            android:onClick="graph_btn_click"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:id="@+id/graph_fragment">
+    </FrameLayout>
+</LinearLayout>
