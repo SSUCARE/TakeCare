@@ -14,7 +14,6 @@ import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.MatchActivity;
 import com.ssu.takecare.UI.ProfileActivity;
-import com.ssu.takecare.UI.ShareInfoImageActivity;
 
 public class MyPageFragment extends Fragment {
 
@@ -60,8 +59,7 @@ public class MyPageFragment extends Fragment {
         share_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), ShareInfoImageActivity.class);
-                startActivity(intent);
+
             }
         });
 

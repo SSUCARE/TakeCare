@@ -1,18 +1,13 @@
 package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
-import com.ssu.takecare.Retrofit.RetrofitCallback;
-import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 
 public class ProfileActivity extends AppCompatActivity {
 

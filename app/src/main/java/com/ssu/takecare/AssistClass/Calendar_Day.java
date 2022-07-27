@@ -1,15 +1,15 @@
 package com.ssu.takecare.AssistClass;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class Calendar_Day {
+
     int day;
     public int systolic;
     public int diastolic;
     public List<Integer> sugarLevels = null;
     public int weight;
+
     public Calendar_Day(int day, int systolic, int diastolic, List<Integer>sugarLevels, int weight){
         this.day=day;
         this.systolic=systolic;
@@ -17,6 +17,7 @@ public class Calendar_Day {
         this.sugarLevels=sugarLevels;
         this.weight=weight;
     }
+
     public int getDay() {
         return day;
     }

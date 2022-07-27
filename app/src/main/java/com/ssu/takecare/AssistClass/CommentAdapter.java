@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ssu.takecare.AssistClass.Comment;
 import com.ssu.takecare.R;
 import java.util.ArrayList;
 

@@ -25,7 +25,6 @@ import com.ssu.takecare.Retrofit.Match.ResponseCare;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -230,8 +229,8 @@ public class MainActivity extends AppCompatActivity {
             for(int i=0; i<sugarLevels.size(); i++)
                 r_sugarLevels.add(sugarLevels.get(i));
 
-            //reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight 기존값들 어떻게 사용할지는 조금 생각해보기
-            //수정하기 API만들기
+            // reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight 기존값들 어떻게 사용할지는 조금 생각해보기
+            // 수정하기 API 만들기
             ApplicationClass.retrofit_manager.updateReport(reportId,systolic, diastolic,r_sugarLevels, weight, new RetrofitCallback() {
                 @Override
                 public void onError(Throwable t) {

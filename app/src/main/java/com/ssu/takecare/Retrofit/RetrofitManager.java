@@ -26,7 +26,6 @@ import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
 import com.ssu.takecare.Retrofit.UpdateReport.ResponseUpdateReport;
-
 import java.util.List;
 
 public class RetrofitManager {

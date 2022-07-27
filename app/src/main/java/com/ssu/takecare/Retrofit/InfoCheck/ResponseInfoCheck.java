@@ -1,7 +1,6 @@
 package com.ssu.takecare.Retrofit.InfoCheck;
 
 import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
 public class ResponseInfoCheck {

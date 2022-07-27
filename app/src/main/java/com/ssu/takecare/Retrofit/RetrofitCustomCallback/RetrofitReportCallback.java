@@ -1,7 +1,6 @@
 package com.ssu.takecare.Retrofit.RetrofitCustomCallback;
 
 import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
-
 import java.util.List;
 
 public interface RetrofitReportCallback {

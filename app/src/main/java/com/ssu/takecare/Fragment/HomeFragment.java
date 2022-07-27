@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
 import com.ssu.takecare.AssistClass.ViewPagerAdapter;
 import com.ssu.takecare.R;
 import java.text.SimpleDateFormat;

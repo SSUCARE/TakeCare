@@ -32,8 +32,6 @@ import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentIdCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
