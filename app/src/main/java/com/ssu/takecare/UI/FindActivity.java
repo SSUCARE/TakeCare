@@ -49,4 +49,5 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+    public void memo(){}//무시2
 }
