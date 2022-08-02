@@ -8,6 +8,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.AssistClass.ListViewMatchAdapter;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
@@ -22,9 +23,11 @@ public class MatchDialog {
     private Button btn;
     private Activity activity;
     private Dialog dialog;
+    private ListViewMatchAdapter adapter;
 
-    public MatchDialog(Activity activity) {
+    public MatchDialog(Activity activity,ListViewMatchAdapter adapter) {
         this.activity = activity;
+        this.adapter=adapter;
         setDialog();
         findViews();
     }
@@ -71,7 +74,7 @@ public class MatchDialog {
                             Log.d("MatchDialog : ", "userGender : " + userGender);
                             Log.d("MatchDialog : ", "userAge : " + userAge);
 
-                            MatchFindUserDialog dialog2 = new MatchFindUserDialog(activity, userId, userName, userGender, userAge);
+                            MatchFindUserDialog dialog2 = new MatchFindUserDialog(activity, userId, userName, userGender, userAge,adapter);
                             dialog2.showDialog();
                         }
 
@@ -80,7 +83,6 @@ public class MatchDialog {
                         }
                     });
                 }
-
                 dismiss();
             }
         });

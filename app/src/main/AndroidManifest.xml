@@ -31,7 +31,8 @@
 
         <activity android:name="com.ssu.takecare.UI.MatchActivity" />
         <activity android:name="com.ssu.takecare.UI.CalendarActivity" />
-        <activity android:name="com.ssu.takecare.UI.ReportActivity" />
+        <activity android:name="com.ssu.takecare.UI.ReportActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name="com.ssu.takecare.UI.PrescriptionActivity" />
         <activity android:name="com.ssu.takecare.UI.ProfileActivity" />
         <activity android:name="com.ssu.takecare.UI.ShareGraph" />

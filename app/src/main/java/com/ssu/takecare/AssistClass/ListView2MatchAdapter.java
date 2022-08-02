@@ -20,12 +20,14 @@ public class ListView2MatchAdapter extends BaseAdapter {
     private Map<String, Integer> arrData;
     private String acceptedOrNot;
     private Integer userId;
+    private ListViewMatchAdapter LVM_adapter;
 
-    public ListView2MatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot) {
+    public ListView2MatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot,ListViewMatchAdapter LVM_adapter) {
         super();
         this.mContext = context;
         this.arrData = arrData;
         this.acceptedOrNot = acceptedOrNot;
+        this.LVM_adapter=LVM_adapter;
     }
 
     public int getCount() {
@@ -76,6 +78,16 @@ public class ListView2MatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
+                        for (String key : arrData.keySet()) {
+                            int value = arrData.get(key);
+                            if (value == (int)userId) {
+                                LVM_adapter.addItem(key,value);
+                                arrData.remove(key);
+                                break;
+                            }
+                        }
+                        notifyDataSetChanged();
+                        LVM_adapter.notifyDataSetChanged();
                         Toast.makeText(v.getContext(), "수락 완료", Toast.LENGTH_SHORT).show();
                     }
 
@@ -99,7 +111,16 @@ public class ListView2MatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
+                        for (String key : arrData.keySet()) {
+                            int value = arrData.get(key);
+                            if (value == (int)userId) {
+                                arrData.remove(key);
+                                break;
+                            }
+                        }
+                        notifyDataSetChanged();
                         Toast.makeText(v.getContext(), "거절 완료", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override

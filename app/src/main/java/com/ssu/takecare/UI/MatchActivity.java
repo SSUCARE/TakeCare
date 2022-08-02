@@ -24,8 +24,10 @@ public class MatchActivity extends AppCompatActivity {
     Map<String, Integer> mArrData2;
 
     private MatchDialog dialog;
-    private ListViewMatchAdapter mAdapter;
-    private ListView2MatchAdapter mAdapter2;
+    private ListViewMatchAdapter mAdapter_accepted;
+    private ListViewMatchAdapter mAdapter_pending;
+    private ListView2MatchAdapter mAdapter_argree_or_refuse;
+    private Button plus;
 
     private String role;
 
@@ -33,24 +35,8 @@ public class MatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
-
-        mArrData = new HashMap<String, Integer>();
-        mArrData2 = new HashMap<String, Integer>();
-
-        role = ApplicationClass.sharedPreferences.getString("role", "");
-
-        Button plus = findViewById(R.id.plus_icon_button);
-
-        if (role.equals("피보호자"))
-            plus.setVisibility(View.GONE);
-        else {
-            plus.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    dialog = new MatchDialog(MatchActivity.this);
-                    dialog.showDialog();
-                }
-            });
-        }
+        init();
+        setting();
 
         ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
             @Override
@@ -58,17 +44,11 @@ public class MatchActivity extends AppCompatActivity {
 
             }
 
-            @Override
+            @Override // status = PENDING, ACCEPTED 두개뿐.
             public void onSuccess(String message, ResponseCare data) {
+                int size=data.getData().size();
                 if (role.equals("보호자")) {
-                    Log.d("MatchActivity", "보호자입니다");
-
-                    int size = data.getData().size();
-                    Log.d("MatchActivity", "size : " + size);
-
                     for (int i = 0; i < size; i++) {
-                        // status = PENDING, ACCEPTED
-                        // user name
                         if (data.getData().get(i).getStatus().equals("PENDING")) {
                             mArrData.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
                         }
@@ -76,41 +56,19 @@ public class MatchActivity extends AppCompatActivity {
                             mArrData2.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
                         }
                     }
-
-                    mListview = (ListView) findViewById(R.id.list_match_waiting);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData, "PENDING"); // 취소
-                    mListview.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
-
-                    mListview2 = (ListView) findViewById(R.id.list_match_connected);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED"); // 삭제
-                    mListview2.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter_pending.notifyDataSetChanged();
                 }
-                else if (role.equals("피보호자")) {
-                    Log.d("MatchActivity", "피보호자입니다");
-
-                    int size = data.getData().size();
+                else{//피보호자
                     for (int i = 0; i < size; i++) {
-                        // statue= PENDING, ACCEPTED
-                        // user name
                         if (data.getData().get(i).getStatus().equals("PENDING")) {
                             mArrData.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
                         } else if (data.getData().get(i).getStatus().equals("ACCEPTED")) {
                             mArrData2.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
                         }
                     }
-
-                    mListview = (ListView) findViewById(R.id.list_match_waiting);
-                    mAdapter2 = new ListView2MatchAdapter(MatchActivity.this, mArrData, "PENDING");
-                    mListview.setAdapter(mAdapter2);
-                    mAdapter2.notifyDataSetChanged();
-
-                    mListview2 = (ListView) findViewById(R.id.list_match_connected);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED");
-                    mListview2.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter_argree_or_refuse.notifyDataSetChanged();
                 }
+                mAdapter_accepted.notifyDataSetChanged();
             }
 
             @Override
@@ -121,5 +79,39 @@ public class MatchActivity extends AppCompatActivity {
 
     public void back_btn_event(View view) {
         finish();
+    }
+
+    public void init(){
+        mListview2 = (ListView) findViewById(R.id.list_match_connected);
+        mListview = (ListView) findViewById(R.id.list_match_waiting);
+        plus = findViewById(R.id.plus_icon_button);
+
+        mArrData = new HashMap<String, Integer>();
+        mArrData2 = new HashMap<String, Integer>();
+
+        role = ApplicationClass.sharedPreferences.getString("role", "");
+    }
+
+    public void setting(){
+        if (role.equals("피보호자")){
+            mAdapter_accepted = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED"); // 삭제
+            mAdapter_argree_or_refuse = new ListView2MatchAdapter(MatchActivity.this, mArrData, "PENDING",mAdapter_accepted);
+            mListview2.setAdapter(mAdapter_accepted);
+            mListview.setAdapter(mAdapter_argree_or_refuse);
+
+            plus.setVisibility(View.GONE);
+        }else { //보호자
+            mAdapter_accepted = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED");
+            mAdapter_pending = new ListViewMatchAdapter(MatchActivity.this, mArrData, "PENDING");
+            mListview2.setAdapter(mAdapter_accepted);
+            mListview.setAdapter(mAdapter_pending);
+
+            plus.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialog = new MatchDialog(MatchActivity.this,mAdapter_pending);
+                    dialog.showDialog();
+                }
+            });
+        }
     }
 }
