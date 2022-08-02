@@ -1,4 +1,4 @@
-package com.ssu.takecare.AssistClass;
+package com.ssu.takecare.AssistClass.Match;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -33,12 +33,11 @@ public class ListView2MatchAdapter extends BaseAdapter {
         return arrData.size();
     }
 
-
     public Integer getElementByIndex(Map<String, Integer> map, int index){
         return map.get( (map.keySet().toArray())[index] );
     }
 
-    public String getKeyByIndex(Map<String, Integer> map,int index){
+    public String getKeyByIndex(Map<String, Integer> map, int index){
         return (String) map.keySet().toArray()[index];
     }
 
@@ -54,7 +53,7 @@ public class ListView2MatchAdapter extends BaseAdapter {
 
         // get the reference of textView and button
         TextView txtListTitle = (TextView) view.findViewById(R.id.txtlistview2);
-        Button btnAction = (Button) view.findViewById(R.id.btnAction1);
+        Button btnAction1 = (Button) view.findViewById(R.id.btnAction1);
         Button btnAction2 = (Button) view.findViewById(R.id.btnAction2);
 
         String userName= getKeyByIndex(arrData, position);
@@ -64,12 +63,11 @@ public class ListView2MatchAdapter extends BaseAdapter {
         txtListTitle.setText(userName);
 
         // Click listener of button
-        btnAction.setOnClickListener(new View.OnClickListener() {
+        btnAction1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 수락
                 ApplicationClass.retrofit_manager.careAcceptRequest(userId, new RetrofitCallback() {
-
                     @Override
                     public void onError(Throwable t) {
                     }

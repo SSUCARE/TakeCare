@@ -1,14 +1,13 @@
 package com.ssu.takecare.UI;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.ssu.takecare.ApplicationClass;
-import com.ssu.takecare.AssistClass.ListView2MatchAdapter;
-import com.ssu.takecare.AssistClass.ListViewMatchAdapter;
+import com.ssu.takecare.AssistClass.Match.ListView2MatchAdapter;
+import com.ssu.takecare.AssistClass.Match.ListView1MatchAdapter;
 import com.ssu.takecare.Dialog.MatchDialog;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
@@ -24,7 +23,7 @@ public class MatchActivity extends AppCompatActivity {
     Map<String, Integer> mArrData2;
 
     private MatchDialog dialog;
-    private ListViewMatchAdapter mAdapter;
+    private ListView1MatchAdapter mAdapter;
     private ListView2MatchAdapter mAdapter2;
 
     private String role;
@@ -60,54 +59,36 @@ public class MatchActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String message, ResponseCare data) {
-                if (role.equals("보호자")) {
-                    Log.d("MatchActivity", "보호자입니다");
-
-                    int size = data.getData().size();
-                    Log.d("MatchActivity", "size : " + size);
-
-                    for (int i = 0; i < size; i++) {
-                        // status = PENDING, ACCEPTED
-                        // user name
-                        if (data.getData().get(i).getStatus().equals("PENDING")) {
-                            mArrData.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
-                        }
-                        else if (data.getData().get(i).getStatus().equals("ACCEPTED")) {
-                            mArrData2.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
-                        }
+                int size = data.getData().size();
+                for (int i = 0; i < size; i++) {
+                    // statue= PENDING, ACCEPTED
+                    // user name
+                    if (data.getData().get(i).getStatus().equals("PENDING")) {
+                        mArrData.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
                     }
+                    else if (data.getData().get(i).getStatus().equals("ACCEPTED")) {
+                        mArrData2.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
+                    }
+                }
 
-                    mListview = (ListView) findViewById(R.id.list_match_waiting);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData, "PENDING"); // 취소
+                mListview = (ListView) findViewById(R.id.list_match_waiting);
+                mListview2 = (ListView) findViewById(R.id.list_match_connected);
+
+                if (role.equals("보호자")) {
+                    mAdapter = new ListView1MatchAdapter(MatchActivity.this, mArrData, "PENDING"); // 취소
                     mListview.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
 
-                    mListview2 = (ListView) findViewById(R.id.list_match_connected);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED"); // 삭제
+                    mAdapter = new ListView1MatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED"); // 삭제
                     mListview2.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
                 else if (role.equals("피보호자")) {
-                    Log.d("MatchActivity", "피보호자입니다");
-
-                    int size = data.getData().size();
-                    for (int i = 0; i < size; i++) {
-                        // statue= PENDING, ACCEPTED
-                        // user name
-                        if (data.getData().get(i).getStatus().equals("PENDING")) {
-                            mArrData.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
-                        } else if (data.getData().get(i).getStatus().equals("ACCEPTED")) {
-                            mArrData2.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
-                        }
-                    }
-
-                    mListview = (ListView) findViewById(R.id.list_match_waiting);
                     mAdapter2 = new ListView2MatchAdapter(MatchActivity.this, mArrData, "PENDING");
                     mListview.setAdapter(mAdapter2);
                     mAdapter2.notifyDataSetChanged();
 
-                    mListview2 = (ListView) findViewById(R.id.list_match_connected);
-                    mAdapter = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED");
+                    mAdapter = new ListView1MatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED");
                     mListview2.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }

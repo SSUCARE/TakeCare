@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import com.ssu.takecare.AssistClass.ViewPagerAdapter;
+import com.ssu.takecare.AssistClass.CardNews.ViewPagerAdapter;
 import com.ssu.takecare.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
     Boolean REPORT_FLAG;
 
     public HomeFragment(Boolean REPORT_FLAG){
-        this.REPORT_FLAG=REPORT_FLAG;
+        this.REPORT_FLAG = REPORT_FLAG;
     }
 
     @Nullable
@@ -36,14 +36,13 @@ public class HomeFragment extends Fragment {
         TextView today_date = view.findViewById(R.id.tv_date);
         today_date.setText(date);
 
-        if(REPORT_FLAG){
-            Button btn1=(Button)view.findViewById(R.id.btn_report);
-            btn1.setText("레포트 수정");
+        if (REPORT_FLAG) {
+            Button btn_rp = (Button) view.findViewById(R.id.btn_report);
+            btn_rp.setText("레포트 수정");
         }
 
-        ViewPager viewPager=(ViewPager)view.findViewById(R.id.viewPager);
-
-        ViewPagerAdapter adapter=new ViewPagerAdapter(getActivity());
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity());
         viewPager.setAdapter(adapter);
 
         return view;

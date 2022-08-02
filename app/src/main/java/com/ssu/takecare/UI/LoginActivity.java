@@ -21,7 +21,6 @@ import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "LoginActivity";
     private long backKeyPressedTime = 0;
 
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
@@ -73,7 +72,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
             backKeyPressedTime = System.currentTimeMillis();
             Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else {
             moveTaskToBack(true); // 태스크를 백그라운드로 이동
             finishAndRemoveTask(); // 액티비티 종료 + 태스크 리스트에서 지우기
             System.exit(0);
@@ -112,7 +112,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
                             @Override
                             public void onError(Throwable t) {
-
                             }
 
                             @Override
@@ -146,14 +145,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             @Override
                             public void onFailure(int error_code) {
-
                             }
                         });
                     }
 
                     @Override
                     public void onFailure(int error_code) {
-
                     }
                 });
             }

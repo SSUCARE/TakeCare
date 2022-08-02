@@ -20,7 +20,6 @@ public class FindActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_find);
 
         buttonFind = (Button) findViewById(R.id.btn_find);
-
         buttonFind.setOnClickListener(this);
     }
 

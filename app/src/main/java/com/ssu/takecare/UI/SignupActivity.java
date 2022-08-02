@@ -94,7 +94,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 };
 
-                Thread st=new Thread(new SignupRunnable(Handler_Signup,getApplicationContext(),email_str,password_str));
+                Thread st = new Thread(new SignupRunnable(Handler_Signup,getApplicationContext(),email_str,password_str));
                 st.start();
             }
         }

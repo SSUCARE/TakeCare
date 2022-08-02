@@ -1,4 +1,4 @@
-package com.ssu.takecare.AssistClass;
+package com.ssu.takecare.AssistClass.Calendar;
 
 import java.util.List;
 

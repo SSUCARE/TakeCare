@@ -3,7 +3,6 @@ package com.ssu.takecare.UI;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,8 +15,8 @@ import com.ssu.takecare.Dialog.SugarDialog;
 import com.ssu.takecare.Dialog.WeightDialog;
 import com.ssu.takecare.Fragment.HomeFragment;
 import com.ssu.takecare.Fragment.MyPageFragment;
-import com.ssu.takecare.Fragment.RoleCaredFragment;
-import com.ssu.takecare.Fragment.ShareFragment;
+import com.ssu.takecare.Fragment.CaredShareFragment;
+import com.ssu.takecare.Fragment.CaringShareFragment;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
 import com.ssu.takecare.Retrofit.Match.DataResponseCare;
@@ -34,8 +33,9 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private long backKeyPressedTime = 0;
+
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     private ImageButton tab_btn1, tab_btn2, tab_btn3;
     private TextView hp_input, lp_input;
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView w_input;
 
     private String ROLE_CARED_OR_ROLE_CARER;
-
-    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     Date currentTime = Calendar.getInstance().getTime();
     String date_year = new SimpleDateFormat("yyyy", Locale.getDefault()).format((currentTime));
@@ -58,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
     int userId;
     int reportId;
 
-    Boolean REPORT_FLAG=false;
-    int r_systolic=0; int r_diastolic=0; int r_weight=0;
+    Boolean REPORT_FLAG = false;
+    int r_systolic = 0; int r_diastolic = 0; int r_weight = 0;
     List<Integer> r_sugarLevels = null;
 
     @Override
@@ -79,47 +77,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init_getReport(){
-        userId=ApplicationClass.sharedPreferences.getInt("userId",-1);
-        if(userId!=-1){
+        userId = ApplicationClass.sharedPreferences.getInt("userId",-1);
+        if (userId != -1) {
             ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
                 @Override
                 public void onError(Throwable t) {
-                    Log.d("ReportActivity", "에러 : " + t);
                 }
 
                 @Override
                 public void onSuccess(String message, List<DataGetReport> data) {
                     if (data.size() != 0) {
-                        Log.d("ReportActivity", "data - CreatedAt : " + data.get(0).getCreatedAt());
-                        Log.d("ReportActivity", "data - ReportId : " + data.get(0).getReportId());
-                        Log.d("ReportActivity", "data - Systolic : " + data.get(0).getSystolic());
-                        Log.d("ReportActivity", "data - Diastolic : " + data.get(0).getDiastolic());
-                        Log.d("ReportActivity", "data - SugarLevels : " + data.get(0).getSugarLevels());
-                        Log.d("ReportActivity", "data - Weight : " + data.get(0).getWeight());
-
                         reportId = data.get(0).getReportId();
-                        r_systolic=data.get(0).getSystolic();
-                        r_diastolic=data.get(0).getDiastolic();
-                        r_weight=data.get(0).getWeight();
-                        r_sugarLevels=data.get(0).getSugarLevels();
+                        r_systolic = data.get(0).getSystolic();
+                        r_diastolic = data.get(0).getDiastolic();
+                        r_weight = data.get(0).getWeight();
+                        r_sugarLevels = data.get(0).getSugarLevels();
 
-                        REPORT_FLAG=true;
-                        Button btn1=(Button)findViewById(R.id.btn_report);
-                        btn1.setText("레포트 수정");
-                        Log.d("확인, 디버그","통과1");
+                        REPORT_FLAG = true;
+                        Button btn_rp = (Button) findViewById(R.id.btn_report);
+                        btn_rp.setText("레포트 수정");
                     }
                     else {
-                        REPORT_FLAG=false;
-                        Log.d("확인, 디버그","통과2");
+                        REPORT_FLAG = false;
                     }
                 }
+
                 @Override
                 public void onFailure(int error_code) {
-                    Log.d("ReportActivity", "실패 : " + error_code);
                 }
             });
         }
-        else{
+        else {
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
             finish();
         }
@@ -224,21 +212,18 @@ public class MainActivity extends AppCompatActivity {
             weight = Integer.parseInt(w_input.getText().toString());
         }
 
-        //------------여기까지 하면 넣을 값 정해짐
-        if (REPORT_FLAG){
-            for(int i=0; i<sugarLevels.size(); i++)
-                r_sugarLevels.add(sugarLevels.get(i));
+        if (REPORT_FLAG) {
+            r_sugarLevels.addAll(sugarLevels);
 
             // reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight 기존값들 어떻게 사용할지는 조금 생각해보기
             // 수정하기 API 만들기
-            ApplicationClass.retrofit_manager.updateReport(reportId,systolic, diastolic,r_sugarLevels, weight, new RetrofitCallback() {
+            ApplicationClass.retrofit_manager.updateReport(reportId, systolic, diastolic, r_sugarLevels, weight, new RetrofitCallback() {
                 @Override
                 public void onError(Throwable t) {
-                    Log.d("디버그, MainActivity","업데이트 에러");
                 }
+
                 @Override
                 public void onSuccess(String message, String token) {
-                    Log.d("디버그, MainActivity","업데이트 성공");
                     String str = "____";
                     hp_input.setText(str);
                     lp_input.setText(str);
@@ -246,21 +231,22 @@ public class MainActivity extends AppCompatActivity {
                     as_input.setText(str);
                     w_input.setText(str);
                 }
+
                 @Override
                 public void onFailure(int error_code) {
-                    Log.d("디버그, MainActivity","업데이트 실패");
                 }
             });
-            REPORT_FLAG=true;
-            Button btn1=(Button)findViewById(R.id.btn_report);
-            btn1.setText("레포트 수정");
 
+            REPORT_FLAG = true;
+            Button btn_rp = (Button) findViewById(R.id.btn_report);
+            btn_rp.setText("레포트 수정");
         }
         else {
             ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
                 @Override
                 public void onError(Throwable t) {
                 }
+
                 @Override
                 public void onSuccess(String message, String token) {
                     String str = "____";
@@ -271,13 +257,15 @@ public class MainActivity extends AppCompatActivity {
                     w_input.setText(str);
                     Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
                 }
+
                 @Override
                 public void onFailure(int error_code) {
                 }
             });
-            REPORT_FLAG=true;
-            Button btn1=(Button)findViewById(R.id.btn_report);
-            btn1.setText("레포트 수정");
+
+            REPORT_FLAG = true;
+            Button btn_rp = (Button) findViewById(R.id.btn_report);
+            btn_rp.setText("레포트 수정");
         }
     }
 
@@ -313,36 +301,29 @@ public class MainActivity extends AppCompatActivity {
                     ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
                         @Override
                         public void onError(Throwable t) {
-                            Log.d(TAG, "에러 : " + t);
                         }
 
                         @Override
                         public void onSuccess(String message, ResponseCare data) {
                             List<String> UserName = new ArrayList<>();
                             List<Integer> UserId = new ArrayList<>();
-
                             List<DataResponseCare> list = data.getData();
-                            Log.d(TAG,"맵핑된 수 : " + list.size());
 
                             editor.putInt("Mapping_Count", list.size());
                             editor.apply();
 
                             for (int i = 0; i < list.size(); i++){
-                                Log.d(TAG,"i : " + i + ", status : " + list.get(i).getStatus());
-
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
                                     UserId.add(list.get(i).getUserId());
-                                    Log.d(TAG, "userName : " + list.get(i).getUserName() + ", userId : " + list.get(i).getUserId());
                                 }
                             }
 
-                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new ShareFragment(UserName, UserId)).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaringShareFragment(UserName, UserId)).commit();
                         }
 
                         @Override
                         public void onFailure(int error_code) {
-                            Log.d(TAG, "실패 : " + error_code);
                         }
                     });
                 }
@@ -350,36 +331,29 @@ public class MainActivity extends AppCompatActivity {
                     ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
                         @Override
                         public void onError(Throwable t) {
-                            Log.d(TAG, "에러 : " + t);
                         }
 
                         @Override
                         public void onSuccess(String message, ResponseCare data) {
                             List<String> UserName = new ArrayList<>();
                             List<Integer> UserId = new ArrayList<>();
-
                             List<DataResponseCare> list = data.getData();
-                            Log.d(TAG,"맵핑된 수 : " + list.size());
 
                             editor.putInt("Mapping_Count", list.size());
                             editor.apply();
 
                             for (int i = 0; i < list.size(); i++){
-                                Log.d(TAG,"i : " + i + ", status : " + list.get(i).getStatus());
-
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
                                     UserId.add(list.get(i).getUserId());
-                                    Log.d(TAG, "userName : " + list.get(i).getUserName() + ", userId : " + list.get(i).getUserId());
                                 }
                             }
 
-                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new RoleCaredFragment(UserName, UserId)).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaredShareFragment(UserName, UserId)).commit();
                         }
 
                         @Override
                         public void onFailure(int error_code) {
-                            Log.d(TAG, "실패 : " + error_code);
                         }
                     });
                 }

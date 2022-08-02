@@ -1,4 +1,4 @@
-package com.ssu.takecare.AssistClass;
+package com.ssu.takecare.AssistClass.Comment;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ssu.takecare.AssistClass.Comment.Comment;
 import com.ssu.takecare.R;
 import java.util.ArrayList;
 

@@ -5,31 +5,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.AssistClass.Share.ShareGridAdapter;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.CalendarActivity;
 import com.ssu.takecare.UI.PrescriptionActivity;
 import com.ssu.takecare.UI.ReportActivity;
-import com.ssu.takecare.UI.ShareGraph;
+import com.ssu.takecare.AssistClass.Graph.ShareGraph;
 import java.util.HashMap;
 import java.util.List;
 
-// 두번째 탭의 피보호자 모드
-public class RoleCaredFragment extends Fragment implements View.OnClickListener {
+public class CaringShareFragment extends Fragment {
 
-    View view;
-    TextView tv_name;
     Intent intent;
-
+    TextView tv_name;
     List<String> Match_UserName_list;
     List<Integer> Match_UserId_list;
     HashMap<Integer, String> ID_NAME = new HashMap<Integer, String>();
 
-    public RoleCaredFragment(List<String> UserName, List<Integer> UserId){
+    public CaringShareFragment(List<String> UserName, List<Integer> UserId){
         this.Match_UserName_list = UserName;
         this.Match_UserId_list = UserId;
     }
@@ -37,50 +38,67 @@ public class RoleCaredFragment extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_role_cared,container, false);
+        View view=inflater.inflate(R.layout.fragment_share_caring,container, false);
 
         String my_name = ApplicationClass.sharedPreferences.getString("name", "");
-        tv_name = view.findViewById(R.id.protected_name);
+        tv_name = view.findViewById(R.id.share_my_name);
         tv_name.setText(my_name);
 
         for (int i = 0; i < Match_UserId_list.size(); i++)
             ID_NAME.put(Match_UserId_list.get(i), Match_UserName_list.get(i));
 
-        view.findViewById(R.id.cared_my_graph).setOnClickListener(this);
-        view.findViewById(R.id.cared_my_calendar).setOnClickListener(this);
-        view.findViewById(R.id.cared_my_presciption).setOnClickListener(this);
-        view.findViewById(R.id.cared_my_report).setOnClickListener(this);
+        ImageButton btn1=(ImageButton) view.findViewById(R.id.share_my_graph);
+        ImageButton btn2=(ImageButton) view.findViewById(R.id.share_my_calendar);
+        ImageButton btn3=(ImageButton) view.findViewById(R.id.share_my_presciption);
+        ImageButton btn4=(ImageButton) view.findViewById(R.id.share_my_report);
 
-        return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.cared_my_graph:
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 intent=new Intent(getActivity(), ShareGraph.class);
                 intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
                 startActivity(intent);
-                break;
-            case R.id.cared_my_calendar:
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 intent=new Intent(getActivity(),CalendarActivity.class);
                 intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
                 intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
                 intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
-                break;
-            case R.id.cared_my_presciption:
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
                 intent=new Intent(getActivity(),PrescriptionActivity.class);
                 intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
                 intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
                 startActivity(intent);
-                break;
-            case R.id.cared_my_report:
-                Intent intent=new Intent(getActivity(), ReportActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+            }
+        });
+
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent=new Intent(getActivity(), ReportActivity.class);
+                intent.putExtra("USER_ID", ApplicationClass.sharedPreferences.getInt("userId",-1));
                 intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
-                break;
-        }
+            }
+        });
+
+        RecyclerView listview = view.findViewById(R.id.share_listview);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        listview.setLayoutManager(gridLayoutManager);
+
+        ShareGridAdapter adapter = new ShareGridAdapter(Match_UserName_list, Match_UserId_list, getActivity());
+        listview.setAdapter(adapter);
+
+        return view;
     }
 }

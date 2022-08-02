@@ -1,4 +1,4 @@
-package com.ssu.takecare.AssistClass;
+package com.ssu.takecare.AssistClass.Match;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,18 +14,18 @@ import com.ssu.takecare.Retrofit.RetrofitCallback;
 import java.util.Map;
 
 // 케어해주는 사람 화면(CARER)
-public class ListViewMatchAdapter extends BaseAdapter {
+public class ListView1MatchAdapter extends BaseAdapter {
 
     private Context mContext;
     private Map<String, Integer> arrData;
     private String acceptedOrNot;
     private Integer userId;
 
-    public ListViewMatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot) {
+    public ListView1MatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot) {
         super();
         this.mContext = context;
         this.arrData = arrData;
-        this.acceptedOrNot=acceptedOrNot;
+        this.acceptedOrNot = acceptedOrNot;
     }
 
     public int getCount() {
@@ -49,7 +49,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         // inflate the layout for each item of listView
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.activity_listview, parent, false);
+        view = inflater.inflate(R.layout.activity_listview1, parent, false);
 
         // get the reference of textView and button
         TextView txtListTitle = (TextView) view.findViewById(R.id.txtlistview);

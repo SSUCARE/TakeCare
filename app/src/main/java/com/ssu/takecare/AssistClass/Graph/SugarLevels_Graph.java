@@ -1,4 +1,4 @@
-package com.ssu.takecare.AssistClass;
+package com.ssu.takecare.AssistClass.Graph;
 
 import java.util.ArrayList;
 import java.util.List;

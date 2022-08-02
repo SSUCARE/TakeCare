@@ -1,4 +1,4 @@
-package com.ssu.takecare.Fragment;
+package com.ssu.takecare.AssistClass.Share;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +9,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ssu.takecare.AssistClass.Graph.ShareGraph;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.CalendarActivity;
 import com.ssu.takecare.UI.PrescriptionActivity;
 import com.ssu.takecare.UI.ReportActivity;
-import com.ssu.takecare.UI.ShareGraph;
+
 import java.util.HashMap;
 import java.util.List;
 

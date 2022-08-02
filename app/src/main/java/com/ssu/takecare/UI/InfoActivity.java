@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,6 +25,8 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
     private long backKeyPressedTime = 0;
 
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
+
     private EditText name_register;
     private EditText age_register;
     private EditText height_register;
@@ -37,11 +38,9 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     private String role_register = "ROLE_CARER";
 
     private Button buttonInfo;
+    private TextView tv_role;
 
     int ExistingUser_flag = 0; // ProfileActivity에서 넘어왔으면 2, 아니면 1
-    TextView tv_role;
-
-    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +89,6 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
     void Check_ExistingUser() {
         ExistingUser_flag = getIntent().getIntExtra("EXISTING_USER",1);
-        Log.d("InfoActivity","flag : " + ExistingUser_flag);
 
         if (ExistingUser_flag == 2) {    // 기존 유저
             tv_role = findViewById(R.id.tv_role);
@@ -100,20 +98,16 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
             role_rg.setVisibility(View.GONE);
             tv_role.setVisibility(View.GONE);
 
-            if (ApplicationClass.sharedPreferences.getString("role", "").equals("보호자")) {
+            if (ApplicationClass.sharedPreferences.getString("role", "").equals("보호자"))
                 role_register = "ROLE_CARER";
-            }
             else
-            {
                 role_register = "ROLE_CARED";
-            }
 
             if (ApplicationClass.sharedPreferences.getString("gender", "").equals("남성")) {
                 rb_man.setChecked(true);
                 rb_woman.setChecked(false);
             }
-            else
-            {
+            else {
                 rb_man.setChecked(false);
                 rb_woman.setChecked(true);
             }
@@ -181,7 +175,6 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 ApplicationClass.retrofit_manager.info(name_str, gender_register, age_int, height_int, role_register, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
-
                     }
 
                     @Override
@@ -189,7 +182,6 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
                             @Override
                             public void onError(Throwable t) {
-
                             }
 
                             @Override
@@ -223,14 +215,12 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
                             @Override
                             public void onFailure(int error_code) {
-
                             }
                         });
                     }
 
                     @Override
                     public void onFailure(int error_code) {
-
                     }
                 });
             }

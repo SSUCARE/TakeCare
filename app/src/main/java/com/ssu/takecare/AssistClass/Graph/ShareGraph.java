@@ -1,4 +1,4 @@
-package com.ssu.takecare.UI;
+package com.ssu.takecare.AssistClass.Graph;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.ssu.takecare.AssistClass.SugarLevels_Graph;
+import com.ssu.takecare.AssistClass.Graph.SugarLevels_Graph;
 import com.ssu.takecare.Fragment.PressureFragment;
 import com.ssu.takecare.Fragment.SugarFragment;
 import com.ssu.takecare.Fragment.WeightFragment;

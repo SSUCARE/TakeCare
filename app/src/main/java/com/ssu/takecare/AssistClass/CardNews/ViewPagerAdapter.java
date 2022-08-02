@@ -1,4 +1,4 @@
-package com.ssu.takecare.AssistClass;
+package com.ssu.takecare.AssistClass.CardNews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.context=context;
     }
 
-    //page를 생성할때 사용하는 메소드
+    // page를 생성할때 사용하는 메소드
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -38,6 +38,7 @@ public class ViewPagerAdapter extends PagerAdapter {
                 img2.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
                 img3.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
                 img4.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
+
                 img0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -52,6 +53,7 @@ public class ViewPagerAdapter extends PagerAdapter {
                 img2.setImageDrawable(context.getDrawable(R.drawable.pageview_circle2));
                 img3.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
                 img4.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
+
                 img0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -66,6 +68,7 @@ public class ViewPagerAdapter extends PagerAdapter {
                 img2.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
                 img3.setImageDrawable(context.getDrawable(R.drawable.pageview_circle2));
                 img4.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
+
                 img0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -80,6 +83,7 @@ public class ViewPagerAdapter extends PagerAdapter {
                 img2.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
                 img3.setImageDrawable(context.getDrawable(R.drawable.pageview_circle));
                 img4.setImageDrawable(context.getDrawable(R.drawable.pageview_circle2));
+
                 img0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

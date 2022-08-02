@@ -11,12 +11,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
-import com.ssu.takecare.AssistClass.SugarLevels_pre;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
 import com.ssu.takecare.Runnable.GetReport_Month_Runnable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -51,11 +49,6 @@ public class PrescriptionActivity extends AppCompatActivity {
     int last_month = Integer.parseInt(new SimpleDateFormat("M", Locale.getDefault()).format((now_date)))-1;
     int userId;
     String userName;
-
-    List<Integer> systolic_list=new ArrayList<>();
-    List<Integer> diastolic_list=new ArrayList<>();
-    List<SugarLevels_pre> sugarlevels_list=new ArrayList<>();
-    List<Integer> weight_list=new ArrayList<>();
 
     int avg_systolic=0;
     int avg_sugarlevels=0;
@@ -251,9 +244,7 @@ public class PrescriptionActivity extends AppCompatActivity {
             presciption_bmi_tv.setBackground(getApplicationContext().getDrawable(R.drawable.prescription_weight_4));
             presciption_bmi_tv.setText("고도 비만");
             str4="비만한 경우 관절통, 숨찬 증상 등 겉으로 드러나는 증상 외에도 심혈관질환, 고혈압, 수면 무호흡증 등 합병증의 위험이 커집니다. 비만이 불러온 합병증은 또 다른 질병을 일으켜 건강을 더욱 악화시킬 수 있습니다.";
-
         }
-
     }
 
     //str2, 3, 4 각각은 혈압, 혈당, 몸무게에 대한 한마디씩 하기.

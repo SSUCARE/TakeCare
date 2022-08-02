@@ -29,12 +29,13 @@
                 android:resource="@xml/file_path" />
         </provider>
 
+        <activity android:name="com.ssu.takecare.UI.ReportActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name="com.ssu.takecare.UI.MatchActivity" />
         <activity android:name="com.ssu.takecare.UI.CalendarActivity" />
-        <activity android:name="com.ssu.takecare.UI.ReportActivity" />
         <activity android:name="com.ssu.takecare.UI.PrescriptionActivity" />
         <activity android:name="com.ssu.takecare.UI.ProfileActivity" />
-        <activity android:name="com.ssu.takecare.UI.ShareGraph" />
+        <activity android:name="com.ssu.takecare.AssistClass.Graph.ShareGraph" />
         <activity android:name="com.ssu.takecare.UI.InfoActivity" />
         <activity android:name="com.ssu.takecare.UI.LoginActivity" />
         <activity android:name="com.ssu.takecare.UI.FindActivity" />

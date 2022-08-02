@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
@@ -30,9 +29,6 @@ public class FirstActivity extends AppCompatActivity {
             String loginPwd = ApplicationClass.sharedPreferences.getString("password_login", "");
 
             if (!loginEmail.equals("") && !loginPwd.equals("")) {
-                Log.d("FirstActivity", "email : " + loginEmail);
-                Log.d("FirstActivity", "password : " + loginPwd);
-
                 ApplicationClass.retrofit_manager.login(loginEmail, loginPwd, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {

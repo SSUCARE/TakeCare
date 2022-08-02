@@ -19,17 +19,17 @@
         android:background="@color/bg_color"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:padding="10dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/email_match"
-            android:layout_width="280dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:gravity="center"
             android:fontFamily="@font/font_normal"
             android:inputType="textEmailAddress"/>
@@ -38,11 +38,10 @@
             android:id="@+id/btn_ok_matching_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="확인"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:fontFamily="@font/font_normal"/>
     </LinearLayout>
-
 </LinearLayout>

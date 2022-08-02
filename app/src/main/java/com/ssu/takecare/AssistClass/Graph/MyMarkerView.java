@@ -1,4 +1,4 @@
-package com.ssu.takecare.AssistClass;
+package com.ssu.takecare.AssistClass.Graph;
 
 import android.content.Context;
 import android.widget.TextView;

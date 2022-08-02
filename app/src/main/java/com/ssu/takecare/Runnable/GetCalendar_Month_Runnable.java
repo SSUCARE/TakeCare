@@ -3,10 +3,9 @@ package com.ssu.takecare.Runnable;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.ssu.takecare.ApplicationClass;
-import com.ssu.takecare.AssistClass.Calendar_Day;
+import com.ssu.takecare.AssistClass.Calendar.Calendar_Day;
 import com.ssu.takecare.Retrofit.GetReport.DataGetReport;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import java.util.ArrayList;

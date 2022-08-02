@@ -71,18 +71,22 @@ public interface RetrofitAPI {
     @GET("/report/{userId}/")
     Call<ResponseGetReport> getReportRequest_Month(@Path("userId")int path, @Query("year")int year, @Query("month")int month);
 
+    // 케어 목록 보기
     @Headers("Content-Type: application/json")
     @GET("/care")
     Call<ResponseCare> getCareDBRequest();
 
+    // 케어 요청
     @Headers("Content-Type: application/json")
     @POST("/care/request/{userId}")
     Call<Void> careRequest(@Path("userId") int path);
 
+    // 케어 수락
     @Headers("Content-Type: application/json")
     @POST("/care/request/{userId}/accept")
     Call<Object> careAcceptRequest(@Path("userId") int path);
 
+    // 케어 삭제
     @Headers("Content-Type: application/json")
     @DELETE("/care/{userId}")
     Call<Object> careDeleteRequest(@Path("userId") int path);
