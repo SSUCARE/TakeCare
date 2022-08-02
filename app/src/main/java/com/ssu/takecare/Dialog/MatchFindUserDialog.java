@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
-import com.ssu.takecare.AssistClass.ListViewMatchAdapter;
+import com.ssu.takecare.AssistClass.Match.ListViewMatchAdapter;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 
