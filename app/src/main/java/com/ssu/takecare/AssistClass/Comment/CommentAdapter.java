@@ -14,7 +14,7 @@ import com.ssu.takecare.R;
 import java.util.ArrayList;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
-
+    //학:
     private TextView name, comment;
     private ArrayList<Comment> commentList = new ArrayList<>();
     private ArrayList<Integer> commentIdList = new ArrayList<>();
@@ -50,6 +50,8 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
     public String getAuthorName(int position) {
         return AuthorNameList.get(position);
     }
+
+
 
     @Override
     public void add(Comment object) {

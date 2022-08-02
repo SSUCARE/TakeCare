@@ -227,4 +227,5 @@ public class CalendarActivity extends AppCompatActivity {
     public void back_btn_event(View view) {
         finish();
     }
+    public void memo(){} //무시
 }

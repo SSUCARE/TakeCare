@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.AssistClass.ListViewMatchAdapter;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCallback;
 
@@ -18,13 +19,17 @@ public class MatchFindUserDialog {
     private TextView userGenderText;
     private TextView userAgeText;
     private Button btnOK, btnNO;
+    private String userName;
 
     private Activity activity;
     private Dialog dialog;
+    private ListViewMatchAdapter adapter;
 
-    public MatchFindUserDialog(Activity activity, Integer userId, String userName, String userGender, Integer userAge) {
+    public MatchFindUserDialog(Activity activity, Integer userId, String userName, String userGender, Integer userAge,ListViewMatchAdapter adapter) {
         this.activity = activity;
         this.userId = userId;
+        this.adapter=adapter;
+        this.userName=userName;
         setDialog();
         findViews(userName, userGender, userAge);
     }
@@ -64,6 +69,9 @@ public class MatchFindUserDialog {
                     @Override
                     public void onSuccess(String message, String data) {
                         Toast.makeText(view.getContext(), "요청 완료", Toast.LENGTH_SHORT).show();
+                        //문제: userId가 아니라 Id값을 넣어야하는데, 이거 다시 getCareDBMatchInfo를 호출해야하나?? addItem에는 UserId가 아닌 Id값을 넣어야함.
+                        adapter.addItem(userName,userId);
+                        adapter.notifyDataSetChanged();
                         dismiss();
                     }
 

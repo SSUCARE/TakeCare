@@ -33,6 +33,10 @@ public class ListView1MatchAdapter extends BaseAdapter {
         return arrData.size();
     }
 
+    public void addItem(String UserName,int id){
+        arrData.put(UserName,id);
+    }
+
     public Integer getElementByIndex(Map<String, Integer> map, int index){
         return map.get( (map.keySet().toArray())[index] );
     }
@@ -80,6 +84,14 @@ public class ListView1MatchAdapter extends BaseAdapter {
                     @Override
                     public void onSuccess(String message, String data) {
                         Toast.makeText(v.getContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
+                        for (String key : arrData.keySet()) {
+                            int value = arrData.get(key);
+                            if (value == userId) {
+                                arrData.remove(key);
+                                break;
+                            }
+                        }
+                        notifyDataSetChanged();
                     }
 
                     @Override
