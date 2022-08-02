@@ -14,14 +14,14 @@ import com.ssu.takecare.Retrofit.RetrofitCallback;
 import java.util.Map;
 
 // 케어해주는 사람 화면(CARER)
-public class ListView1MatchAdapter extends BaseAdapter {
+public class ListViewMatchAdapter extends BaseAdapter {
 
     private Context mContext;
     private Map<String, Integer> arrData;
     private String acceptedOrNot;
     private Integer userId;
 
-    public ListView1MatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot) {
+    public ListViewMatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot) {
         super();
         this.mContext = context;
         this.arrData = arrData;

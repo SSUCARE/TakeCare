@@ -1,14 +1,13 @@
 package com.ssu.takecare.UI;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.ssu.takecare.ApplicationClass;
-import com.ssu.takecare.AssistClass.ListView2MatchAdapter;
-import com.ssu.takecare.AssistClass.ListViewMatchAdapter;
+import com.ssu.takecare.AssistClass.Match.ListView2MatchAdapter;
+import com.ssu.takecare.AssistClass.Match.ListViewMatchAdapter;
 import com.ssu.takecare.Dialog.MatchDialog;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
@@ -108,7 +107,7 @@ public class MatchActivity extends AppCompatActivity {
 
             plus.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    dialog = new MatchDialog(MatchActivity.this,mAdapter_pending);
+                    dialog = new MatchDialog(MatchActivity.this, mAdapter_pending);
                     dialog.showDialog();
                 }
             });
