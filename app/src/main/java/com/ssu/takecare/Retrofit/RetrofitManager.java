@@ -16,11 +16,15 @@ import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
 import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
+import com.ssu.takecare.Retrofit.Password.RequestChangePassword;
+import com.ssu.takecare.Retrofit.Password.ResponseChangePassword;
+import com.ssu.takecare.Retrofit.Password.ResponseFindPassword;
 import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCareCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentIdCallback;
+import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitErrorCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
@@ -30,7 +34,7 @@ import java.util.List;
 
 public class RetrofitManager {
 
-    public void signup(String email, String password, RetrofitCallback callback) {
+    public void signup(String email, String password, RetrofitErrorCallback callback) {
         RequestSignup requestSignup = new RequestSignup();
         requestSignup.setEmail(email);
         requestSignup.setPassword(password);
@@ -40,17 +44,18 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseSignup>() {
             @Override
             public void onResponse(@NonNull Call<ResponseSignup> call, @NonNull Response<ResponseSignup> response) {
+                ResponseSignup body = response.body();
                 if (response.isSuccessful()) {
-                    ResponseSignup body = response.body();
-                    Log.d("RetrofitManager_signup", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_signup", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_signup", "onResponse : status code is " + response.code());
 
                     callback.onSuccess(body.message, body.data_email);
                 }
                 else {
+                    Log.d("RetrofitManager_signup", "onResponse : 실패, error message : " + body.getErrorMessage());
                     Log.d("RetrofitManager_signup", "onResponse : 실패, error code : " + response.code());
 
-                    callback.onFailure(response.code());
+                    callback.onFailure(body.errorMessage, response.code());
                 }
             }
 
@@ -63,7 +68,7 @@ public class RetrofitManager {
         });
     }
 
-    public void login(String email, String password, RetrofitCallback callback) {
+    public void login(String email, String password, RetrofitErrorCallback callback) {
         RequestLogin requestLogin = new RequestLogin();
         requestLogin.setEmail(email);
         requestLogin.setPassword(password);
@@ -73,17 +78,18 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(@NonNull Call<ResponseLogin> call, @NonNull Response<ResponseLogin> response) {
+                ResponseLogin body = response.body();
                 if (response.isSuccessful()) {
-                    ResponseLogin body = response.body();
-                    Log.d("RetrofitManager_login", "onResponse : 성공, message : " + body.toString());
+                    Log.d("RetrofitManager_login", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_login", "onResponse : status code is " + response.code());
 
                     callback.onSuccess(body.message, body.data_accessToken);
                 }
                 else {
+                    Log.d("RetrofitManager_login", "onResponse : 실패, error message : " + body.getErrorMessage());
                     Log.d("RetrofitManager_login", "onResponse : 실패, error code : " + response.code());
 
-                    callback.onFailure(response.code());
+                    callback.onFailure(body.errorMessage, response.code());
                 }
             }
 
@@ -110,8 +116,8 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseInfo>() {
             @Override
             public void onResponse(@NonNull Call<ResponseInfo> call, @NonNull Response<ResponseInfo> response) {
+                ResponseInfo body = response.body();
                 if (response.isSuccessful()) {
-                    ResponseInfo body = response.body();
                     Log.d("RetrofitManager_info", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_info", "onResponse : status code is " + response.code());
 
@@ -162,6 +168,97 @@ public class RetrofitManager {
         });
     }
 
+    public void getByEmailUserInfo(String email, RetrofitUserInfoCallback callback) {
+        Call<ResponseGetUser> call = ApplicationClass.retrofit_api.searchByEmailRequest(email);
+
+        call.enqueue(new Callback<ResponseGetUser>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseGetUser> call, @NonNull Response<ResponseGetUser> response) {
+                if (response.isSuccessful()) {
+                    ResponseGetUser body = response.body();
+                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 성공, message : " + body.getMessage());
+                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess("searchByEmailRequest 호출 : ", body.getData());
+                }
+                else {
+                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseGetUser> call, @NonNull Throwable t) {
+                Log.e("RetrofitManager_getByEmailUserInfo", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void findPassword(String email, RetrofitCallback callback) {
+        Call<ResponseFindPassword> call = ApplicationClass.retrofit_api.findPasswordRequest(email);
+
+        call.enqueue(new Callback<ResponseFindPassword>() {
+            @Override
+            public void onResponse(Call<ResponseFindPassword> call, Response<ResponseFindPassword> response) {
+                if (response.isSuccessful()) {
+                    ResponseFindPassword body = response.body();
+                    Log.d("RetrofitManager_findPassword", "onResponse : 성공, message : " + body.getMessage());
+                    Log.d("RetrofitManager_findPassword", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess("findPassword 호출 : ", body.getMessage());
+                }
+                else {
+                    Log.d("RetrofitManager_findPassword", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseFindPassword> call, Throwable t) {
+                Log.e("RetrofitManager_findPassword", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
+    public void changePassword(String current_email, String new_password, RetrofitCallback callback) {
+        RequestChangePassword requestChangePassword = new RequestChangePassword();
+        requestChangePassword.setCurrentPassword(current_email);
+        requestChangePassword.setNewPassword(new_password);
+
+        Call<ResponseChangePassword> call = ApplicationClass.retrofit_api.changePasswordRequest(requestChangePassword);
+
+        call.enqueue(new Callback<ResponseChangePassword>() {
+            @Override
+            public void onResponse(Call<ResponseChangePassword> call, Response<ResponseChangePassword> response) {
+                if (response.isSuccessful()) {
+                    ResponseChangePassword body = response.body();
+                    Log.d("RetrofitManager_ChangePassword", "onResponse : 성공, message : " + body.getMessage());
+                    Log.d("RetrofitManager_ChangePassword", "onResponse : status code is " + response.code());
+
+                    callback.onSuccess("ChangePassword 호출 : ", body.getMessage());
+                }
+                else {
+                    Log.d("RetrofitManager_ChangePassword", "onResponse : 실패, error code : " + response.code());
+
+                    callback.onFailure(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseChangePassword> call, Throwable t) {
+                Log.e("RetrofitManager_ChangePassword", "onFailure : " + t.getLocalizedMessage());
+
+                callback.onError(t);
+            }
+        });
+    }
+
     public void makeReport(int systolic, int diastolic, List<Integer> sugarLevels, int weight, RetrofitCallback callback) {
         RequestReport requestReport = new RequestReport();
         requestReport.setSystolic(systolic);
@@ -174,8 +271,8 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseReport>() {
             @Override
             public void onResponse(@NonNull Call<ResponseReport> call, @NonNull Response<ResponseReport> response) {
+                ResponseReport body = response.body();
                 if (response.isSuccessful()) {
-                    ResponseReport body = response.body();
                     Log.d("RetrofitManager_makeReport", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_makeReport", "onResponse : status code is " + response.code());
 
@@ -209,10 +306,11 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseUpdateReport>() {
             @Override
             public void onResponse(@NonNull Call<ResponseUpdateReport> call, @NonNull Response<ResponseUpdateReport> response) {
+                ResponseUpdateReport body = response.body();
                 if (response.isSuccessful()) {
-                    ResponseUpdateReport body = response.body();
                     Log.d("RetrofitManager_updateReport", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_updateReport", "onResponse : status code is " + response.code());
+
                     callback.onSuccess(body.message, body.message);
                 }
                 else {
@@ -349,8 +447,8 @@ public class RetrofitManager {
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
+                Object body = response.body();
                 if (response.isSuccessful()) {
-                    Object body = response.body();
                     Log.d("RetrofitManager_careAcceptRequest", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_careAcceptRequest", "onResponse : status code is " + response.code());
                     
@@ -378,8 +476,8 @@ public class RetrofitManager {
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
+                Object body = response.body();
                 if (response.isSuccessful()) {
-                    Object body = response.body();
                     Log.d("RetrofitManager_careDeleteRequest", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_careDeleteRequest", "onResponse : status code is " + response.code());
 
@@ -395,35 +493,6 @@ public class RetrofitManager {
             @Override
             public void onFailure(@NonNull Call<Object> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_careDeleteRequest", "onFailure : " + t.getLocalizedMessage());
-
-                callback.onError(t);
-            }
-        });
-    }
-
-    public void getByEmailUserInfo(String email, RetrofitUserInfoCallback callback) {
-        Call<ResponseGetUser> call = ApplicationClass.retrofit_api.searchByEmailRequest(email);
-
-        call.enqueue(new Callback<ResponseGetUser>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseGetUser> call, @NonNull Response<ResponseGetUser> response) {
-                if (response.isSuccessful()) {
-                    ResponseGetUser body = response.body();
-                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 성공, message : " + body.getMessage());
-                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : status code is " + response.code());
-
-                    callback.onSuccess("searchByEmailRequest 호출 : ", body.getData());
-                }
-                else {
-                    Log.d("RetrofitManager_getByEmailUserInfo", "onResponse : 실패, error code : " + response.code());
-
-                    callback.onFailure(response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseGetUser> call, @NonNull Throwable t) {
-                Log.e("RetrofitManager_getByEmailUserInfo", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
             }
@@ -496,8 +565,8 @@ public class RetrofitManager {
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
+                Object body = response.body();
                 if (response.isSuccessful()) {
-                    Object body = response.body();
                     Log.d("RetrofitManager_deleteComment", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_deleteComment", "onResponse : status code is " + response.code());
 

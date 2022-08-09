@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.UI.MatchActivity;
+import com.ssu.takecare.UI.PasswordActivity;
 import com.ssu.takecare.UI.ProfileActivity;
 
 public class MyPageFragment extends Fragment {
@@ -29,6 +30,7 @@ public class MyPageFragment extends Fragment {
         tv_name.setText(my_name);
 
         ConstraintLayout profile_setting = (ConstraintLayout) view.findViewById(R.id.layout_profile);
+        ConstraintLayout password_setting = (ConstraintLayout) view.findViewById(R.id.layout_password);
         ConstraintLayout match_setting = (ConstraintLayout) view.findViewById(R.id.layout_match);
         ConstraintLayout alarm_setting = (ConstraintLayout) view.findViewById(R.id.layout_alarm);
         ConstraintLayout share_setting = (ConstraintLayout) view.findViewById(R.id.layout_share);
@@ -37,6 +39,14 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        password_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PasswordActivity.class);
                 startActivity(intent);
             }
         });

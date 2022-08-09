@@ -216,7 +216,7 @@ public class CalendarActivity extends AppCompatActivity {
         }
     }
 
-    //레포트 초기화
+    // 레포트 초기화
     void init_report(){
         high_pressure_calendar.setText("____ mmHg");
         low_pressure_calendar.setText("____ mmHg");
@@ -224,8 +224,8 @@ public class CalendarActivity extends AppCompatActivity {
         after_sugar_calendar.setText("____ mg/dL");
         weight_calendar.setText("____ kg");
     }
+
     public void back_btn_event(View view) {
         finish();
     }
-    public void memo(){} //무시
 }

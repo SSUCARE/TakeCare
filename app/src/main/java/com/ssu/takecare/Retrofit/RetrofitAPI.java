@@ -10,6 +10,9 @@ import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
 import com.ssu.takecare.Retrofit.Match.ResponseGetUser;
+import com.ssu.takecare.Retrofit.Password.RequestChangePassword;
+import com.ssu.takecare.Retrofit.Password.ResponseChangePassword;
+import com.ssu.takecare.Retrofit.Password.ResponseFindPassword;
 import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
@@ -47,9 +50,20 @@ public interface RetrofitAPI {
     @GET("/users")
     Call<ResponseGetUser> infoCheckRequest();
 
+    // 이메일로 회원 검색
     @Headers("Content-Type: application/json")
     @GET("/users/{email}")
     Call<ResponseGetUser> searchByEmailRequest(@Path("email") String path);
+
+    // 비밀번호 찾기
+    @Headers("Content-Type: application/json")
+    @GET("/users/password")
+    Call<ResponseFindPassword> findPasswordRequest(@Query("email") String email);
+
+    // 비밀번호 수정
+    @Headers("Content-Type: application/json")
+    @POST("/users/password")
+    Call<ResponseChangePassword> changePasswordRequest(@Body RequestChangePassword body);
 
     // report 생성
     @Headers("Content-Type: application/json")
