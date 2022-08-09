@@ -26,11 +26,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/close_btn"
             android:onClick="back_btn_event"/>
 
         <TextView
-            android:id="@+id/TitleTextView"
+            android:id="@+id/tv_match_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_normal"
@@ -49,7 +48,7 @@
             android:background="@drawable/plus"
             android:scaleType="centerCrop"
             app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toEndOf="@id/TitleTextView"
+            app:layout_constraintStart_toEndOf="@id/tv_match_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

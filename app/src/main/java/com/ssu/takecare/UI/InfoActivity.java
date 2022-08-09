@@ -134,7 +134,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //화면 터치 시 키보드 내려감
+    // 화면 터치 시 키보드 내려감
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View focusView = getCurrentFocus();

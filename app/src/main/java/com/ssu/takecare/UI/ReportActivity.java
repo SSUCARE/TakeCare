@@ -4,20 +4,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.database.DataSetObserver;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +28,6 @@ import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitCommentIdCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -241,29 +237,15 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
 
-        // 해당 메세지를 길게 누르면 메세지 수정 또는 삭제를 선택할 수 있다
+        // 해당 메세지를 길게 누르면 메세지를 삭제할 수 있다
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("ReportActivity", "position : " + position);
-
-                EditText et = new EditText(ReportActivity.this);
-                String update_comment = commentAdapter.getItem(position).getMessage();
                 String author = commentAdapter.getAuthorName(position);
 
-                FrameLayout container = new FrameLayout(ReportActivity.this);
-                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-                params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-                et.setLayoutParams(params);
-                et.setText(update_comment);
-                et.setTextColor(Color.parseColor("#ffffff"));
-                container.addView(et);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this, R.style.MyDialogTheme);
-                builder.setTitle("메세지 수정 또는 삭제");
-                builder.setMessage("이 메시지를 수정 또는 삭제할까요?");
-                builder.setView(container);
+                builder.setTitle("메세지 삭제");
+                builder.setMessage("이 메시지를 삭제할까요?");
 
                 builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                     @Override
@@ -295,38 +277,7 @@ public class ReportActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("수정", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (author.equals(ApplicationClass.sharedPreferences.getString("name", ""))) {
-                            int update_commentId = commentAdapter.getCommentId(position);
-                            String edit_comment = et.getText().toString();
-
-                            ApplicationClass.retrofit_manager.updateComment(update_commentId, edit_comment, new RetrofitCommentIdCallback() {
-                                @Override
-                                public void onError(Throwable t) {
-
-                                }
-
-                                @Override
-                                public void onSuccess(String message, int commentId) {
-                                    commentAdapter.edit(commentId - 1, new Comment(false, edit_comment));
-                                    commentAdapter.notifyDataSetChanged(); // 새로고침
-                                }
-
-                                @Override
-                                public void onFailure(int error_code) {
-
-                                }
-                            });
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "자신이 쓴 메세지만 수정할 수 있습니다", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                builder.setNeutralButton("취소", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

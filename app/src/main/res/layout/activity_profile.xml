@@ -10,6 +10,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bar_profile"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/actionbar_color"
@@ -37,7 +38,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="5dp"
-            android:id="@+id/close_btn"
             android:onClick="back_btn_event"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -45,7 +45,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:background="@color/tab_color"
         android:orientation="vertical"
         android:padding="15dp">
 
@@ -99,7 +98,7 @@
                 app:layout_constraintLeft_toLeftOf="@id/profile_matchcount_tv"
                 app:layout_constraintRight_toRightOf="@id/profile_matchcount_tv"
                 android:layout_marginBottom="5dp"
-                android:text="3"
+                android:text="123"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:id="@+id/profile_matchcounting_tv"

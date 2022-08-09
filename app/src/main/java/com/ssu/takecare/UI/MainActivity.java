@@ -305,19 +305,21 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(String message, ResponseCare data) {
+                            int mapping_count = 0;
                             List<String> UserName = new ArrayList<>();
                             List<Integer> UserId = new ArrayList<>();
                             List<DataResponseCare> list = data.getData();
-
-                            editor.putInt("Mapping_Count", list.size());
-                            editor.apply();
 
                             for (int i = 0; i < list.size(); i++){
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
                                     UserId.add(list.get(i).getUserId());
+                                    mapping_count++;
                                 }
                             }
+
+                            editor.putInt("Mapping_Count", mapping_count);
+                            editor.apply();
 
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaringShareFragment(UserName, UserId)).commit();
                         }
@@ -335,19 +337,21 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(String message, ResponseCare data) {
+                            int mapping_count = 0;
                             List<String> UserName = new ArrayList<>();
                             List<Integer> UserId = new ArrayList<>();
                             List<DataResponseCare> list = data.getData();
-
-                            editor.putInt("Mapping_Count", list.size());
-                            editor.apply();
 
                             for (int i = 0; i < list.size(); i++){
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
                                     UserId.add(list.get(i).getUserId());
+                                    mapping_count++;
                                 }
                             }
+
+                            editor.putInt("Mapping_Count", mapping_count);
+                            editor.apply();
 
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaredShareFragment(UserName, UserId)).commit();
                         }

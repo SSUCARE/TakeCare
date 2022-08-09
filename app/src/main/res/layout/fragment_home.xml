@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tab_color"
-    android:weightSum="13"
+    android:weightSum="14"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:background="@color/actionbar_color"
-        android:layout_weight="1">
+        android:layout_weight="1.2">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="4">
+        android:layout_weight="4.8">
 
         <TextView
             android:layout_width="wrap_content"

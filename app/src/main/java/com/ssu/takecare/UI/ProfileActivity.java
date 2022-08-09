@@ -2,7 +2,6 @@ package com.ssu.takecare.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,8 +12,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     TextView tv_name, tv_gender, tv_age, tv_height, tv_role;
     TextView tv_match_count;
-
-    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

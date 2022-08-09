@@ -9,7 +9,7 @@
     android:weightSum="12">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bar_match"
+        android:id="@+id/bar_export"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/actionbar_color"
@@ -25,10 +25,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/back_btn"/>
+            android:onClick="back_btn_event"/>
 
         <TextView
-            android:id="@+id/share_document"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_normal"

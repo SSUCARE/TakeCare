@@ -1,6 +1,5 @@
 package com.ssu.takecare.Retrofit.Signup;
 
-import androidx.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 public class ResponseSignup {
@@ -10,13 +9,26 @@ public class ResponseSignup {
     @SerializedName("data")
     public DataSignup data;
 
-    public String data_email;
+    @SerializedName("errorMessage")
+    public String errorMessage;
 
-    @NonNull
-    @Override
-    public String toString() {
-        data_email = data.toString();
+    @SerializedName("errors")
+    public DataSignup errors;
+
+    public String data_email;
+    public String error_email;
+    public String error_password;
+
+    public String getMessage() {
+        data_email = data.getEmail();
 
         return message;
+    }
+
+    public String getErrorMessage() {
+        error_email = errors.getEmail();
+        error_password = errors.getPassword();
+
+        return errorMessage;
     }
 }
