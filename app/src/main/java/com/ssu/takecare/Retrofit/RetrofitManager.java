@@ -2,9 +2,11 @@ package com.ssu.takecare.Retrofit;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.google.gson.Gson;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Retrofit.Comment.RequestComment;
 import com.ssu.takecare.Retrofit.Comment.ResponseComment;
@@ -12,6 +14,7 @@ import com.ssu.takecare.Retrofit.Comment.ResponseGetComment;
 import com.ssu.takecare.Retrofit.GetReport.ResponseGetReport;
 import com.ssu.takecare.Retrofit.Info.RequestInfo;
 import com.ssu.takecare.Retrofit.Info.ResponseInfo;
+import com.ssu.takecare.Retrofit.Login.LoginError;
 import com.ssu.takecare.Retrofit.Login.RequestLogin;
 import com.ssu.takecare.Retrofit.Login.ResponseLogin;
 import com.ssu.takecare.Retrofit.Match.ResponseCare;
@@ -29,7 +32,9 @@ import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitReportCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
-import com.ssu.takecare.Retrofit.UpdateReport.ResponseUpdateReport;
+import com.ssu.takecare.Retrofit.Signup.SignupError;
+import com.ssu.takecare.Retrofit.Report.ResponseUpdateReport;
+import java.io.IOException;
 import java.util.List;
 
 public class RetrofitManager {
@@ -44,18 +49,26 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseSignup>() {
             @Override
             public void onResponse(@NonNull Call<ResponseSignup> call, @NonNull Response<ResponseSignup> response) {
-                ResponseSignup body = response.body();
                 if (response.isSuccessful()) {
+                    ResponseSignup body = response.body();
                     Log.d("RetrofitManager_signup", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_signup", "onResponse : status code is " + response.code());
 
                     callback.onSuccess(body.message, body.data_email);
                 }
                 else {
-                    Log.d("RetrofitManager_signup", "onResponse : 실패, error message : " + body.getErrorMessage());
-                    Log.d("RetrofitManager_signup", "onResponse : 실패, error code : " + response.code());
+                    ResponseBody responseBody = response.errorBody();
+                    Gson gson = new Gson();
+                    try {
+                        SignupError signupError = gson.fromJson(responseBody.string(), SignupError.class);
+                        Log.d("RetrofitManager_signup", "onResponse : 실패, error message : " + signupError.getErrorMessage());
+                        Log.d("RetrofitManager_signup", "onResponse : 실패, error code : " + response.code());
 
-                    callback.onFailure(body.errorMessage, response.code());
+                        callback.onFailure(signupError.errorMessage, response.code());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -78,18 +91,26 @@ public class RetrofitManager {
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(@NonNull Call<ResponseLogin> call, @NonNull Response<ResponseLogin> response) {
-                ResponseLogin body = response.body();
                 if (response.isSuccessful()) {
+                    ResponseLogin body = response.body();
                     Log.d("RetrofitManager_login", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_login", "onResponse : status code is " + response.code());
 
                     callback.onSuccess(body.message, body.data_accessToken);
                 }
                 else {
-                    Log.d("RetrofitManager_login", "onResponse : 실패, error message : " + body.getErrorMessage());
-                    Log.d("RetrofitManager_login", "onResponse : 실패, error code : " + response.code());
+                    ResponseBody responseBody = response.errorBody();
+                    Gson gson = new Gson();
+                    try {
+                        LoginError loginError = gson.fromJson(responseBody.string(), LoginError.class);
+                        Log.d("RetrofitManager_login", "onResponse : 실패, error message : " + loginError.getErrorMessage());
+                        Log.d("RetrofitManager_login", "onResponse : 실패, error code : " + response.code());
 
-                    callback.onFailure(body.errorMessage, response.code());
+                        callback.onFailure(loginError.errorMessage, response.code());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

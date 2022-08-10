@@ -17,7 +17,7 @@ import com.ssu.takecare.Retrofit.Report.RequestReport;
 import com.ssu.takecare.Retrofit.Report.ResponseReport;
 import com.ssu.takecare.Retrofit.Signup.RequestSignup;
 import com.ssu.takecare.Retrofit.Signup.ResponseSignup;
-import com.ssu.takecare.Retrofit.UpdateReport.ResponseUpdateReport;
+import com.ssu.takecare.Retrofit.Report.ResponseUpdateReport;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

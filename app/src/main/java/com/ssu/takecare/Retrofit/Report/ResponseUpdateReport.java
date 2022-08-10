@@ -1,4 +1,4 @@
-package com.ssu.takecare.Retrofit.UpdateReport;
+package com.ssu.takecare.Retrofit.Report;
 
 import com.google.gson.annotations.SerializedName;
 
