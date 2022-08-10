@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Share folder under device root directory. The base folder is new File("/") -->
-    <root-path name="root" path="." />
-
-    <!-- Share folder under internal file folder. The base folder is context.getFilesDir() -->
-    <files-path name="internal_files" path="Android/data/com.ssu.takecare/files" />
-
-    <!-- Share folder under internal cache folder. The base folder is context.getCacheDir() -->
-    <cache-path name="internal_cache" path="Android/data/com.ssu.takecare/files" />
-
-    <!-- Share folder under public external storage folder.The base folder is Environment.getExternalStorageDirectory()-->
-    <external-path name="external" path="Android/data/com.ssu.takecare/files" />
-
-    <!-- Share folder under app specific external file folder.The base folder is context.getExternalFilesDirs()-->
-    <external-files-path name="external_files" path="Android/data/com.ssu.takecare/files" />
-
-    <!-- Share folder under app specific external cache folder.The base folder is context.getExternalCacheDirs()-->
-    <external-cache-path name="external_cache" path="Android/data/com.ssu.takecare/files" />
+    <cache-path
+        name="cache"
+        path="/"/>
+    <files-path
+        name="files"
+        path="/"/>
 </paths>
