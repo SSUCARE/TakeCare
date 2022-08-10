@@ -4,13 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
-import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitErrorCallback;
 
 public class FirstActivity extends AppCompatActivity {
@@ -43,17 +40,12 @@ public class FirstActivity extends AppCompatActivity {
                         editor.putString("accessToken", token);
                         editor.apply();
 
-                        Log.d("FirstActivity_Login_onSuccess", "message : " + message);
-                        Toast.makeText(getApplicationContext(), "자동로그인 성공", Toast.LENGTH_SHORT).show();
-
                         finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }
 
                     @Override
                     public void onFailure(String error_message, int error_code) {
-                        Log.d("자동로그인_onFailure", "error message : " + error_message);
-                        Log.d("자동로그인_onFailure", "error code : " + error_code);
                         Toast.makeText(getApplicationContext(), error_message, Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.Retrofit.Match.DataResponseGetUser;
-import com.ssu.takecare.Retrofit.RetrofitCallback;
 import com.ssu.takecare.R;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitErrorCallback;
 import com.ssu.takecare.Retrofit.RetrofitCustomCallback.RetrofitUserInfoCallback;
@@ -106,6 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onSuccess(String message, String token) {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
                         setPreference("email_login", email_str);
                         setPreference("password_login", password_str);
                         setPreference("accessToken", token);
@@ -118,9 +118,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             @Override
                             public void onSuccess(String message, DataResponseGetUser data) {
-                                Log.d("LoginActivity_Login_onSuccess", "message : " + message);
-                                Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
-
                                 if (data.getName() != null || data.getGender() != null || data.getAge() != null || data.getHeight() != null || data.getRole() != null) {
                                     editor.putInt("userId", data.getId());
                                     editor.putString("name", data.getName());
@@ -150,16 +147,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             @Override
                             public void onFailure(int error_code) {
-                                Log.d("Login_onFailure", "error code : " + error_code);
-                                Toast.makeText(getApplicationContext(), "해당 요청 값이 요구하는 형식과 일치하지 않습니다", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
 
                     @Override
                     public void onFailure(String error_message, int error_code) {
-                        Log.d("Login_onFailure", "error message : " + error_message);
-                        Log.d("Login_onFailure", "error code : " + error_code);
                         Toast.makeText(getApplicationContext(), error_message, Toast.LENGTH_SHORT).show();
                     }
                 });
