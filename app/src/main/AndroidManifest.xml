@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ssu.takecare">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,14 +11,15 @@
     <application
         android:name="com.ssu.takecare.ApplicationClass"
         android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_rules"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_main"
         android:roundIcon="@mipmap/ic_main_round"
-        android:theme="@style/Theme.TakeCare">
+        android:theme="@style/Theme.TakeCare"
+        tools:targetApi="31">
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -28,23 +31,29 @@
                 android:resource="@xml/file_path" />
         </provider>
 
-        <activity android:name="com.ssu.takecare.UI.PasswordActivity" />
-        <activity android:name="com.ssu.takecare.UI.MatchActivity" />
-        <activity android:name="com.ssu.takecare.UI.CalendarActivity" />
-        <activity android:name="com.ssu.takecare.UI.PrescriptionActivity" />
-        <activity android:name="com.ssu.takecare.UI.ProfileActivity" />
-        <activity android:name="com.ssu.takecare.UI.InfoActivity" />
-        <activity android:name="com.ssu.takecare.UI.LoginActivity" />
-        <activity android:name="com.ssu.takecare.UI.FindActivity" />
-        <activity android:name="com.ssu.takecare.UI.SignupActivity" />
-        <activity android:name="com.ssu.takecare.UI.MainActivity" />
-        <activity android:name="com.ssu.takecare.UI.ReportActivity"
+        <activity android:name=".ui.PasswordActivity" />
+        <activity android:name=".ui.MatchActivity" />
+        <activity android:name=".ui.CalendarActivity" />
+        <activity android:name=".ui.PrescriptionActivity" />
+        <activity android:name=".ui.ProfileActivity" />
+        <activity android:name=".ui.InfoActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.FindActivity" />
+        <activity android:name=".ui.SignupActivity" />
+        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity
+            android:name=".ui.ReportActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.ssu.takecare.UI.FirstActivity"
+            android:name=".ui.FirstActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
