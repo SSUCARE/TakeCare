@@ -14,6 +14,12 @@
         <item name="android:timePickerDialogTheme">@style/DialogDatePicker.Theme</item>
     </style>
 
+    <!-- 앱 사용설명서 -->
+    <style name="Theme.TakeCare.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <!-- 달력 날짜 설정 -->
     <style name="DialogDatePicker.Theme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/actionbar_color</item>

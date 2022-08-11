@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/tab_color"
-    tools:context=".UI.InfoActivity">
+    tools:context=".ui.InfoActivity">
 
     <TextView
         android:layout_width="wrap_content"
