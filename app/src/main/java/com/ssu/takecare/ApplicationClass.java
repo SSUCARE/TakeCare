@@ -9,6 +9,7 @@ import com.ssu.takecare.retrofit.RetrofitManager;
 public class ApplicationClass extends Application {
 
     public final String BASE_URL = "http://3.39.15.41:8080";
+
     public static SharedPreferences sharedPreferences;
     public static RetrofitAPI retrofit_api;
     public static RetrofitManager retrofit_manager;

@@ -1,6 +1,7 @@
 package com.ssu.takecare.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -29,7 +30,7 @@ public class MatchActivity extends AppCompatActivity {
     private Button plus;
 
     private String role;
-
+    private final String TAG="MatchActivity,Jdebug";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class MatchActivity extends AppCompatActivity {
                     for (int i = 0; i < size; i++) {
                         if (data.getData().get(i).getStatus().equals("PENDING")) {
                             mArrData.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
+                           // Log.d(TAG,"id:"+data.getData().get(i).getId());
                         }
                         else if (data.getData().get(i).getStatus().equals("ACCEPTED")) {
                             mArrData2.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());

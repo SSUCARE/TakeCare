@@ -10,7 +10,6 @@ import com.ssu.takecare.R;
 
 public class SugarDialog extends Dialog implements View.OnClickListener {
 
-    private Context mContext;
     private SugarDialogListener sugarDialogListener;
 
     EditText beforeSugar, afterSugar;
@@ -18,7 +17,6 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
 
     public SugarDialog(Context context) {
         super(context);
-        this.mContext = context;
     }
 
     public interface SugarDialogListener {

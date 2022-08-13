@@ -10,7 +10,6 @@ import com.ssu.takecare.R;
 
 public class PressureDialog extends Dialog implements View.OnClickListener {
 
-    private Context mContext;
     private PressureDialogListener pressureDialogListener;
 
     EditText highPressure, lowPressure;
@@ -18,7 +17,6 @@ public class PressureDialog extends Dialog implements View.OnClickListener {
 
     public PressureDialog(Context context) {
         super(context);
-        this.mContext = context;
     }
 
     public interface PressureDialogListener {

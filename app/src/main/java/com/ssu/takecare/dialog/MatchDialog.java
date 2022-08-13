@@ -26,7 +26,7 @@ public class MatchDialog {
     private Dialog dialog;
     private ListViewMatchAdapter adapter;
 
-    public MatchDialog(Activity activity,ListViewMatchAdapter adapter) {
+    public MatchDialog(Activity activity, ListViewMatchAdapter adapter) {
         this.activity = activity;
         this.adapter=adapter;
         setDialog();
@@ -79,7 +79,7 @@ public class MatchDialog {
                             Log.d("MatchDialog : ", "userGender : " + userGender);
                             Log.d("MatchDialog : ", "userAge : " + userAge);
 
-                            MatchFindUserDialog dialog2 = new MatchFindUserDialog(activity, userId, userName, userGender, userAge,adapter);
+                            MatchFindUserDialog dialog2 = new MatchFindUserDialog(activity, userId, userName, userGender, userAge, adapter);
                             dialog2.showDialog();
                         }
 

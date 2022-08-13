@@ -10,7 +10,6 @@ import com.ssu.takecare.R;
 
 public class WeightDialog extends Dialog implements View.OnClickListener {
 
-    private Context mContext;
     private WeightDialogListener weightDialogListener;
 
     EditText weight;
@@ -18,7 +17,6 @@ public class WeightDialog extends Dialog implements View.OnClickListener {
 
     public WeightDialog(Context context) {
         super(context);
-        this.mContext = context;
     }
 
     public interface WeightDialogListener {
