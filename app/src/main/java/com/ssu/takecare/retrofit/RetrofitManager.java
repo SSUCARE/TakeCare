@@ -11,6 +11,7 @@ import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.retrofit.comment.RequestComment;
 import com.ssu.takecare.retrofit.comment.ResponseComment;
 import com.ssu.takecare.retrofit.comment.ResponseGetComment;
+import com.ssu.takecare.retrofit.match.Response_Resquest_Care;
 import com.ssu.takecare.retrofit.report.ResponseGetReport;
 import com.ssu.takecare.retrofit.info.RequestInfo;
 import com.ssu.takecare.retrofit.info.ResponseInfo;
@@ -436,15 +437,15 @@ public class RetrofitManager {
     }
 
     public void careRequest(int userId, RetrofitCallback callback) {
-        Call<Void> call = ApplicationClass.retrofit_api.careRequest(userId);
+        Call<Response_Resquest_Care> call = ApplicationClass.retrofit_api.careRequest(userId);
 
-        call.enqueue(new Callback<Void>() {
+        call.enqueue(new Callback<Response_Resquest_Care>() {
             @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+            public void onResponse(@NonNull Call<Response_Resquest_Care> call, @NonNull Response<Response_Resquest_Care> response) {
                 if (response.isSuccessful()) {
                     Log.d("RetrofitManager_careRequest", "onResponse : status code is " + response.code());
-
-                    callback.onSuccess("careRequest 호출 : ", "상대방 추가완료");
+                    Response_Resquest_Care data= response.body();
+                    callback.onSuccess(data.getMessage(), Integer.toString(data.getData()));
                 }
                 else {
                     Log.d("RetrofitManager_careRequest", "onResponse : 실패, error code : " + response.code());
@@ -454,7 +455,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Response_Resquest_Care> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_careRequest", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
