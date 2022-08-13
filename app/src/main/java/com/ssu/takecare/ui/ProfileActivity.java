@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.BuildConfig;
 import com.ssu.takecare.R;
 import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
@@ -102,13 +103,14 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
+                dialog.dismiss();
             }
         });
 
         btnGetImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dialog.dismiss();
             }
         });
     }
@@ -184,9 +186,8 @@ public class ProfileActivity extends AppCompatActivity {
     // 카메라 인텐트 실행하는 부분
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Log.d("ProfileActivity", "aaaa");
+
         File photoFile = null;
-        Log.d("ProfileActivity", "bbbb");
         try {
             photoFile = createImageFile();
         }
@@ -195,7 +196,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         if (photoFile != null) {
-            Uri photoURI = FileProvider.getUriForFile(this, "com.ssu.takecare", photoFile);
+            Uri photoURI = FileProvider.getUriForFile(this, "com.ssu.takecare.fileprovider", photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
         }

@@ -2,11 +2,11 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <cache-path
         name="cache"
-        path="/"/>
+        path="/" />
     <files-path
         name="files"
-        path="/"/>
+        path="/" />
     <external-path
-        name="my_images"
-        path="Android/data/com.ssu.takecare/files/Pictures" />
+        name="images"
+        path="Android/data/com.ssu.takecare/files/Images" />
 </paths>
