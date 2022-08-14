@@ -2,7 +2,6 @@ package com.ssu.takecare.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,7 +24,7 @@ public class MatchFindUserDialog {
     private Activity activity;
     private Dialog dialog;
     private ListViewMatchAdapter adapter;
-    private final String TAG="MatchFindUserDialog,Jdebug";
+
     public MatchFindUserDialog(Activity activity, Integer userId, String userName, String userGender, Integer userAge,ListViewMatchAdapter adapter) {
         this.activity = activity;
         this.userId = userId;
@@ -70,7 +69,7 @@ public class MatchFindUserDialog {
                     @Override
                     public void onSuccess(String message, String data) {
                         Toast.makeText(view.getContext(), "요청 완료", Toast.LENGTH_SHORT).show();
-                        //Log.d(TAG,"메세지:"+message+" data:"+data); 재영님이 UserId가 아닌 CareId 넘겨줬는지만 확인하기.
+
                         adapter.addItem(userName,Integer.parseInt(data));
                         adapter.notifyDataSetChanged();
                         dismiss();

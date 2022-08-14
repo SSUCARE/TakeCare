@@ -1,7 +1,6 @@
 package com.ssu.takecare.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,7 +29,8 @@ public class MatchActivity extends AppCompatActivity {
     private Button plus;
 
     private String role;
-    private final String TAG="MatchActivity,Jdebug";
+    private final String TAG="MatchActivity_debug";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

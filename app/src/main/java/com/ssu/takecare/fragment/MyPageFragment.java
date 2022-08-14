@@ -1,6 +1,8 @@
 package com.ssu.takecare.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,9 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
@@ -23,7 +25,6 @@ import com.ssu.takecare.runnable.ShareRunnable;
 import com.ssu.takecare.ui.MatchActivity;
 import com.ssu.takecare.ui.PasswordActivity;
 import com.ssu.takecare.ui.ProfileActivity;
-
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -34,13 +35,20 @@ import java.util.List;
 import java.util.Locale;
 
 public class MyPageFragment extends Fragment {
-    private final String TAG="MyPageFragment,Deburg";
-    TextView tv_name;
+
+    private String imgName = "my_profile_image.png";
+    private final String TAG = "MyPageFragment_Debug";
+
+    private ImageView profileImage;
+    private TextView tv_name;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mypage, container, false);
+
+        profileImage = view.findViewById(R.id.img_user);
+        getImage();
 
         String my_name = ApplicationClass.sharedPreferences.getString("name", "");
         tv_name = view.findViewById(R.id.user_name);
@@ -164,6 +172,23 @@ public class MyPageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    // 설정된 프로필 사진 불러오기
+    private void getImage() {
+        try {
+            File file = getActivity().getCacheDir();
+            File[] flist = file.listFiles();
+            for (int i = 0; i < flist.length; i++) {
+                if (flist[i].getName().equals(imgName)) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(String.valueOf(flist[i]));
+                    profileImage.setImageBitmap(bitmap);
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
