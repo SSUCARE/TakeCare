@@ -1,6 +1,7 @@
 package com.ssu.takecare.assist.match;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
     private Map<String, Integer> arrData;
     private String acceptedOrNot;
     private Integer userId;
+    private final String TAG="ListViewMatchAdapter, Jdebug";
 
     public ListViewMatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot) {
         super();
@@ -51,6 +53,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
 
     // getView method is called for each item of ListView
     public View getView(int position, View view, ViewGroup parent) {
+
         // inflate the layout for each item of listView
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.activity_listview1, parent, false);
@@ -75,8 +78,8 @@ public class ListViewMatchAdapter extends BaseAdapter {
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApplicationClass.retrofit_manager.careDeleteRequest(userId, new RetrofitCallback() {
-
+                int list_userid=getElementByIndex(arrData, position);
+                ApplicationClass.retrofit_manager.careDeleteRequest(list_userid, new RetrofitCallback() {
                     @Override
                     public void onError(Throwable t) {
                     }
@@ -86,7 +89,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
                         Toast.makeText(v.getContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
                         for (String key : arrData.keySet()) {
                             int value = arrData.get(key);
-                            if (value == userId) {
+                            if (value == list_userid) {
                                 arrData.remove(key);
                                 break;
                             }

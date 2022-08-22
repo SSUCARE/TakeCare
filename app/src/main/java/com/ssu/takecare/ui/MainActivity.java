@@ -3,6 +3,7 @@ package com.ssu.takecare.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     Boolean REPORT_FLAG = false;
     int r_systolic = 0; int r_diastolic = 0; int r_weight = 0;
     List<Integer> r_sugarLevels = null;
+
+    private final String TAG="MainActivty,Jdebug";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -304,6 +307,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
+        editor.putInt("keep_sign_in_flag",0); //자동 로그인과 관련된 flag
         editor.putString("email_login", "");
         editor.putString("password_login", "");
         editor.putString("accessToken", "");
@@ -326,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
                 tab_btn3.setImageResource(R.drawable.tab_btn3);
                 break;
             case R.id.tab_btn2:
+                List<String> UserName = new ArrayList<>(); List<Integer> UserId = new ArrayList<>();
                 if (ROLE_CARED_OR_ROLE_CARER.equals("보호자")) {
                     ApplicationClass.retrofit_manager.getCareDBMatchInfo(new RetrofitCareCallback() {
                         @Override
@@ -334,22 +339,16 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(String message, ResponseCare data) {
-                            int mapping_count = 0;
-                            List<String> UserName = new ArrayList<>();
-                            List<Integer> UserId = new ArrayList<>();
-                            List<DataResponseCare> list = data.getData();
-
+                            List<DataResponseCare>list = data.getData();
                             for (int i = 0; i < list.size(); i++){
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
                                     UserId.add(list.get(i).getUserId());
-                                    mapping_count++;
                                 }
                             }
 
-                            editor.putInt("Mapping_Count", mapping_count);
+                            editor.putInt("Mapping_Count", UserName.size());
                             editor.apply();
-
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaringShareFragment(UserName, UserId)).commit();
                         }
 
@@ -366,20 +365,16 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onSuccess(String message, ResponseCare data) {
-                            int mapping_count = 0;
-                            List<String> UserName = new ArrayList<>();
-                            List<Integer> UserId = new ArrayList<>();
                             List<DataResponseCare> list = data.getData();
 
                             for (int i = 0; i < list.size(); i++){
                                 if (list.get(i).getStatus().equals("ACCEPTED")) {
                                     UserName.add(list.get(i).getUserName());
                                     UserId.add(list.get(i).getUserId());
-                                    mapping_count++;
                                 }
                             }
 
-                            editor.putInt("Mapping_Count", mapping_count);
+                            editor.putInt("Mapping_Count", UserName.size());
                             editor.apply();
 
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaredShareFragment(UserName, UserId)).commit();
@@ -403,6 +398,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+        }
+    }
+    //자동 로그인 설정을 안했을 경우.
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        int keep_sign_in_flag=ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0);
+        Log.d(TAG,"keep_sign_in_flag:"+ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
+        if(keep_sign_in_flag==0) {
+            clearInfo();
         }
     }
 }

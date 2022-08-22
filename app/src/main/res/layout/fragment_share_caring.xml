@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tab_color"
@@ -179,9 +180,11 @@
             android:layout_weight="8">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/share_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/share_listview"/>
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

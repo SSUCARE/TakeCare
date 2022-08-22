@@ -50,7 +50,7 @@ public class GraphActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_graph);
+        setContentView(R.layout.activity_graph);
 
         pressure_btn = findViewById(R.id.pressure_btn);
         sugar_btn = findViewById(R.id.sugar_btn);

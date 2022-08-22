@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ssu.takecare">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name="com.ssu.takecare.ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:usesCleartextTraffic="true"
-        android:supportsRtl="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/ic_main"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_main_round"
+        android:supportsRtl="true"
         android:theme="@style/Theme.TakeCare"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -33,7 +35,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-
+        <activity android:name=".ui.GraphActivity" />
         <activity android:name=".ui.PasswordActivity" />
         <activity android:name=".ui.MatchActivity" />
         <activity android:name=".ui.GraphActivity" />
@@ -48,7 +50,7 @@
         <activity
             android:name=".ui.WelcomeActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.ReportActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -62,4 +64,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

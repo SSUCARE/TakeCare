@@ -2,6 +2,7 @@ package com.ssu.takecare.assist.share;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.ssu.takecare.ui.GraphActivity;
 import com.ssu.takecare.R;
 import com.ssu.takecare.ui.CalendarActivity;
+import com.ssu.takecare.ui.GraphActivity;
 import com.ssu.takecare.ui.PrescriptionActivity;
 import com.ssu.takecare.ui.ReportActivity;
 
@@ -26,6 +26,7 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
     List<Integer> Match_UserId_list;
     HashMap<Integer, String> ID_NAME = new HashMap<Integer, String>();
     Intent intent;
+    String TAG="ShareGridAdapter,Jdebug";
 
     public ShareGridAdapter(List<String> name_list, List<Integer> id_list, Context context) {
         this.Match_UserName_list = name_list;
@@ -39,7 +40,7 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            Log.d(TAG,"실행");
             for (int i = 0; i < Match_UserId_list.size(); i++)
                 ID_NAME.put(Match_UserId_list.get(i), Match_UserName_list.get(i));
 
@@ -79,10 +80,12 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
                 @Override
                 public void onClick(View view) {
                     int match_userid=Search_UserId(name.getText().toString());
-                    intent=new Intent(view.getContext(), PrescriptionActivity.class);
-                    intent.putExtra("USER_NAME",name.getText().toString());
-                    intent.putExtra("USER_ID", match_userid);
-                    mContext.startActivity(intent);
+                    if(match_userid!=-1) {
+                        intent = new Intent(view.getContext(), PrescriptionActivity.class);
+                        intent.putExtra("USER_NAME", name.getText().toString());
+                        intent.putExtra("USER_ID", match_userid);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
 
@@ -106,7 +109,21 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context=parent.getContext();
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=inflater.inflate(R.layout.share_list_container,parent,false);
+        View view;
+        switch (Match_UserId_list.size()){
+            case 1:
+                view=inflater.inflate(R.layout.share_list_container_1,parent,false);
+                Log.d(TAG,"1");
+                break;
+            case 2:
+                view=inflater.inflate(R.layout.share_list_container_2,parent,false);
+                Log.d(TAG,"2");
+                break;
+            default:
+                view=inflater.inflate(R.layout.share_list_container,parent,false);
+                Log.d(TAG,"3");
+                break;
+        }
         ViewHolder viewholder=new ViewHolder(view);
         return viewholder;
     }

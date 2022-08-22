@@ -3,6 +3,7 @@ package com.ssu.takecare.retrofit;
 import com.ssu.takecare.retrofit.comment.RequestComment;
 import com.ssu.takecare.retrofit.comment.ResponseComment;
 import com.ssu.takecare.retrofit.comment.ResponseGetComment;
+import com.ssu.takecare.retrofit.match.Response_Resquest_Care;
 import com.ssu.takecare.retrofit.report.ResponseGetReport;
 import com.ssu.takecare.retrofit.info.RequestInfo;
 import com.ssu.takecare.retrofit.info.ResponseInfo;
@@ -85,7 +86,7 @@ public interface RetrofitAPI {
     // 케어 요청
     @Headers("Content-Type: application/json")
     @POST("/care/request/{userId}")
-    Call<Void> careRequest(@Path("userId") int path);
+    Call<Response_Resquest_Care> careRequest(@Path("userId") int path);
 
     // 케어 수락
     @Headers("Content-Type: application/json")
