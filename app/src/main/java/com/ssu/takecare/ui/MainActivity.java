@@ -295,9 +295,9 @@ public class MainActivity extends AppCompatActivity {
         status_p.setVisibility(View.VISIBLE);
         status_s.setVisibility(View.VISIBLE);
         status_w.setVisibility(View.VISIBLE);
+        btn_rp.setVisibility(View.GONE);
 
         REPORT_FLAG = true;
-        btn_rp.setText("리포트 수정");
     }
 
     public void logout(View view) {
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
-        editor.putInt("keep_sign_in_flag",0); //자동 로그인과 관련된 flag
+        editor.putInt("keep_sign_in_flag",0); // 자동 로그인과 관련된 flag
         editor.putString("email_login", "");
         editor.putString("password_login", "");
         editor.putString("accessToken", "");
@@ -400,7 +400,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-    //자동 로그인 설정을 안했을 경우.
+
+    // 자동 로그인 설정을 안했을 경우.
     @Override
     protected void onDestroy() {
         super.onDestroy();

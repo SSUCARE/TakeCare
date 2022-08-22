@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:weightSum="11"
     android:orientation="vertical">
 
@@ -32,8 +33,8 @@
         android:layout_height="0dp"
         android:layout_weight="7"
         android:layout_margin="30dp"
-        android:orientation="vertical"
-        android:background="@drawable/layout_border5">
+        android:background="@drawable/layout_border5"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +70,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:padding="10dp"
-            android:background="@drawable/layout_border2"
+            android:background="@drawable/layout_border1"
             app:layout_constraintTop_toTopOf="@id/protected_name"
             app:layout_constraintBottom_toTopOf="@id/cared_my_presciption"
             app:layout_constraintVertical_bias="0.2"
@@ -98,7 +99,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:padding="10dp"
-            android:background="@drawable/layout_border2"
+            android:background="@drawable/layout_border1"
             app:layout_constraintTop_toTopOf="@id/cared_my_graph"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/cared_my_graph"
@@ -123,7 +124,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:padding="10dp"
-            android:background="@drawable/layout_border2"
+            android:background="@drawable/layout_border1"
             app:layout_constraintRight_toLeftOf="@id/cared_my_report"
             app:layout_constraintTop_toBottomOf="@id/cared_my_graph"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -150,7 +151,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:padding="10dp"
-            android:background="@drawable/layout_border2"
+            android:background="@drawable/layout_border1"
             app:layout_constraintTop_toTopOf="@id/cared_my_presciption"
             app:layout_constraintLeft_toRightOf="@id/cared_my_presciption"
             app:layout_constraintRight_toRightOf="parent"

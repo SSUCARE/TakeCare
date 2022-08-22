@@ -86,8 +86,8 @@ public class HomeFragment extends Fragment {
         status_p.setVisibility(View.VISIBLE);
         status_s.setVisibility(View.VISIBLE);
         status_w.setVisibility(View.VISIBLE);
+        btn_rp.setVisibility(View.GONE);
 
         REPORT_FLAG = true;
-        btn_rp.setText("리포트 수정");
     }
 }
