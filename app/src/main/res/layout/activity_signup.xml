@@ -6,27 +6,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/tab_color"
+    android:layout_marginTop="40dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
+    android:weightSum="7"
     tools:context=".ui.SignupActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="2.5">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/main_image"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"/>
+            android:src="@drawable/main_image" />
     </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="4">
+        android:layout_margin="10dp"
+        android:layout_weight="4.5">
 
         <TextView
             app:layout_constraintTop_toTopOf="parent"
@@ -38,6 +41,7 @@
             android:textColor="@color/black"
             android:textSize="18dp"
             android:id="@+id/signup_tv1"/>
+
         <TextView
             app:layout_constraintTop_toTopOf="@id/signup_tv1"
             app:layout_constraintLeft_toRightOf="@id/signup_tv1"
@@ -46,6 +50,7 @@
             android:text="*"
             android:textSize="18dp"
             android:textColor="@color/red"/>
+
         <EditText
             app:layout_constraintTop_toBottomOf="@id/signup_tv1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -59,8 +64,21 @@
             android:textSize="20sp"
             android:fontFamily="@font/font_normal"
             android:inputType="textEmailAddress" />
+
         <TextView
+            android:id="@+id/signup_tv0"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_email_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/signup_tv0"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +88,7 @@
             android:layout_marginTop="10dp"
             android:textSize="18dp"
             android:id="@+id/signup_tv2"/>
+
         <TextView
             app:layout_constraintTop_toTopOf="@id/signup_tv2"
             app:layout_constraintLeft_toRightOf="@id/signup_tv2"
@@ -78,6 +97,7 @@
             android:text="*"
             android:textSize="18dp"
             android:textColor="@color/red"/>
+
         <EditText
             app:layout_constraintTop_toBottomOf="@id/signup_tv2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -91,6 +111,7 @@
             android:textSize="20dp"
             android:fontFamily="@font/font_normal"
             android:inputType="textPassword" />
+
         <TextView
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_password_register"
@@ -102,6 +123,7 @@
             android:textStyle="bold"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"/>
+
         <TextView
             app:layout_constraintTop_toBottomOf="@id/signup_tv4"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -113,6 +135,7 @@
             android:textSize="18dp"
             android:layout_marginTop="10dp"
             android:id="@+id/signup_tv3"/>
+
         <TextView
             app:layout_constraintTop_toTopOf="@id/signup_tv3"
             app:layout_constraintLeft_toRightOf="@id/signup_tv3"
@@ -121,6 +144,7 @@
             android:text="*"
             android:textSize="18dp"
             android:textColor="@color/red"/>
+
         <EditText
             app:layout_constraintTop_toBottomOf="@id/signup_tv3"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -133,6 +157,7 @@
             android:textSize="20sp"
             android:fontFamily="@font/font_normal"
             android:inputType="textPassword" />
+
         <TextView
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_password_register2"
@@ -143,6 +168,7 @@
             android:textSize="10dp"
             android:textStyle="bold"
             android:layout_marginTop="5dp"/>
+
         <Button
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -151,8 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
             android:background="@color/btn_color"
             android:text="회원가입"
             android:textSize="20sp"
@@ -166,7 +191,7 @@
             app:layout_constraintTop_toBottomOf="@id/btn_register"
             android:id="@+id/tv_login"
             android:text="회원이시면 여기서 로그인하세요"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:textSize="18sp"
             android:fontFamily="@font/font_normal"
             android:layout_width="wrap_content"
