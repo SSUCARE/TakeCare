@@ -14,7 +14,7 @@ import com.ssu.takecare.R;
 import com.ssu.takecare.ui.CalendarActivity;
 import com.ssu.takecare.ui.PrescriptionActivity;
 import com.ssu.takecare.ui.ReportActivity;
-import com.ssu.takecare.assist.graph.ShareGraph;
+import com.ssu.takecare.ui.GraphActivity;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class CaredShareFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.cared_my_graph:
-                intent=new Intent(getActivity(), ShareGraph.class);
+                intent=new Intent(getActivity(), GraphActivity.class);
                 intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
                 startActivity(intent);
                 break;

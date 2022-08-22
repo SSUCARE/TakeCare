@@ -1,6 +1,7 @@
 package com.ssu.takecare.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import com.ssu.takecare.runnable.ShareRunnable;
@@ -36,11 +37,12 @@ import java.util.Locale;
 
 public class MyPageFragment extends Fragment {
 
-    private String imgName = "my_profile_image.png";
+    SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
+
+    private final String imgName = "my_profile_image.png";
     private final String TAG = "MyPageFragment_Debug";
 
     private ImageView profileImage;
-    private TextView tv_name;
 
     @Nullable
     @Override
@@ -51,14 +53,40 @@ public class MyPageFragment extends Fragment {
         getImage();
 
         String my_name = ApplicationClass.sharedPreferences.getString("name", "");
-        tv_name = view.findViewById(R.id.user_name);
+        TextView tv_name = view.findViewById(R.id.user_name);
         tv_name.setText(my_name);
 
-        ConstraintLayout profile_setting = (ConstraintLayout) view.findViewById(R.id.layout_profile);
-        ConstraintLayout password_setting = (ConstraintLayout) view.findViewById(R.id.layout_password);
-        ConstraintLayout match_setting = (ConstraintLayout) view.findViewById(R.id.layout_match);
-        ConstraintLayout alarm_setting = (ConstraintLayout) view.findViewById(R.id.layout_alarm);
-        ConstraintLayout share_setting = (ConstraintLayout) view.findViewById(R.id.layout_share);
+        androidx.appcompat.widget.SwitchCompat aSwitch = view.findViewById(R.id.btn_alarm_on_off);
+
+        if (ApplicationClass.sharedPreferences.getString("alarm_switch", "NONE").equals("NONE")) {
+            editor.putString("alarm_switch", "ON");
+            editor.apply();
+        }
+        else {
+            aSwitch.setChecked(ApplicationClass.sharedPreferences.getString("alarm_switch", null).equals("ON"));
+        }
+
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    // ON 상태
+                    editor.putString("alarm_switch", "ON");
+                    editor.apply();
+                }
+                else {
+                    // OFF 상태
+                    editor.putString("alarm_switch", "OFF");
+                    editor.apply();
+                }
+            }
+        });
+
+        ImageView profile_setting = view.findViewById(R.id.btn_profile);
+        ImageView match_setting = view.findViewById(R.id.btn_match);
+        ImageView password_setting = view.findViewById(R.id.btn_password);
+        ImageView alarm_setting = view.findViewById(R.id.btn_alarm_list);
+        ImageView share_setting = view.findViewById(R.id.btn_share);
 
         profile_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,18 +96,18 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        password_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PasswordActivity.class);
-                startActivity(intent);
-            }
-        });
-
         match_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MatchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        password_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -172,6 +200,13 @@ public class MyPageFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getImage();
     }
 
     // 설정된 프로필 사진 불러오기

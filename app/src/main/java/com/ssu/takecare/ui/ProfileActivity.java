@@ -268,10 +268,13 @@ public class ProfileActivity extends AppCompatActivity {
         try {
             File file = getCacheDir();
             File[] flist = file.listFiles();
-            for (int i = 0; i < flist.length; i++) {
-                if (flist[i].getName().equals(imgName)) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(String.valueOf(flist[i]));
-                    profileImage.setImageBitmap(bitmap);
+
+            if (flist != null) {
+                for (File value : flist) {
+                    if (value.getName().equals(imgName)) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(String.valueOf(value));
+                        profileImage.setImageBitmap(bitmap);
+                    }
                 }
             }
         }

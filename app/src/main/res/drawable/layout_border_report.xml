@@ -6,13 +6,10 @@
     <!-- 테두리 색깔 및 두께 -->
     <stroke
         android:width="2dp"
-        android:color="@color/gray" />
+        android:color="@color/black" />
     <!-- 모서리 끝부분의 둥근정도 -->
     <corners
         android:radius="5dp"/>
     <!-- padding 설정 -->
     <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
 </shape>
-
-
-

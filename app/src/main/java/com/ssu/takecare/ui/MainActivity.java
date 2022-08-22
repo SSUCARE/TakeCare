@@ -24,6 +24,8 @@ import com.ssu.takecare.retrofit.match.ResponseCare;
 import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCareCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
+import org.json.JSONArray;
+import org.json.JSONException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     private ImageButton tab_btn1, tab_btn2, tab_btn3;
-    private TextView hp_input, lp_input;
-    private TextView bs_input, as_input;
-    private TextView w_input;
+    private TextView hp_input, lp_input, s_input, w_input;
 
     private String ROLE_CARED_OR_ROLE_CARER;
 
@@ -74,43 +74,6 @@ public class MainActivity extends AppCompatActivity {
         init_getReport();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
-    }
-
-    public void init_getReport(){
-        userId = ApplicationClass.sharedPreferences.getInt("userId",-1);
-        if (userId != -1) {
-            ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
-                @Override
-                public void onError(Throwable t) {
-                }
-
-                @Override
-                public void onSuccess(String message, List<DataGetReport> data) {
-                    if (data.size() != 0) {
-                        reportId = data.get(0).getReportId();
-                        r_systolic = data.get(0).getSystolic();
-                        r_diastolic = data.get(0).getDiastolic();
-                        r_weight = data.get(0).getWeight();
-                        r_sugarLevels = data.get(0).getSugarLevels();
-
-                        REPORT_FLAG = true;
-                        Button btn_rp = (Button) findViewById(R.id.btn_report);
-                        btn_rp.setText("레포트 수정");
-                    }
-                    else {
-                        REPORT_FLAG = false;
-                    }
-                }
-
-                @Override
-                public void onFailure(int error_code) {
-                }
-            });
-        }
-        else {
-            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-            finish();
-        }
     }
 
     @Override
@@ -150,15 +113,11 @@ public class MainActivity extends AppCompatActivity {
         SugarDialog sDialog = new SugarDialog(this);
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
-            public void okClicked(String before_sugar, String after_sugar) {
-                bs_input = findViewById(R.id.input_before_sugar);
-                as_input = findViewById(R.id.input_after_sugar);
+            public void okClicked(String sugar) {
+                s_input = findViewById(R.id.input_sugar);
 
-                if (!before_sugar.equals(""))
-                    bs_input.setText(before_sugar);
-
-                if (!after_sugar.equals(""))
-                    as_input.setText(after_sugar);
+                if (!sugar.equals(""))
+                    s_input.setText(sugar);
             }
         });
 
@@ -180,81 +139,84 @@ public class MainActivity extends AppCompatActivity {
         wDialog.show();
     }
 
-    public void makeReport(View view) {
-        hp_input = findViewById(R.id.input_high_pressure);
-        lp_input = findViewById(R.id.input_low_pressure);
-        bs_input = findViewById(R.id.input_before_sugar);
-        as_input = findViewById(R.id.input_after_sugar);
-        w_input = findViewById(R.id.input_weight);
-
-        int systolic = 0;
-        int diastolic = 0;
-        List<Integer> sugarLevels = new ArrayList<>();
-        int weight = 0;
-
-        if (!hp_input.getText().toString().equals("____")) {
-            systolic = Integer.parseInt(hp_input.getText().toString());
-        }
-
-        if (!lp_input.getText().toString().equals("____")) {
-            diastolic = Integer.parseInt(lp_input.getText().toString());
-        }
-
-        if (!bs_input.getText().toString().equals("____")) {
-            sugarLevels.add(Integer.parseInt(bs_input.getText().toString()));
-        }
-
-        if (!as_input.getText().toString().equals("____")) {
-            sugarLevels.add(Integer.parseInt(as_input.getText().toString()));
-        }
-
-        if (!w_input.getText().toString().equals("____")) {
-            weight = Integer.parseInt(w_input.getText().toString());
-        }
-
-        if (REPORT_FLAG) {
-            r_sugarLevels.addAll(sugarLevels);
-
-            // reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight 기존값들 어떻게 사용할지는 조금 생각해보기
-            // 수정하기 API 만들기
-            ApplicationClass.retrofit_manager.updateReport(reportId, systolic, diastolic, r_sugarLevels, weight, new RetrofitCallback() {
+    public void init_getReport() {
+        userId = ApplicationClass.sharedPreferences.getInt("userId",-1);
+        if (userId != -1) {
+            ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
                 @Override
                 public void onError(Throwable t) {
                 }
 
                 @Override
-                public void onSuccess(String message, String token) {
-                    String str = "____";
-                    hp_input.setText(str);
-                    lp_input.setText(str);
-                    bs_input.setText(str);
-                    as_input.setText(str);
-                    w_input.setText(str);
+                public void onSuccess(String message, List<DataGetReport> data) {
+                    if (data.size() != 0) {
+                        reportId = data.get(0).getReportId();
+                        r_systolic = data.get(0).getSystolic();
+                        r_diastolic = data.get(0).getDiastolic();
+                        r_sugarLevels = data.get(0).getSugarLevels();
+                        r_weight = data.get(0).getWeight();
+
+                        saveValue();
+                        setValue();
+                        setStatus();
+                    }
+                    else {
+                        REPORT_FLAG = false;
+                    }
                 }
 
                 @Override
                 public void onFailure(int error_code) {
                 }
             });
-
-            REPORT_FLAG = true;
-            Button btn_rp = (Button) findViewById(R.id.btn_report);
-            btn_rp.setText("레포트 수정");
         }
         else {
-            ApplicationClass.retrofit_manager.makeReport(systolic, diastolic, sugarLevels, weight, new RetrofitCallback() {
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+            finish();
+        }
+    }
+
+    public void makeReport(View view) {
+        if (!hp_input.getText().toString().equals("____")) {
+            r_systolic = Integer.parseInt(hp_input.getText().toString());
+        }
+
+        if (!lp_input.getText().toString().equals("____")) {
+            r_diastolic = Integer.parseInt(lp_input.getText().toString());
+        }
+
+        if (!s_input.getText().toString().equals("____")) {
+            r_sugarLevels.add(Integer.parseInt(s_input.getText().toString()));
+        }
+
+        if (!w_input.getText().toString().equals("____")) {
+            r_weight = Integer.parseInt(w_input.getText().toString());
+        }
+
+        if (REPORT_FLAG) {
+            ApplicationClass.retrofit_manager.updateReport(reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
                 @Override
                 public void onError(Throwable t) {
                 }
 
                 @Override
                 public void onSuccess(String message, String token) {
-                    String str = "____";
-                    hp_input.setText(str);
-                    lp_input.setText(str);
-                    bs_input.setText(str);
-                    as_input.setText(str);
-                    w_input.setText(str);
+                    Toast.makeText(getApplicationContext(), "리포트가 수정되었습니다", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(int error_code) {
+                }
+            });
+        }
+        else {
+            ApplicationClass.retrofit_manager.makeReport(r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
+                @Override
+                public void onError(Throwable t) {
+                }
+
+                @Override
+                public void onSuccess(String message, String token) {
                     Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
                 }
 
@@ -262,11 +224,77 @@ public class MainActivity extends AppCompatActivity {
                 public void onFailure(int error_code) {
                 }
             });
-
-            REPORT_FLAG = true;
-            Button btn_rp = (Button) findViewById(R.id.btn_report);
-            btn_rp.setText("레포트 수정");
         }
+
+        saveValue();
+        setValue();
+        setStatus();
+    }
+
+    public void saveValue() {
+        editor.putString("systolic", Integer.toString(r_systolic));
+        editor.putString("diastolic", Integer.toString(r_diastolic));
+        editor.putString("weight", Integer.toString(r_weight));
+
+        JSONArray a = new JSONArray();
+        for (int i = 0; i < r_sugarLevels.size(); i++) {
+            a.put(r_sugarLevels.get(i));
+        }
+
+        if (!r_sugarLevels.isEmpty()) {
+            editor.putString("sugarLevels", a.toString());
+        }
+        else {
+            editor.putString("sugarLevels", null);
+        }
+
+        editor.apply();
+    }
+
+    public void setValue() {
+        String json = ApplicationClass.sharedPreferences.getString("sugarLevels", null);
+        ArrayList<String> s_sugarLevels = new ArrayList<String>();
+        if (json != null) {
+            try {
+                JSONArray a = new JSONArray(json);
+                for (int i = 0; i < a.length(); i++) {
+                    String sugar = a.optString(i);
+                    s_sugarLevels.add(sugar);
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String s_systolic = ApplicationClass.sharedPreferences.getString("systolic", null);
+        String s_diastolic = ApplicationClass.sharedPreferences.getString("diastolic", null);
+        String s_sugar = s_sugarLevels.get(s_sugarLevels.size()-1);
+        String s_weight = ApplicationClass.sharedPreferences.getString("weight", null);
+
+        hp_input = findViewById(R.id.input_high_pressure);
+        lp_input = findViewById(R.id.input_low_pressure);
+        s_input = findViewById(R.id.input_sugar);
+        w_input = findViewById(R.id.input_weight);
+
+        hp_input.setText(s_systolic);
+        lp_input.setText(s_diastolic);
+        s_input.setText(s_sugar);
+        w_input.setText(s_weight);
+    }
+
+    public void setStatus() {
+        TextView status_p = findViewById(R.id.status_pressure);
+        TextView status_s = findViewById(R.id.status_sugar);
+        TextView status_w = findViewById(R.id.status_weight);
+        Button btn_rp = findViewById(R.id.btn_report);
+
+        status_p.setVisibility(View.VISIBLE);
+        status_s.setVisibility(View.VISIBLE);
+        status_w.setVisibility(View.VISIBLE);
+
+        REPORT_FLAG = true;
+        btn_rp.setText("리포트 수정");
     }
 
     public void logout(View view) {
@@ -285,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("age", 0);
         editor.putInt("height", 0);
         editor.putString("role", "");
+        editor.putString("alarm_switch", "");
         editor.apply();
     }
 

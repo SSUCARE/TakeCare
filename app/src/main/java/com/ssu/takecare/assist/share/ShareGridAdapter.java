@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ssu.takecare.assist.graph.ShareGraph;
+import com.ssu.takecare.ui.GraphActivity;
 import com.ssu.takecare.R;
 import com.ssu.takecare.ui.CalendarActivity;
 import com.ssu.takecare.ui.PrescriptionActivity;
@@ -54,7 +54,7 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
                 public void onClick(View view) {
                     int match_userid=Search_UserId(name.getText().toString());
                     if(match_userid!=-1){
-                        intent=new Intent(view.getContext(), ShareGraph.class);
+                        intent=new Intent(view.getContext(), GraphActivity.class);
                         intent.putExtra("USER_ID", match_userid);
                         mContext.startActivity(intent);
                     }

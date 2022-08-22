@@ -1,4 +1,4 @@
-package com.ssu.takecare.assist.graph;
+package com.ssu.takecare.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ssu.takecare.assist.graph.SugarLevels_Graph;
 import com.ssu.takecare.fragment.PressureFragment;
 import com.ssu.takecare.fragment.SugarFragment;
 import com.ssu.takecare.fragment.WeightFragment;
@@ -22,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class ShareGraph extends AppCompatActivity {
+public class GraphActivity extends AppCompatActivity {
 
     TextView year_graph, month_graph;
     Button pressure_btn, sugar_btn, weight_btn;

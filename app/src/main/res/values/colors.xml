@@ -14,6 +14,11 @@
     <color name="tab_color">#FAFAFA</color>
     <color name="bg_color">#EAEAEA</color>
 
+    <!--건강정보 입력 탭 color -->
+    <color name="pressure_tab">#fa8177</color>
+    <color name="sugar_tab">#ef9a3c</color>
+    <color name="weight_tab">#81fa83</color>
+
     <!--앱 사용설명서 color -->
     <color name="bg_screen1">#f64c73</color>
     <color name="bg_screen2">#20d2bb</color>

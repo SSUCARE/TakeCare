@@ -2,17 +2,14 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 내부 색깔 -->
     <solid
-        android:color="@color/white"/>
+        android:color="@color/weight_tab"/>
     <!-- 테두리 색깔 및 두께 -->
     <stroke
-        android:width="2dp"
-        android:color="@color/gray" />
+        android:width="0dp" />
     <!-- 모서리 끝부분의 둥근정도 -->
     <corners
-        android:radius="5dp"/>
+        android:topLeftRadius="5dp"
+        android:bottomLeftRadius="5dp"/>
     <!-- padding 설정 -->
     <padding android:left="0dip" android:top="0dip" android:right="0dip" android:bottom="0dip" />
 </shape>
-
-
-

@@ -12,7 +12,7 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
 
     private SugarDialogListener sugarDialogListener;
 
-    EditText beforeSugar, afterSugar;
+    EditText sugar;
     Button okButton_s, cancelButton_s;
 
     public SugarDialog(Context context) {
@@ -20,7 +20,7 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
     }
 
     public interface SugarDialogListener {
-        void okClicked(String before_sugar, String after_sugar);
+        void okClicked(String sugar);
     }
 
     public void setSugarDialogListener(SugarDialogListener sugarDialogListener) {
@@ -32,8 +32,7 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_sugar);
 
-        beforeSugar = findViewById(R.id.et_beforeSugar);
-        afterSugar = findViewById(R.id.et_afterSugar);
+        sugar = findViewById(R.id.et_sugar);
 
         okButton_s = findViewById(R.id.btn_ok_s);
         cancelButton_s = findViewById(R.id.btn_cancel_s);
@@ -45,10 +44,9 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view == okButton_s) {
-            String bs_str = beforeSugar.getText().toString();
-            String as_str = afterSugar.getText().toString();
+            String s_str = sugar.getText().toString();
 
-            sugarDialogListener.okClicked(bs_str, as_str);
+            sugarDialogListener.okClicked(s_str);
             dismiss();
         }
         else if (view == cancelButton_s) {
