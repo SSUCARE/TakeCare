@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonLogin;
     private TextView textViewRegister;
     private TextView textViewFind;
+    private CheckBox checkBox;
+
+    private final String TAG="LoginActivty,Jdebug";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin = findViewById(R.id.btn_login);
         textViewRegister = findViewById(R.id.tv_register);
         textViewFind = findViewById(R.id.tv_find);
+        checkBox=findViewById(R.id.login_checkbox);
+
+        SpannableString content1=new SpannableString(textViewRegister.getText().toString());
+        content1.setSpan(new UnderlineSpan(), 0, content1.length(),0);
+        textViewRegister.setText(content1);
+
+        SpannableString content2=new SpannableString(textViewFind.getText().toString());
+        content2.setSpan(new UnderlineSpan(), 0, content2.length(),0);
+        textViewFind.setText(content2);
 
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
@@ -134,8 +151,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     else
                                         editor.putString("role", "피보호자");
 
-                                    editor.apply();
+                                    if(checkBox.isChecked())
+                                        editor.putInt("keep_sign_in_flag",1);
+                                    else
+                                        editor.putInt("keep_sign_in_flag",0);
 
+                                    editor.apply();
+                                    Log.d(TAG,"keep_sign_in_flag:"+ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }

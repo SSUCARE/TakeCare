@@ -28,8 +28,8 @@ public class FirstActivity extends AppCompatActivity {
             // 자동 로그인
             String loginEmail = ApplicationClass.sharedPreferences.getString("email_login", "");
             String loginPwd = ApplicationClass.sharedPreferences.getString("password_login", "");
-
-            if (!loginEmail.equals("") && !loginPwd.equals("")) {
+            int keep_sign_in_flag=ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0);
+            if (!loginEmail.equals("") && !loginPwd.equals("")&&keep_sign_in_flag==1) {
                 ApplicationClass.retrofit_manager.login(loginEmail, loginPwd, new RetrofitErrorCallback() {
                     @Override
                     public void onError(Throwable t) {
