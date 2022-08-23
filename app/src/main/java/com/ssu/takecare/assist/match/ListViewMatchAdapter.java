@@ -74,7 +74,7 @@ public class ListViewMatchAdapter extends BaseAdapter {
             btnAction.setText("삭제");
         }
 
-        // 삭제
+        // 취소 & 삭제
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +86,13 @@ public class ListViewMatchAdapter extends BaseAdapter {
 
                     @Override
                     public void onSuccess(String message, String data) {
-                        Toast.makeText(v.getContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
+                        if (acceptedOrNot.equals("PENDING")) {
+                            Toast.makeText(v.getContext(), "취소 완료", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (acceptedOrNot.equals("ACCEPTED")) {
+                            Toast.makeText(v.getContext(), "삭제 완료", Toast.LENGTH_SHORT).show();
+                        }
+
                         for (String key : arrData.keySet()) {
                             int value = arrData.get(key);
                             if (value == list_userid) {

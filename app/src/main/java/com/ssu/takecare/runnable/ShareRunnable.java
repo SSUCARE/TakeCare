@@ -5,7 +5,7 @@ import android.os.Message;
 import android.util.Log;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.retrofit.report.DataGetReport;
-import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
+import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
 import java.util.List;
 
 public class ShareRunnable implements Runnable {
@@ -29,7 +29,7 @@ public class ShareRunnable implements Runnable {
     @Override
     public void run() {
         Message msg=handler.obtainMessage();
-        ApplicationClass.retrofit_manager.getReport_Month(userId,year,month, new RetrofitReportCallback() {
+        ApplicationClass.retrofit_manager.getReport_Month(userId,year,month, new RetrofitGetReportCallback() {
             @Override
             public void onError(Throwable t) {
                 msg.arg1=-1;

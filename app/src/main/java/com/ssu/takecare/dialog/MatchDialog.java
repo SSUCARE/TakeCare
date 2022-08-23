@@ -8,11 +8,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.assist.match.ListViewMatchAdapter;
 import com.ssu.takecare.R;
 import com.ssu.takecare.retrofit.match.DataResponseGetUser;
 import com.ssu.takecare.retrofit.customcallback.RetrofitUserInfoCallback;
+import java.util.Map;
 
 public class MatchDialog {
 
@@ -22,13 +25,16 @@ public class MatchDialog {
     private Integer userAge;
     private EditText txt;
     private Button btn;
-    private Activity activity;
     private Dialog dialog;
+    private Activity activity;
     private ListViewMatchAdapter adapter;
+    private Map<String, Integer> pendingList, acceptedList;
 
-    public MatchDialog(Activity activity, ListViewMatchAdapter adapter) {
+    public MatchDialog(Activity activity, ListViewMatchAdapter adapter, Map<String, Integer> pendingList, Map<String, Integer> acceptedList) {
         this.activity = activity;
-        this.adapter=adapter;
+        this.adapter = adapter;
+        this.pendingList = pendingList;
+        this.acceptedList = acceptedList;
         setDialog();
         findViews();
     }
@@ -69,18 +75,33 @@ public class MatchDialog {
 
                         @Override
                         public void onSuccess(String message, DataResponseGetUser data) {
-                            userId = data.getId();
-                            userName = data.getName();
-                            userGender = data.getGender();
-                            userAge = data.getAge();
+                            int flag = 0;
 
-                            Log.d("MatchDialog : ", "userId : " + userId);
-                            Log.d("MatchDialog : ", "userName : " + userName);
-                            Log.d("MatchDialog : ", "userGender : " + userGender);
-                            Log.d("MatchDialog : ", "userAge : " + userAge);
+                            if (pendingList.containsKey(data.getName()))
+                                flag = 1;
 
-                            MatchFindUserDialog dialog2 = new MatchFindUserDialog(activity, userId, userName, userGender, userAge, adapter);
-                            dialog2.showDialog();
+                            if (acceptedList.containsKey(data.getName()))
+                                flag = 2;
+
+                            switch (flag) {
+                                case 0:
+                                    userId = data.getId();
+                                    userName = data.getName();
+                                    userGender = data.getGender();
+                                    userAge = data.getAge();
+
+                                    MatchFindUserDialog dialog2 = new MatchFindUserDialog(activity, userId, userName, userGender, userAge, adapter);
+                                    dialog2.showDialog();
+                                    break;
+                                case 1:
+                                    Toast.makeText(activity.getApplicationContext(), "이미 요청을 보낸 사용자입니다", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 2:
+                                    Toast.makeText(activity.getApplicationContext(), "이미 연결된 사용자입니다", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
 
                         @Override

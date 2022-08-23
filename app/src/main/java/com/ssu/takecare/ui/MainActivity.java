@@ -19,12 +19,15 @@ import com.ssu.takecare.fragment.MyPageFragment;
 import com.ssu.takecare.fragment.CaredShareFragment;
 import com.ssu.takecare.fragment.CaringShareFragment;
 import com.ssu.takecare.R;
+import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
 import com.ssu.takecare.retrofit.report.DataGetReport;
 import com.ssu.takecare.retrofit.match.DataResponseCare;
 import com.ssu.takecare.retrofit.match.ResponseCare;
 import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCareCallback;
-import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
+import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
+import com.ssu.takecare.retrofit.report.DataReport;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.text.SimpleDateFormat;
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     Boolean REPORT_FLAG = false;
     int r_systolic = 0; int r_diastolic = 0; int r_weight = 0;
-    List<Integer> r_sugarLevels = null;
+    List<Integer> r_sugarLevels = new ArrayList<>();
 
     private final String TAG="MainActivty,Jdebug";
 
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputPressure(View view) {
-        PressureDialog pDialog = new PressureDialog(this);
+        PressureDialog pDialog = new PressureDialog(this, REPORT_FLAG);
         pDialog.setPressureDialogListener(new PressureDialog.PressureDialogListener() {
             @Override
             public void okClicked(String high_pressure, String low_pressure) {
@@ -106,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!low_pressure.equals(""))
                     lp_input.setText(low_pressure);
+
+                if (REPORT_FLAG) {
+                    r_systolic = Integer.parseInt(hp_input.getText().toString());
+                    r_diastolic = Integer.parseInt(lp_input.getText().toString());
+                    updateReport();
+                }
             }
         });
 
@@ -113,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputSugar(View view) {
-        SugarDialog sDialog = new SugarDialog(this);
+        SugarDialog sDialog = new SugarDialog(this, REPORT_FLAG);
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
             public void okClicked(String sugar) {
@@ -121,6 +130,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!sugar.equals(""))
                     s_input.setText(sugar);
+
+                if (REPORT_FLAG) {
+                    r_sugarLevels.add(Integer.parseInt(s_input.getText().toString()));
+                    updateReport();
+                }
             }
         });
 
@@ -128,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputWeight(View view) {
-        WeightDialog wDialog = new WeightDialog(this);
+        WeightDialog wDialog = new WeightDialog(this, REPORT_FLAG);
         wDialog.setWeightDialogListener(new WeightDialog.WeightDialogListener() {
             @Override
             public void okClicked(String weight) {
@@ -136,6 +150,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!weight.equals(""))
                     w_input.setText(weight);
+
+                if (REPORT_FLAG) {
+                    r_weight = Integer.parseInt(w_input.getText().toString());
+                    updateReport();
+                }
             }
         });
 
@@ -145,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     public void init_getReport() {
         userId = ApplicationClass.sharedPreferences.getInt("userId",-1);
         if (userId != -1) {
-            ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
+            ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitGetReportCallback() {
                 @Override
                 public void onError(Throwable t) {
                 }
@@ -165,6 +184,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         REPORT_FLAG = false;
+
+                        // 오늘 작성된 리포트가 없으면 SharedPreferences에 저장된 건강 정보를 초기화한다.
+                        initValue();
                     }
                 }
 
@@ -196,42 +218,54 @@ public class MainActivity extends AppCompatActivity {
             r_weight = Integer.parseInt(w_input.getText().toString());
         }
 
-        if (REPORT_FLAG) {
-            ApplicationClass.retrofit_manager.updateReport(reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
-                @Override
-                public void onError(Throwable t) {
-                }
+        ApplicationClass.retrofit_manager.makeReport(r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitReportCallback() {
+            @Override
+            public void onError(Throwable t) {
+            }
 
-                @Override
-                public void onSuccess(String message, String token) {
-                    Toast.makeText(getApplicationContext(), "리포트가 수정되었습니다", Toast.LENGTH_SHORT).show();
-                }
+            @Override
+            public void onSuccess(String message, DataReport data) {
+                reportId = data.getReportId();
+                Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onFailure(int error_code) {
-                }
-            });
-        }
-        else {
-            ApplicationClass.retrofit_manager.makeReport(r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
-                @Override
-                public void onError(Throwable t) {
-                }
-
-                @Override
-                public void onSuccess(String message, String token) {
-                    Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(int error_code) {
-                }
-            });
-        }
+            @Override
+            public void onFailure(int error_code) {
+            }
+        });
 
         saveValue();
         setValue();
         setStatus();
+    }
+
+    public void updateReport() {
+        ApplicationClass.retrofit_manager.updateReport(reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
+            @Override
+            public void onError(Throwable t) {
+            }
+
+            @Override
+            public void onSuccess(String message, String token) {
+                Log.d(TAG, "updateReport -> message : " + message);
+                Toast.makeText(getApplicationContext(), "리포트가 수정되었습니다", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int error_code) {
+            }
+        });
+
+        saveValue();
+        setValue();
+    }
+
+    public void initValue() {
+        editor.putString("systolic", "");
+        editor.putString("diastolic", "");
+        editor.putString("sugarLevels", "");
+        editor.putString("weight", "");
+        editor.apply();
     }
 
     public void saveValue() {
