@@ -1,7 +1,10 @@
 package com.ssu.takecare.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.dialog.PressureDialog;
 import com.ssu.takecare.dialog.SugarDialog;
@@ -27,7 +31,6 @@ import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCareCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
 import com.ssu.takecare.retrofit.report.DataReport;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.text.SimpleDateFormat;
@@ -70,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+            }
+        }
 
         ROLE_CARED_OR_ROLE_CARER = ApplicationClass.sharedPreferences.getString("role", "");
 
@@ -282,14 +291,14 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("sugarLevels", a.toString());
         }
         else {
-            editor.putString("sugarLevels", null);
+            editor.putString("sugarLevels", "");
         }
 
         editor.apply();
     }
 
     public void setValue() {
-        String json = ApplicationClass.sharedPreferences.getString("sugarLevels", null);
+        String json = ApplicationClass.sharedPreferences.getString("sugarLevels", "");
         ArrayList<String> s_sugarLevels = new ArrayList<String>();
         if (json != null) {
             try {
@@ -304,10 +313,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        String s_systolic = ApplicationClass.sharedPreferences.getString("systolic", null);
-        String s_diastolic = ApplicationClass.sharedPreferences.getString("diastolic", null);
-        String s_sugar = s_sugarLevels.get(s_sugarLevels.size()-1);
-        String s_weight = ApplicationClass.sharedPreferences.getString("weight", null);
+        String s_systolic = ApplicationClass.sharedPreferences.getString("systolic", "");
+        String s_diastolic = ApplicationClass.sharedPreferences.getString("diastolic", "");
+        String s_sugar = s_sugarLevels.get(s_sugarLevels.size() - 1);
+        String s_weight = ApplicationClass.sharedPreferences.getString("weight", "");
 
         hp_input = findViewById(R.id.input_high_pressure);
         lp_input = findViewById(R.id.input_low_pressure);
@@ -341,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
-        editor.putInt("keep_sign_in_flag",0); // 자동 로그인과 관련된 flag
+        editor.putInt("keep_sign_in_flag", 0); // 자동 로그인과 관련된 flag
         editor.putString("email_login", "");
         editor.putString("password_login", "");
         editor.putString("accessToken", "");
@@ -351,7 +360,14 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("age", 0);
         editor.putInt("height", 0);
         editor.putString("role", "");
+        editor.putInt("mapping_count", 0);
+        editor.putString("systolic", "");
+        editor.putString("diastolic", "");
+        editor.putString("sugarLevels", "");
+        editor.putString("weight", "");
         editor.putString("alarm_switch", "");
+        editor.putInt("record_date", 0);
+        editor.putInt("today_steps", 0);
         editor.apply();
     }
 
@@ -381,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
 
-                            editor.putInt("Mapping_Count", UserName.size());
+                            editor.putInt("mapping_count", UserName.size());
                             editor.apply();
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaringShareFragment(UserName, UserId)).commit();
                         }
@@ -408,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
 
-                            editor.putInt("Mapping_Count", UserName.size());
+                            editor.putInt("mapping_count", UserName.size());
                             editor.apply();
 
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaredShareFragment(UserName, UserId)).commit();
@@ -440,8 +456,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         int keep_sign_in_flag=ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0);
-        Log.d(TAG,"keep_sign_in_flag:"+ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
-        if(keep_sign_in_flag==0) {
+        Log.d(TAG,"keep_sign_in_flag : " + ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
+        if (keep_sign_in_flag == 0) {
             clearInfo();
         }
     }

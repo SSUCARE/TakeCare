@@ -82,7 +82,7 @@ public class CaringShareFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 intent=new Intent(getActivity(), GraphActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId", -1));
                 startActivity(intent);
             }
         });
@@ -91,8 +91,8 @@ public class CaringShareFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 intent=new Intent(getActivity(),CalendarActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
-                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId", -1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name", ""));
                 intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
             }
@@ -102,8 +102,8 @@ public class CaringShareFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 intent=new Intent(getActivity(),PrescriptionActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
-                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId", -1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name", ""));
                 startActivity(intent);
             }
         });
@@ -112,7 +112,7 @@ public class CaringShareFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 intent=new Intent(getActivity(), ReportActivity.class);
-                intent.putExtra("USER_ID", ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_ID", ApplicationClass.sharedPreferences.getInt("userId", -1));
                 intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
             }

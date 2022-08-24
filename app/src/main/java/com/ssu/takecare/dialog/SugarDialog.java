@@ -40,7 +40,7 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
         cancelButton_s = findViewById(R.id.btn_cancel_s);
 
         if (report_flag) {
-            okButton_s.setText("수정");
+            okButton_s.setText("추가");
         }
         else {
             okButton_s.setText("확인");

@@ -59,25 +59,25 @@ public class CaredShareFragment extends Fragment implements View.OnClickListener
         switch (view.getId()){
             case R.id.cared_my_graph:
                 intent=new Intent(getActivity(), GraphActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId", -1));
                 startActivity(intent);
                 break;
             case R.id.cared_my_calendar:
                 intent=new Intent(getActivity(),CalendarActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
-                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId", -1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name", ""));
                 intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
                 break;
             case R.id.cared_my_presciption:
                 intent=new Intent(getActivity(),PrescriptionActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
-                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name",""));
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId", -1));
+                intent.putExtra("USER_NAME",ApplicationClass.sharedPreferences.getString("name", ""));
                 startActivity(intent);
                 break;
             case R.id.cared_my_report:
                 Intent intent=new Intent(getActivity(), ReportActivity.class);
-                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId",-1));
+                intent.putExtra("USER_ID",ApplicationClass.sharedPreferences.getInt("userId", -1));
                 intent.putExtra("ID_NAME", ID_NAME);
                 startActivity(intent);
                 break;

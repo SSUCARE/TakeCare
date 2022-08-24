@@ -55,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.profile_img);
         getImage();
 
-        int match_count=ApplicationClass.sharedPreferences.getInt("Mapping_Count",0);
+        int match_count=ApplicationClass.sharedPreferences.getInt("mapping_count", 0);
         tv_match_count=findViewById(R.id.profile_matchcounting_tv);
         tv_match_count.setText(String.valueOf(match_count));
 

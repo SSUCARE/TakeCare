@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -35,7 +36,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-        <activity android:name=".ui.GraphActivity" />
+
         <activity android:name=".ui.PasswordActivity" />
         <activity android:name=".ui.MatchActivity" />
         <activity android:name=".ui.GraphActivity" />
