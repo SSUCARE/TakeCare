@@ -39,8 +39,10 @@ public class HomeFragment extends Fragment {
         String report_date = "건강 리포트 (" + date + ")";
         today_date.setText(report_date);
 
-        setValue(view);
-        setStatus(view);
+        if(REPORT_FLAG){
+            setValue(view);
+            setStatus(view);
+        }
 
         return view;
     }

@@ -59,7 +59,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/presciption_tv0"
+                android:textColor="@color/black"
+                android:id="@+id/prescription_month"
                 android:textSize="20sp" />
 
             <TextView
@@ -103,29 +104,144 @@
                 android:textSize="18sp"
                 android:id="@+id/presciption_bmi"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="16"
+            android:padding="15dp"
+            android:layout_marginRight="15dp"
             android:orientation="vertical"
             android:background="@drawable/layout_border3">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:orientation="vertical">
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:textSize="18sp"
-                    android:id="@+id/presciption_tv1"
-                    android:text=""/>
-            </LinearLayout>
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pre_subheadings"
+                        android:textStyle="bold"
+                        android:id="@+id/prescription_subheading_tv1"
+                        android:layout_marginBottom="@dimen/pre_subheading_margin"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="19dp"
+                        android:textColor="@color/pre_subheadings_text"
+                        android:id="@+id/prescription_avg_tv"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/pre_line"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pre_subheadings"
+                        android:textStyle="bold"
+                        android:id="@+id/prescription_subheading_tv2"
+                        android:layout_marginBottom="@dimen/pre_subheading_margin"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/prescription_describe_tv1"
+                        android:textSize="@dimen/pre_text_size"
+                        android:textStyle="italic"
+                        android:textColor="@color/pre_subheadings_text"
+                        android:layout_marginBottom="@dimen/pre_bottom_margin"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:id="@+id/prescription_img1"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/pre_bottom_margin"
+                        android:id="@+id/prescription_describe_tv2"
+                        android:textSize="@dimen/pre_text_size"
+                        android:textColor="@color/pre_subheadings_text"
+                        android:textStyle="italic"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/pre_line"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pre_subheadings"
+                        android:id="@+id/prescription_subheading_tv3"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/pre_subheading_margin"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/prescription_describe_tv3"
+                        android:textSize="@dimen/pre_text_size"
+                        android:textStyle="italic"
+                        android:textColor="@color/pre_subheadings_text"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/pre_line"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pre_subheadings"
+                        android:id="@+id/prescription_subheading_tv4"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/pre_subheading_margin"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/prescription_describe_tv4"
+                        android:textSize="@dimen/pre_text_size"
+                        android:textColor="@color/pre_subheadings_text"
+                        android:textStyle="italic"
+                        android:layout_marginBottom="@dimen/pre_bottom_margin"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/pre_line"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pre_subheadings"
+                        android:id="@+id/prescription_subheading_tv5"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="@dimen/pre_subheading_margin"
+                        android:textSize="20dp"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:id="@+id/prescription_img2"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/prescription_describe_tv5"
+                        android:layout_marginTop="@dimen/pre_bottom_margin"
+                        android:textSize="@dimen/pre_text_size"
+                        android:textColor="@color/pre_subheadings_text"
+                        android:textStyle="italic"/>
+                </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </LinearLayout>

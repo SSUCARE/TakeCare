@@ -60,9 +60,13 @@
     <color name="weight_chart">#00B4DB</color>
 
     <!--Prescription 노트랑 관련된 color-->
-    <color name="pre_text">#8C000000</color>
+    <color name="pre_text">#000000</color>
+    <color name="pre_subheadings">#3391d1</color>
+    <color name="pre_line">#E0E0E0</color>
+    <color name="pre_subheadings_text">#333333</color>
 
     <!--리포트 수치 박스 color-->
     <color name="box_color">#1AD5D5D5</color>
     <color name="calendar_report">#FFCD12</color>
+
 </resources>
