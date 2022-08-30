@@ -14,9 +14,11 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
 
     EditText sugar;
     Button okButton_s, cancelButton_s;
+    Boolean report_flag;
 
-    public SugarDialog(Context context) {
+    public SugarDialog(Context context, Boolean report_flag) {
         super(context);
+        this.report_flag = report_flag;
     }
 
     public interface SugarDialogListener {
@@ -36,6 +38,13 @@ public class SugarDialog extends Dialog implements View.OnClickListener {
 
         okButton_s = findViewById(R.id.btn_ok_s);
         cancelButton_s = findViewById(R.id.btn_cancel_s);
+
+        if (report_flag) {
+            okButton_s.setText("추가");
+        }
+        else {
+            okButton_s.setText("확인");
+        }
 
         okButton_s.setOnClickListener(this);
         cancelButton_s.setOnClickListener(this);

@@ -58,12 +58,12 @@ public class MyPageFragment extends Fragment {
 
         androidx.appcompat.widget.SwitchCompat aSwitch = view.findViewById(R.id.btn_alarm_on_off);
 
-        if (ApplicationClass.sharedPreferences.getString("alarm_switch", "NONE").equals("NONE")) {
+        if (ApplicationClass.sharedPreferences.getString("alarm_switch", "").equals("")) {
             editor.putString("alarm_switch", "ON");
             editor.apply();
         }
         else {
-            aSwitch.setChecked(ApplicationClass.sharedPreferences.getString("alarm_switch", null).equals("ON"));
+            aSwitch.setChecked(ApplicationClass.sharedPreferences.getString("alarm_switch", "").equals("ON"));
         }
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

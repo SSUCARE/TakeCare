@@ -27,7 +27,7 @@ import com.ssu.takecare.retrofit.report.DataGetReport;
 import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCommentCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCommentIdCallback;
-import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
+import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -106,7 +106,7 @@ public class ReportActivity extends AppCompatActivity {
         }
 
         Log.d("ReportActivity","find_year : " + find_year+", find_month : " + find_month + ", find_day : " + find_day);
-        ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
+        ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitGetReportCallback() {
             @Override
             public void onError(Throwable t) {
                 Log.d("ReportActivity", "에러 : " + t);

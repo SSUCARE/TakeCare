@@ -109,7 +109,7 @@ public class MatchActivity extends AppCompatActivity {
 
             plus.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    dialog = new MatchDialog(MatchActivity.this, mAdapter_pending);
+                    dialog = new MatchDialog(MatchActivity.this, mAdapter_pending, mArrData, mArrData2);
                     dialog.showDialog();
                 }
             });

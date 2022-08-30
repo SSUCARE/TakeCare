@@ -11,6 +11,7 @@ import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.retrofit.comment.RequestComment;
 import com.ssu.takecare.retrofit.comment.ResponseComment;
 import com.ssu.takecare.retrofit.comment.ResponseGetComment;
+import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
 import com.ssu.takecare.retrofit.match.Response_Resquest_Care;
 import com.ssu.takecare.retrofit.report.ResponseGetReport;
 import com.ssu.takecare.retrofit.info.RequestInfo;
@@ -29,7 +30,7 @@ import com.ssu.takecare.retrofit.customcallback.RetrofitCareCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCommentCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCommentIdCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitErrorCallback;
-import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
+import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitUserInfoCallback;
 import com.ssu.takecare.retrofit.signup.RequestSignup;
 import com.ssu.takecare.retrofit.signup.ResponseSignup;
@@ -281,7 +282,7 @@ public class RetrofitManager {
         });
     }
 
-    public void makeReport(int systolic, int diastolic, List<Integer> sugarLevels, int weight, RetrofitCallback callback) {
+    public void makeReport(int systolic, int diastolic, List<Integer> sugarLevels, int weight, RetrofitReportCallback callback) {
         RequestReport requestReport = new RequestReport();
         requestReport.setSystolic(systolic);
         requestReport.setDiastolic(diastolic);
@@ -298,7 +299,7 @@ public class RetrofitManager {
                     Log.d("RetrofitManager_makeReport", "onResponse : 성공, message : " + body.getMessage());
                     Log.d("RetrofitManager_makeReport", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess(body.message, body.message);
+                    callback.onSuccess(body.message, body.data);
                 }
                 else {
                     Log.d("RetrofitManager_makeReport", "onResponse : 실패, error code : " + response.code());
@@ -350,7 +351,7 @@ public class RetrofitManager {
         });
     }
 
-    public void getReport(int path, int year, int month, int day, RetrofitReportCallback callback) {
+    public void getReport(int path, int year, int month, int day, RetrofitGetReportCallback callback) {
         Call<ResponseGetReport> call = ApplicationClass.retrofit_api.getReportRequest(path, year, month, day);
 
         call.enqueue(new Callback<ResponseGetReport>() {
@@ -380,7 +381,7 @@ public class RetrofitManager {
     }
 
     // 월별 리포트 조회
-    public void getReport_Month(int path, int year, int month, RetrofitReportCallback callback) {
+    public void getReport_Month(int path, int year, int month, RetrofitGetReportCallback callback) {
         Call<ResponseGetReport> call = ApplicationClass.retrofit_api.getReportRequest_Month(path, year, month);
 
         call.enqueue(new Callback<ResponseGetReport>() {

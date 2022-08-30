@@ -14,9 +14,11 @@ public class PressureDialog extends Dialog implements View.OnClickListener {
 
     EditText highPressure, lowPressure;
     Button okButton_p, cancelButton_p;
+    Boolean report_flag;
 
-    public PressureDialog(Context context) {
+    public PressureDialog(Context context, Boolean report_flag) {
         super(context);
+        this.report_flag = report_flag;
     }
 
     public interface PressureDialogListener {
@@ -37,6 +39,13 @@ public class PressureDialog extends Dialog implements View.OnClickListener {
 
         okButton_p = findViewById(R.id.btn_ok_p);
         cancelButton_p = findViewById(R.id.btn_cancel_p);
+
+        if (report_flag) {
+            okButton_p.setText("수정");
+        }
+        else {
+            okButton_p.setText("확인");
+        }
 
         okButton_p.setOnClickListener(this);
         cancelButton_p.setOnClickListener(this);

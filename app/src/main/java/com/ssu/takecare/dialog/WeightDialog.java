@@ -14,9 +14,11 @@ public class WeightDialog extends Dialog implements View.OnClickListener {
 
     EditText weight;
     Button okButton_w, cancelButton_w;
+    Boolean report_flag;
 
-    public WeightDialog(Context context) {
+    public WeightDialog(Context context, Boolean report_flag) {
         super(context);
+        this.report_flag = report_flag;
     }
 
     public interface WeightDialogListener {
@@ -36,6 +38,13 @@ public class WeightDialog extends Dialog implements View.OnClickListener {
 
         okButton_w = findViewById(R.id.btn_ok_w);
         cancelButton_w = findViewById(R.id.btn_cancel_w);
+
+        if (report_flag) {
+            okButton_w.setText("수정");
+        }
+        else {
+            okButton_w.setText("확인");
+        }
 
         okButton_w.setOnClickListener(this);
         cancelButton_w.setOnClickListener(this);

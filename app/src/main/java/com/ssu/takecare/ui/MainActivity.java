@@ -1,7 +1,10 @@
 package com.ssu.takecare.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.dialog.PressureDialog;
 import com.ssu.takecare.dialog.SugarDialog;
@@ -19,12 +23,14 @@ import com.ssu.takecare.fragment.MyPageFragment;
 import com.ssu.takecare.fragment.CaredShareFragment;
 import com.ssu.takecare.fragment.CaringShareFragment;
 import com.ssu.takecare.R;
+import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
 import com.ssu.takecare.retrofit.report.DataGetReport;
 import com.ssu.takecare.retrofit.match.DataResponseCare;
 import com.ssu.takecare.retrofit.match.ResponseCare;
 import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.retrofit.customcallback.RetrofitCareCallback;
-import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
+import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
+import com.ssu.takecare.retrofit.report.DataReport;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.text.SimpleDateFormat;
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     Boolean REPORT_FLAG = false;
     int r_systolic = 0; int r_diastolic = 0; int r_weight = 0;
-    List<Integer> r_sugarLevels = null;
+    List<Integer> r_sugarLevels = new ArrayList<>();
 
     private final String TAG="MainActivty,Jdebug";
 
@@ -67,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+            }
+        }
 
         ROLE_CARED_OR_ROLE_CARER = ApplicationClass.sharedPreferences.getString("role", "");
 
@@ -94,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputPressure(View view) {
-        PressureDialog pDialog = new PressureDialog(this);
+        PressureDialog pDialog = new PressureDialog(this, REPORT_FLAG);
         pDialog.setPressureDialogListener(new PressureDialog.PressureDialogListener() {
             @Override
             public void okClicked(String high_pressure, String low_pressure) {
@@ -106,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!low_pressure.equals(""))
                     lp_input.setText(low_pressure);
+
+                if (REPORT_FLAG) {
+                    r_systolic = Integer.parseInt(hp_input.getText().toString());
+                    r_diastolic = Integer.parseInt(lp_input.getText().toString());
+                    updateReport();
+                }
             }
         });
 
@@ -113,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputSugar(View view) {
-        SugarDialog sDialog = new SugarDialog(this);
+        SugarDialog sDialog = new SugarDialog(this, REPORT_FLAG);
         sDialog.setSugarDialogListener(new SugarDialog.SugarDialogListener() {
             @Override
             public void okClicked(String sugar) {
@@ -121,6 +139,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!sugar.equals(""))
                     s_input.setText(sugar);
+
+                if (REPORT_FLAG) {
+                    r_sugarLevels.add(Integer.parseInt(s_input.getText().toString()));
+                    updateReport();
+                }
             }
         });
 
@@ -128,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inputWeight(View view) {
-        WeightDialog wDialog = new WeightDialog(this);
+        WeightDialog wDialog = new WeightDialog(this, REPORT_FLAG);
         wDialog.setWeightDialogListener(new WeightDialog.WeightDialogListener() {
             @Override
             public void okClicked(String weight) {
@@ -136,6 +159,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!weight.equals(""))
                     w_input.setText(weight);
+
+                if (REPORT_FLAG) {
+                    r_weight = Integer.parseInt(w_input.getText().toString());
+                    updateReport();
+                }
             }
         });
 
@@ -145,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     public void init_getReport() {
         userId = ApplicationClass.sharedPreferences.getInt("userId",-1);
         if (userId != -1) {
-            ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitReportCallback() {
+            ApplicationClass.retrofit_manager.getReport(userId, find_year, find_month, find_day, new RetrofitGetReportCallback() {
                 @Override
                 public void onError(Throwable t) {
                 }
@@ -165,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         REPORT_FLAG = false;
+
+                        // 오늘 작성된 리포트가 없으면 SharedPreferences에 저장된 건강 정보를 초기화한다.
+                        initValue();
                     }
                 }
 
@@ -196,42 +227,54 @@ public class MainActivity extends AppCompatActivity {
             r_weight = Integer.parseInt(w_input.getText().toString());
         }
 
-        if (REPORT_FLAG) {
-            ApplicationClass.retrofit_manager.updateReport(reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
-                @Override
-                public void onError(Throwable t) {
-                }
+        ApplicationClass.retrofit_manager.makeReport(r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitReportCallback() {
+            @Override
+            public void onError(Throwable t) {
+            }
 
-                @Override
-                public void onSuccess(String message, String token) {
-                    Toast.makeText(getApplicationContext(), "리포트가 수정되었습니다", Toast.LENGTH_SHORT).show();
-                }
+            @Override
+            public void onSuccess(String message, DataReport data) {
+                reportId = data.getReportId();
+                Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onFailure(int error_code) {
-                }
-            });
-        }
-        else {
-            ApplicationClass.retrofit_manager.makeReport(r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
-                @Override
-                public void onError(Throwable t) {
-                }
-
-                @Override
-                public void onSuccess(String message, String token) {
-                    Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(int error_code) {
-                }
-            });
-        }
+            @Override
+            public void onFailure(int error_code) {
+            }
+        });
 
         saveValue();
         setValue();
         setStatus();
+    }
+
+    public void updateReport() {
+        ApplicationClass.retrofit_manager.updateReport(reportId, r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitCallback() {
+            @Override
+            public void onError(Throwable t) {
+            }
+
+            @Override
+            public void onSuccess(String message, String token) {
+                Log.d(TAG, "updateReport -> message : " + message);
+                Toast.makeText(getApplicationContext(), "리포트가 수정되었습니다", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int error_code) {
+            }
+        });
+
+        saveValue();
+        setValue();
+    }
+
+    public void initValue() {
+        editor.putString("systolic", "");
+        editor.putString("diastolic", "");
+        editor.putString("sugarLevels", "");
+        editor.putString("weight", "");
+        editor.apply();
     }
 
     public void saveValue() {
@@ -248,14 +291,14 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("sugarLevels", a.toString());
         }
         else {
-            editor.putString("sugarLevels", null);
+            editor.putString("sugarLevels", "");
         }
 
         editor.apply();
     }
 
     public void setValue() {
-        String json = ApplicationClass.sharedPreferences.getString("sugarLevels", null);
+        String json = ApplicationClass.sharedPreferences.getString("sugarLevels", "");
         ArrayList<String> s_sugarLevels = new ArrayList<String>();
         if (json != null) {
             try {
@@ -270,10 +313,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        String s_systolic = ApplicationClass.sharedPreferences.getString("systolic", null);
-        String s_diastolic = ApplicationClass.sharedPreferences.getString("diastolic", null);
-        String s_sugar = s_sugarLevels.get(s_sugarLevels.size()-1);
-        String s_weight = ApplicationClass.sharedPreferences.getString("weight", null);
+        String s_systolic = ApplicationClass.sharedPreferences.getString("systolic", "");
+        String s_diastolic = ApplicationClass.sharedPreferences.getString("diastolic", "");
+        String s_sugar = s_sugarLevels.get(s_sugarLevels.size() - 1);
+        String s_weight = ApplicationClass.sharedPreferences.getString("weight", "");
 
         hp_input = findViewById(R.id.input_high_pressure);
         lp_input = findViewById(R.id.input_low_pressure);
@@ -307,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
-        editor.putInt("keep_sign_in_flag",0); // 자동 로그인과 관련된 flag
+        editor.putInt("keep_sign_in_flag", 0); // 자동 로그인과 관련된 flag
         editor.putString("email_login", "");
         editor.putString("password_login", "");
         editor.putString("accessToken", "");
@@ -317,7 +360,14 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("age", 0);
         editor.putInt("height", 0);
         editor.putString("role", "");
+        editor.putInt("mapping_count", 0);
+        editor.putString("systolic", "");
+        editor.putString("diastolic", "");
+        editor.putString("sugarLevels", "");
+        editor.putString("weight", "");
         editor.putString("alarm_switch", "");
+        editor.putInt("record_date", 0);
+        editor.putInt("today_steps", 0);
         editor.apply();
     }
 
@@ -347,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
 
-                            editor.putInt("Mapping_Count", UserName.size());
+                            editor.putInt("mapping_count", UserName.size());
                             editor.apply();
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaringShareFragment(UserName, UserId)).commit();
                         }
@@ -374,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
 
-                            editor.putInt("Mapping_Count", UserName.size());
+                            editor.putInt("mapping_count", UserName.size());
                             editor.apply();
 
                             getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new CaredShareFragment(UserName, UserId)).commit();
@@ -406,8 +456,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         int keep_sign_in_flag=ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0);
-        Log.d(TAG,"keep_sign_in_flag:"+ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
-        if(keep_sign_in_flag==0) {
+        Log.d(TAG,"keep_sign_in_flag : " + ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
+        if (keep_sign_in_flag == 0) {
             clearInfo();
         }
     }

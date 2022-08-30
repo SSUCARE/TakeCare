@@ -7,7 +7,7 @@ import android.os.Message;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.assist.calendar.Calendar_Day;
 import com.ssu.takecare.retrofit.report.DataGetReport;
-import com.ssu.takecare.retrofit.customcallback.RetrofitReportCallback;
+import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class GetCalendar_Month_Runnable implements Runnable {
     @Override
     public void run() {
         Message Hmessage=handler.obtainMessage();
-        ApplicationClass.retrofit_manager.getReport_Month(userId, year, month, new RetrofitReportCallback() {
+        ApplicationClass.retrofit_manager.getReport_Month(userId, year, month, new RetrofitGetReportCallback() {
 
             @Override
             public void onError(Throwable t) {
