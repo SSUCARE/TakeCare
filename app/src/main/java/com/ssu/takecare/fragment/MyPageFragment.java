@@ -2,19 +2,15 @@ package com.ssu.takecare.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,22 +35,10 @@ public class MyPageFragment extends Fragment {
 
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
-    private final String imgName = "my_profile_image.png";
-    private final String TAG = "MyPageFragment_Debug";
-
-    private ImageView profileImage;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mypage, container, false);
-
-        profileImage = view.findViewById(R.id.img_user);
-        getImage();
-
-        String my_name = ApplicationClass.sharedPreferences.getString("name", "");
-        TextView tv_name = view.findViewById(R.id.user_name);
-        tv_name.setText(my_name);
 
         androidx.appcompat.widget.SwitchCompat aSwitch = view.findViewById(R.id.btn_alarm_on_off);
 
@@ -176,7 +160,7 @@ public class MyPageFragment extends Fragment {
 
                     Handler handler2 = new Handler() {
                         @Override
-                        public void handleMessage(Message msg) {Log.d(TAG,"2");
+                        public void handleMessage(Message msg) {
                             Thread thread = new Thread(new ShareRunnable(stringBuilder, userId, list_year.get(count+2), list_month.get(count+2), handler3));
                             thread.start();
                         }
@@ -194,7 +178,7 @@ public class MyPageFragment extends Fragment {
                     thread.start();
                 }
                 else{
-                    Toast.makeText(getActivity().getApplicationContext(),"기능을 사욯할 수 없습니다. 다시 로그인 해주세요!",Toast.LENGTH_SHORT);
+                    Toast.makeText(getActivity(),"기능을 사욯할 수 없습니다. 다시 로그인 해주세요!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -205,25 +189,6 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        getImage();
-    }
-
-    // 설정된 프로필 사진 불러오기
-    private void getImage() {
-        try {
-            File file = getActivity().getCacheDir();
-            File[] flist = file.listFiles();
-            for (int i = 0; i < flist.length; i++) {
-                if (flist[i].getName().equals(imgName)) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(String.valueOf(flist[i]));
-                    profileImage.setImageBitmap(bitmap);
-                }
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
 

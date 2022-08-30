@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.retrofit.match.DataResponseGetUser;
 import com.ssu.takecare.R;
 import com.ssu.takecare.retrofit.customcallback.RetrofitErrorCallback;
@@ -126,6 +127,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         setPreference("email_login", email_str);
                         setPreference("password_login", password_str);
                         setPreference("accessToken", token);
+
+                        ApplicationClass.retrofit_manager.postToken(token, new RetrofitCallback() {
+                            @Override
+                            public void onError(Throwable t) {
+                            }
+
+                            @Override
+                            public void onSuccess(String message, String data) {
+                                Log.d(TAG, message + data);
+                            }
+
+                            @Override
+                            public void onFailure(int error_code) {
+                            }
+                        });
 
                         // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 저장한 뒤 MainActivity로 감
                         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {

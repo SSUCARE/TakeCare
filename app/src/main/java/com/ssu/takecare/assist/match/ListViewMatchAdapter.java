@@ -21,7 +21,6 @@ public class ListViewMatchAdapter extends BaseAdapter {
     private Map<String, Integer> arrData;
     private String acceptedOrNot;
     private Integer userId;
-    private final String TAG="ListViewMatchAdapter, Jdebug";
 
     public ListViewMatchAdapter(Context context, Map<String, Integer> arrData, String acceptedOrNot) {
         super();

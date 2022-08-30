@@ -163,6 +163,7 @@ public class ReportActivity extends AppCompatActivity {
                                 Log.d("ReportActivity", "data - ModifiedAt : " + data.get(0).getModifiedAt());
                                 Log.d("ReportActivity", "data - ReportId : " + data.get(0).getReportId());
                                 Log.d("ReportActivity", "data - AuthorId : " + data.get(0).getAuthorId());
+                                Log.d("ReportActivity", "data - AuthorName : " + data.get(0).getAuthorName());
                                 Log.d("ReportActivity", "data - CommentId : " + data.get(0).getCommentId());
                                 Log.d("ReportActivity", "data - Content : " + data.get(0).getContent());
 
@@ -178,8 +179,7 @@ public class ReportActivity extends AppCompatActivity {
                                         if (User_id_name.containsKey(data.get(i).getAuthorId()))
                                             commentAdapter.addAuthorName(User_id_name.get(data.get(i).getAuthorId()));
                                         else {
-                                            Log.d("ReportActivity", "해당하는 id(" + data.get(i).getAuthorId() + ")의 정보가 없습니다.");
-                                            commentAdapter.addAuthorName("다른 보호자");
+                                            commentAdapter.addAuthorName(data.get(0).getAuthorName());
                                         }
                                     }
 

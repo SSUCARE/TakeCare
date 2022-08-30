@@ -15,6 +15,9 @@ public class DataGetComment {
     @SerializedName("authorId")
     public int authorId;
 
+    @SerializedName("authorName")
+    public String authorName;
+
     @SerializedName("id")
     public int commentId;
 
@@ -35,6 +38,10 @@ public class DataGetComment {
 
     public void setAuthorId(int authorId) {
         this.authorId = authorId;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public void setCommentId(int commentId) {
@@ -59,6 +66,10 @@ public class DataGetComment {
 
     public int getAuthorId() {
         return authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
     }
 
     public int getCommentId() {

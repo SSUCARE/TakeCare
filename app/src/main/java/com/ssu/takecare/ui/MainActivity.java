@@ -89,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
         init_getReport();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
+
+//        Intent it = new Intent(this, StepCountService.class);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startForegroundService(it);
+//        }
     }
 
     @Override
@@ -344,6 +349,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout(View view) {
+        ApplicationClass.retrofit_manager.deleteToken(new RetrofitCallback() {
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onSuccess(String message, String data) {
+                Log.d(TAG, message + data);
+            }
+
+            @Override
+            public void onFailure(int error_code) {
+
+            }
+        });
+
         clearInfo();
         finish();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));

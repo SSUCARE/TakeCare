@@ -33,6 +33,16 @@ public interface RetrofitAPI {
     @POST("/users/login")
     Call<ResponseLogin> loginRequest(@Body RequestLogin body);
 
+    // 토큰 등록
+    @Headers("Content-Type: application/json")
+    @POST("/users/token")
+    Call<String> tokenPostRequest(@Query("token") String token);
+
+    // 토큰 삭제
+    @Headers("Content-Type: application/json")
+    @DELETE("/users/token")
+    Call<String> tokenDeleteRequest();
+
     // 회원정보 저장
     @Headers("Content-Type: application/json")
     @PUT("/users")

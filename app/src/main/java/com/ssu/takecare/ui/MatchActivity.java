@@ -27,9 +27,7 @@ public class MatchActivity extends AppCompatActivity {
     private ListViewMatchAdapter mAdapter_pending;
     private ListView2MatchAdapter mAdapter_argree_or_refuse;
     private Button plus;
-
     private String role;
-    private final String TAG="MatchActivity_debug";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,14 +92,15 @@ public class MatchActivity extends AppCompatActivity {
     }
 
     public void setting(){
-        if (role.equals("피보호자")){
+        if (role.equals("피보호자")) {
             mAdapter_accepted = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED"); // 삭제
             mAdapter_argree_or_refuse = new ListView2MatchAdapter(MatchActivity.this, mArrData, "PENDING",mAdapter_accepted);
             mListview2.setAdapter(mAdapter_accepted);
             mListview.setAdapter(mAdapter_argree_or_refuse);
 
             plus.setVisibility(View.GONE);
-        }else { //보호자
+        }
+        else {  // 보호자
             mAdapter_accepted = new ListViewMatchAdapter(MatchActivity.this, mArrData2, "ACCEPTED");
             mAdapter_pending = new ListViewMatchAdapter(MatchActivity.this, mArrData, "PENDING");
             mListview2.setAdapter(mAdapter_accepted);

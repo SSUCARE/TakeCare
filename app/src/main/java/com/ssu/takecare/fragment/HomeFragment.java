@@ -1,5 +1,6 @@
 package com.ssu.takecare.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -19,10 +20,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
+import com.ssu.takecare.dialog.MedicineDialog;
+import com.ssu.takecare.dialog.PedometerDialog;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -37,14 +41,22 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
     Boolean REPORT_FLAG;
 
-    ImageView today_medicine, today_pedometer, today_healthnews;
-    TextView today_medicine_content, today_pedometer_content, today_healthnews_content;
+    ImageView today_medicine, today_pedometer;
+    TextView today_medicine_content, today_pedometer_content;
 
     SensorManager sensorManager;
     Sensor stepCountSensor;
 
+    private MedicineDialog dialog;
+
+    // 현재 복용 중인 약 수
+    int numMedicine = 0;
+
     // 현재 걸음 수
     int todaySteps = 0;
+
+    // 목표 걸음 수
+    int goalSteps = 0;
 
     int sensor_flag = 0;
     float sensor_value = 0.0f;
@@ -69,11 +81,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
         today_medicine = view.findViewById(R.id.iv_medicine);
         today_pedometer = view.findViewById(R.id.iv_pedometer);
-        today_healthnews = view.findViewById(R.id.iv_healthnews);
 
         today_medicine_content = view.findViewById(R.id.iv_medicine_content);
         today_pedometer_content = view.findViewById(R.id.iv_pedometer_content);
-        today_healthnews_content = view.findViewById(R.id.iv_healthnews_content);
 
         // 걸음 센서 연결
         // * 옵션
@@ -84,35 +94,61 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
         // 디바이스에 걸음 센서의 존재 여부 체크
         if (stepCountSensor == null) {
-            Toast.makeText(getActivity(), "No Step Sensor", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "걸음 센서가 존재하지 않습니다", Toast.LENGTH_SHORT).show();
         }
 
+        checkMedicine();
+
+        // 복용 관리 기능
         today_medicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialog = new MedicineDialog(view.getContext());
+                dialog.showDialog();
             }
         });
 
-        // 길게 누르면 리셋 기능
-        today_pedometer.setOnLongClickListener(new View.OnLongClickListener() {
+        // 목표 걸음 수 설정 기능
+        today_pedometer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                // 현재 걸음수 초기화
-                todaySteps = 0;
-                today_pedometer_content.setText(String.valueOf(todaySteps));
-                return false;
-            }
-        });
+            public void onClick(View view) {
+                PedometerDialog pDialog = new PedometerDialog(view.getContext());
+                pDialog.setPedometerDialogListener(new PedometerDialog.PedometerDialogListener() {
+                    @Override
+                    public void okClicked(String goalStep) {
+                        Toast.makeText(view.getContext(), "목표가 " + goalStep + "걸음으로 설정되었습니다", Toast.LENGTH_SHORT).show();
+                        goalSteps = Integer.parseInt(goalStep);
+                        editor.putInt("goal_steps", goalSteps);
+                        editor.apply();
+                    }
+                });
 
-        today_healthnews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                pDialog.show();
             }
         });
 
         return view;
+    }
+
+    public void checkMedicine() {
+        if (getActivity().getSharedPreferences("MedicineInfo1", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            numMedicine = 0;
+        else if (getActivity().getSharedPreferences("MedicineInfo2", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            numMedicine = 1;
+        else if (getActivity().getSharedPreferences("MedicineInfo3", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            numMedicine = 2;
+        else
+            numMedicine = 3;
+
+        String[] check = new String[numMedicine];
+        String[] check_temp = new String[numMedicine];
+        for (int i = 0; i < numMedicine; i++) {
+            check[i] = "YES";
+            check_temp[i] = getActivity().getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getString("medicine_check", "NO");
+        }
+
+        if (numMedicine != 0 && Arrays.equals(check, check_temp))
+            today_medicine.setImageResource(R.drawable.medicine_complete);
     }
 
     public void setValue(View view) {
@@ -178,7 +214,8 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onResume() {
         super.onResume();
 
-        if (ApplicationClass.sharedPreferences.getInt("today_steps", 0) != 0) {
+        int today_steps = ApplicationClass.sharedPreferences.getInt("today_steps", 0);
+        if (today_steps != 0) {
             int record_date = ApplicationClass.sharedPreferences.getInt("record_date", 0);
             if (record_date == 0) {
                 editor.putInt("record_date", Integer.parseInt(step_date));
@@ -187,13 +224,27 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
             // 날짜가 바뀌었다면 0으로 초기화
             if (Integer.parseInt(step_date) - record_date == 0)
-                todaySteps = ApplicationClass.sharedPreferences.getInt("today_steps", 0);
+                todaySteps = today_steps;
             else {
                 todaySteps = 0;
                 editor.putInt("record_date", Integer.parseInt(step_date));
                 editor.putInt("today_steps", 0);
                 editor.apply();
+
+                // 복용 중인 약 check 초기화
+                for (int i = 0; i < numMedicine; i++) {
+                    SharedPreferences pref_c = getActivity().getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE);
+                    SharedPreferences.Editor editor_c = pref_c.edit();
+                    editor_c.putString("medicine_check", "NO");
+                    editor_c.apply();
+                }
             }
+        }
+
+        int goal_steps = ApplicationClass.sharedPreferences.getInt("goal_steps", 0);
+        if (goal_steps != 0) {
+            if (todaySteps >= goal_steps)
+                today_pedometer.setImageResource(R.drawable.walking_complete);
         }
     }
 

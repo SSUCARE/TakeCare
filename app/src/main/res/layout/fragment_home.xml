@@ -383,11 +383,16 @@
         android:padding="10dp"
         android:layout_weight="3.5">
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_weight="1">
+            android:layout_weight="3"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -409,17 +414,22 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_medicine"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="10dp"
-                android:text="완료"
+                android:text="복용 관리"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal"
                 android:id="@+id/iv_medicine_content"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_weight="1">
+            android:layout_weight="3"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -447,36 +457,9 @@
                 android:id="@+id/iv_pedometer_content"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <View
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/iv_healthnews_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/healthnews"
-                android:id="@+id/iv_healthnews"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_healthnews"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="10dp"
-                android:text="안녕"
-                android:textSize="20sp"
-                android:fontFamily="@font/font_normal"
-                android:id="@+id/iv_healthnews_content"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>
