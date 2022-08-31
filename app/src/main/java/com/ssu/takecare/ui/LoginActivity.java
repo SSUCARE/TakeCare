@@ -1,5 +1,7 @@
 package com.ssu.takecare.ui;
 
+import static com.ssu.takecare.util.FcmTokenUtil.getFcmToken;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -127,15 +129,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         setPreference("email_login", email_str);
                         setPreference("password_login", password_str);
                         setPreference("accessToken", token);
-
-                        ApplicationClass.retrofit_manager.postToken(token, new RetrofitCallback() {
+                        ApplicationClass.retrofit_manager.postToken(getFcmToken(), new RetrofitCallback() {
                             @Override
                             public void onError(Throwable t) {
                             }
 
                             @Override
                             public void onSuccess(String message, String data) {
-                                Log.d(TAG, message + data);
+                                Log.d(TAG, getFcmToken());
                             }
 
                             @Override

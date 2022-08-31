@@ -1,5 +1,7 @@
 package com.ssu.takecare;
 
+import static com.ssu.takecare.util.FcmTokenUtil.loadFcmToken;
+
 import android.app.Application;
 import android.content.SharedPreferences;
 import com.ssu.takecare.retrofit.RetrofitAPI;
@@ -17,9 +19,9 @@ public class ApplicationClass extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         sharedPreferences = getApplicationContext().getSharedPreferences("TakeCare", MODE_PRIVATE);
         retrofit_api = RetrofitClient.getClient(BASE_URL).create(RetrofitAPI.class);
         retrofit_manager = new RetrofitManager();
+        loadFcmToken();
     }
 }
