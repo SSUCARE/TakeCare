@@ -126,17 +126,17 @@ public class RetrofitManager {
     }
 
     public void postToken(String token, RetrofitCallback callback) {
-        Call<String> call = ApplicationClass.retrofit_api.tokenPostRequest(token);
+        Call<Object> call = ApplicationClass.retrofit_api.tokenPostRequest(token);
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+            public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
                 if (response.isSuccessful()) {
-                    String body = response.body();
-                    Log.d("RetrofitManager_postToken", "onResponse : 성공, message : " + body);
+                    Object body = response.body();
+                    Log.d("RetrofitManager_postToken", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_postToken", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess("postToken() 호출 : ", body);
+                    callback.onSuccess("postToken() 호출 : ", body.toString());
                 }
                 else {
                     Log.d("RetrofitManager_postToken", "onResponse : 실패, error code : " + response.code());
@@ -146,7 +146,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Object> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_postToken", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
@@ -155,17 +155,17 @@ public class RetrofitManager {
     }
 
     public void deleteToken(RetrofitCallback callback) {
-        Call<String> call = ApplicationClass.retrofit_api.tokenDeleteRequest();
+        Call<Object> call = ApplicationClass.retrofit_api.tokenDeleteRequest();
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+            public void onResponse(@NonNull Call<Object> call, @NonNull Response<Object> response) {
                 if (response.isSuccessful()) {
-                    String body = response.body();
-                    Log.d("RetrofitManager_deleteToken", "onResponse : 성공, message : " + body);
+                    Object body = response.body();
+                    Log.d("RetrofitManager_deleteToken", "onResponse : 성공, message : " + body.toString());
                     Log.d("RetrofitManager_deleteToken", "onResponse : status code is " + response.code());
 
-                    callback.onSuccess("deleteToken() 호출 : ", body);
+                    callback.onSuccess("deleteToken() 호출 : ", body.toString());
                 }
                 else {
                     Log.d("RetrofitManager_deleteToken", "onResponse : 실패, error code : " + response.code());
@@ -175,7 +175,7 @@ public class RetrofitManager {
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Object> call, @NonNull Throwable t) {
                 Log.e("RetrofitManager_deleteToken", "onFailure : " + t.getLocalizedMessage());
 
                 callback.onError(t);
