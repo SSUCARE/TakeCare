@@ -381,7 +381,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
+        String fcm_token = ApplicationClass.sharedPreferences.getString("FcmToken", "");
         editor.clear();
+        editor.putString("FcmToken", fcm_token);
         editor.apply();
         clearMedicine();
     }

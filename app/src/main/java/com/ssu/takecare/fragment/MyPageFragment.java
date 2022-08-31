@@ -1,11 +1,14 @@
 package com.ssu.takecare.fragment;
 
+import static com.ssu.takecare.util.FcmTokenUtil.getFcmToken;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +21,9 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
+import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.runnable.ShareRunnable;
+import com.ssu.takecare.ui.LoginActivity;
 import com.ssu.takecare.ui.MatchActivity;
 import com.ssu.takecare.ui.PasswordActivity;
 import com.ssu.takecare.ui.ProfileActivity;
@@ -57,11 +62,43 @@ public class MyPageFragment extends Fragment {
                     // ON 상태
                     editor.putString("alarm_switch", "ON");
                     editor.apply();
+
+                    ApplicationClass.retrofit_manager.postToken(getFcmToken(), new RetrofitCallback() {
+                        @Override
+                        public void onError(Throwable t) {
+                        }
+
+                        @Override
+                        public void onSuccess(String message, String data) {
+                            Log.d("MyPageFragment", getFcmToken());
+                        }
+
+                        @Override
+                        public void onFailure(int error_code) {
+                        }
+                    });
                 }
                 else {
                     // OFF 상태
                     editor.putString("alarm_switch", "OFF");
                     editor.apply();
+
+                    ApplicationClass.retrofit_manager.deleteToken(new RetrofitCallback() {
+                        @Override
+                        public void onError(Throwable t) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String message, String data) {
+                            Log.d("MyPageFragment", message + data);
+                        }
+
+                        @Override
+                        public void onFailure(int error_code) {
+
+                        }
+                    });
                 }
             }
         });
@@ -69,7 +106,6 @@ public class MyPageFragment extends Fragment {
         ImageView profile_setting = view.findViewById(R.id.btn_profile);
         ImageView match_setting = view.findViewById(R.id.btn_match);
         ImageView password_setting = view.findViewById(R.id.btn_password);
-        ImageView alarm_setting = view.findViewById(R.id.btn_alarm_list);
         ImageView share_setting = view.findViewById(R.id.btn_share);
 
         profile_setting.setOnClickListener(new View.OnClickListener() {
@@ -93,13 +129,6 @@ public class MyPageFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PasswordActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        alarm_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
