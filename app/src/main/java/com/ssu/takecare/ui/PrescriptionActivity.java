@@ -77,8 +77,6 @@ public class PrescriptionActivity extends AppCompatActivity {
     ImageView prescription_img1,prescription_img2;
     ProgressDialog Circle_Dialog;
 
-    String str1,str2,str3,str4;
-
     int pressure_flag, sugar_flag, weight_flag; //이 중 가장 큰 값을 처방 노트에서 진단하기.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
