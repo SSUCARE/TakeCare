@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     int r_systolic = 0; int r_diastolic = 0; int r_weight = 0;
     List<Integer> r_sugarLevels = new ArrayList<>();
 
+    Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
         init_getReport();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
-
-        Start_pedometer();
+        int keep_sign_in_flag=ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0);
+        if(keep_sign_in_flag==1){
+            Start_pedometer();
+        }
     }
 
     void Start_pedometer(){
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("record_date", Integer.parseInt(date_day)).apply();
         }
         //ServiceIntent생성
-        Intent serviceIntent = new Intent(MainActivity.this,com.ssu.takecare.assist.service.pedometerService.class);
+        serviceIntent = new Intent(MainActivity.this,com.ssu.takecare.assist.service.pedometerService.class);
 
         //하루가 지나 만보기를 초기화해야하는지 아니면 그대로 두어야하는지 확인
         if(pedometer_record_date==Integer.parseInt(date_day)){ //아직 하루가 지나지 않음(만보기 초기화 x)
@@ -583,6 +586,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG,"keep_sign_in_flag : " + ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
         if (keep_sign_in_flag == 0) {
             clearInfo();
+            try{
+                stopService(serviceIntent);
+            }catch (Exception e){
+
+            }
+
         }
     }
 }
