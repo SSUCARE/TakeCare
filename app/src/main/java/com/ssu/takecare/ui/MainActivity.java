@@ -1,6 +1,10 @@
 package com.ssu.takecare.ui;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,8 +17,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.assist.alarm.AlarmReceiver;
 import com.ssu.takecare.dialog.PressureDialog;
 import com.ssu.takecare.dialog.SugarDialog;
 import com.ssu.takecare.dialog.WeightDialog;
@@ -33,11 +39,12 @@ import com.ssu.takecare.retrofit.customcallback.RetrofitGetReportCallback;
 import com.ssu.takecare.retrofit.report.DataReport;
 import org.json.JSONArray;
 import org.json.JSONException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView hp_input, lp_input, s_input, w_input;
 
     private String ROLE_CARED_OR_ROLE_CARER;
+
+    private AlarmManager alarmManager;
+    private GregorianCalendar mCalender;
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder builder;
 
     Date currentTime = Calendar.getInstance().getTime();
     String date_year = new SimpleDateFormat("yyyy", Locale.getDefault()).format((currentTime));
@@ -75,26 +87,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
-            }
-        }
-
         ROLE_CARED_OR_ROLE_CARER = ApplicationClass.sharedPreferences.getString("role", "");
 
         tab_btn1 = findViewById(R.id.tab_btn1);
         tab_btn2 = findViewById(R.id.tab_btn2);
         tab_btn3 = findViewById(R.id.tab_btn3);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+            }
+        }
+
+        notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        mCalender = new GregorianCalendar();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        }
+
+        setAlarm();
+
         init_getReport();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
-
-//        Intent it = new Intent(this, StepCountService.class);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            startForegroundService(it);
-//        }
     }
 
     @Override
@@ -373,27 +388,86 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
+        String access_token = ApplicationClass.sharedPreferences.getString("accessToken", "");
         editor.clear();
+        editor.putString("accessToken", access_token);
         editor.apply();
         clearMedicine();
     }
 
-    public void clearMedicine() {
-        int numMedicine;
+    public int getMedicineCount() {
+        int num;
         if (getSharedPreferences("MedicineInfo1", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
-            numMedicine = 0;
+            num = 0;
         else if (getSharedPreferences("MedicineInfo2", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
-            numMedicine = 1;
+            num = 1;
         else if (getSharedPreferences("MedicineInfo3", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
-            numMedicine = 2;
+            num = 2;
         else
-            numMedicine = 3;
+            num = 3;
+
+        return num;
+    }
+
+    public void clearMedicine() {
+        int numMedicine = getMedicineCount();
 
         for (int i = 0; i < numMedicine; i++) {
             SharedPreferences pref = getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.clear();
             editor.apply();
+        }
+    }
+
+    public void setAlarm() {
+        for (int i = 0; i < getMedicineCount(); i++) {
+            int num;
+            if (getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getString("medicine_alarm", "").equals("ON")) {
+                if (getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getString("medicine_time1", "").equals(""))
+                    num = 0;
+                else if (getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getString("medicine_time2", "").equals(""))
+                    num = 1;
+                else if (getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getString("medicine_time3", "").equals(""))
+                    num = 2;
+                else
+                    num = 3;
+            }
+            else
+                num = 0;
+
+            for (int j = 0; j < num; j++) {
+                Intent receiverIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+                PendingIntent pendingIntent;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, i * 4 + j + 1, receiverIntent, PendingIntent.FLAG_IMMUTABLE);
+                } else {
+                    pendingIntent = PendingIntent.getBroadcast(MainActivity.this, i * 4 + j + 1, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                }
+
+                SharedPreferences pref = getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("medicine_alarm_id_" + (j + 1), i * 4 + j + 1);
+                editor.apply();
+
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+                String medTime = getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getString("medicine_time" + (j + 1), "NONE");
+                String time_str = medTime.substring(medTime.indexOf(" ") + 1);
+                String alarm_time = sdf.format(date) + time_str + ":00";
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date datetime = null;
+                try {
+                    datetime = dateFormat.parse(alarm_time);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                mCalender.setTime(datetime);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.ssu.takecare.dialog;
 
 import static android.content.Context.MODE_PRIVATE;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import com.ssu.takecare.R;
 import com.ssu.takecare.assist.medicine.ListViewMedicineAdapter;
 import java.util.Calendar;
@@ -22,6 +24,7 @@ import java.util.Calendar;
 public class MedicineAddDialog {
 
     private Context context;
+    private Activity activity;
     private Dialog dialog;
     private String[] items;
     private ListViewMedicineAdapter adapter;
@@ -29,8 +32,9 @@ public class MedicineAddDialog {
     private SharedPreferences.Editor editor;
     private String numMedicine;
 
-    public MedicineAddDialog(Context context, String numMedicine, ListViewMedicineAdapter adapter){
+    public MedicineAddDialog(Context context, Activity activity, String numMedicine, ListViewMedicineAdapter adapter){
         this.context = context;
+        this.activity = activity;
         this.numMedicine = numMedicine;
         this.adapter = adapter;
         setDialog();
@@ -114,13 +118,23 @@ public class MedicineAddDialog {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         String state = "오전";
-
+                        String str_hour = String.valueOf(selectedHour);
                         if (selectedHour > 12) {
-                            selectedHour -= 12;
                             state = "오후";
+                            selectedHour -= 12;
+                            if (selectedHour < 10) {
+                                str_hour = "0" + selectedHour;
+                            }
+                            else
+                                str_hour = String.valueOf(selectedHour);
                         }
 
-                        editText1.setText(state + " " + selectedHour + "시 " + selectedMinute + "분");
+                        String str_minute = String.valueOf(selectedMinute);
+                        if (selectedMinute < 10) {
+                            str_minute = "0" + selectedMinute;
+                        }
+
+                        editText1.setText(state + " " + str_hour + ":" + str_minute);
                     }
                 }, hour, minute, false);
 
@@ -140,13 +154,23 @@ public class MedicineAddDialog {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         String state = "오전";
-
+                        String str_hour = String.valueOf(selectedHour);
                         if (selectedHour > 12) {
-                            selectedHour -= 12;
                             state = "오후";
+                            selectedHour -= 12;
+                            if (selectedHour < 10) {
+                                str_hour = "0" + selectedHour;
+                            }
+                            else
+                                str_hour = String.valueOf(selectedHour);
                         }
 
-                        editText2.setText(state + " " + selectedHour + "시 " + selectedMinute + "분");
+                        String str_minute = String.valueOf(selectedMinute);
+                        if (selectedMinute < 10) {
+                            str_minute = "0" + selectedMinute;
+                        }
+
+                        editText2.setText(state + " " + str_hour + ":" + str_minute);
                     }
                 }, hour, minute, false);
 
@@ -166,13 +190,23 @@ public class MedicineAddDialog {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         String state = "오전";
-
+                        String str_hour = String.valueOf(selectedHour);
                         if (selectedHour > 12) {
-                            selectedHour -= 12;
                             state = "오후";
+                            selectedHour -= 12;
+                            if (selectedHour < 10) {
+                                str_hour = "0" + selectedHour;
+                            }
+                            else
+                                str_hour = String.valueOf(selectedHour);
                         }
 
-                        editText3.setText(state + " " + selectedHour + "시 " + selectedMinute + "분");
+                        String str_minute = String.valueOf(selectedMinute);
+                        if (selectedMinute < 10) {
+                            str_minute = "0" + selectedMinute;
+                        }
+
+                        editText3.setText(state + " " + str_hour + ":" + str_minute);
                     }
                 }, hour, minute, false);
 
@@ -205,29 +239,32 @@ public class MedicineAddDialog {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pref = context.getSharedPreferences("MedicineInfo" + numMedicine, MODE_PRIVATE);
-                editor = pref.edit();
-
                 EditText editText_name = dialog.findViewById(R.id.et_med_name);
-                editor.putString("medicine_name", editText_name.getText().toString());
-
                 Spinner medicine_spinner = dialog.findViewById(R.id.sp_period);
-                editor.putString("medicine_period", items[medicine_spinner.getSelectedItemPosition()]);
-
                 EditText medicine_time1 = dialog.findViewById(R.id.et_med_time1);
                 EditText medicine_time2 = dialog.findViewById(R.id.et_med_time2);
                 EditText medicine_time3 = dialog.findViewById(R.id.et_med_time3);
-                editor.putString("medicine_time1", medicine_time1.getText().toString());
-                editor.putString("medicine_time2", medicine_time2.getText().toString());
-                editor.putString("medicine_time3", medicine_time3.getText().toString());
 
-                editor.putString("medicine_check", "NO");
-                editor.apply();
+                if (editText_name.getText().toString().replace(" ", "").equals("")) {
+                    Toast.makeText(context, "약 이름은 필수 기재사항입니다", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    pref = context.getSharedPreferences("MedicineInfo" + numMedicine, MODE_PRIVATE);
+                    editor = pref.edit();
 
-                adapter.addNamePeriod(Integer.parseInt(numMedicine));
-                adapter.notifyDataSetChanged();
+                    editor.putString("medicine_name", editText_name.getText().toString());
+                    editor.putString("medicine_period", items[medicine_spinner.getSelectedItemPosition()]);
+                    editor.putString("medicine_time1", medicine_time1.getText().toString());
+                    editor.putString("medicine_time2", medicine_time2.getText().toString());
+                    editor.putString("medicine_time3", medicine_time3.getText().toString());
+                    editor.putString("medicine_check", "NO");
+                    editor.apply();
 
-                dismiss();
+                    adapter.addMedicine(Integer.parseInt(numMedicine));
+                    adapter.notifyDataSetChanged();
+
+                    dismiss();
+                }
             }
         });
 

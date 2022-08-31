@@ -53,14 +53,7 @@ public class MedicineDialog {
     }
 
     private void findViews() {
-        if (context.getSharedPreferences("MedicineInfo1", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
-            numMedicine = 0;
-        else if (context.getSharedPreferences("MedicineInfo2", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
-            numMedicine = 1;
-        else if (context.getSharedPreferences("MedicineInfo3", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
-            numMedicine = 2;
-        else
-            numMedicine = 3;
+        numMedicine = countMedicine();
 
         ImageButton btn_mb = dialog.findViewById(R.id.btn_medicine_back);
         Button btn_mp = dialog.findViewById(R.id.btn_medicine_plus);
@@ -87,15 +80,16 @@ public class MedicineDialog {
             }
         });
 
-        mAdapter_medicine = new ListViewMedicineAdapter(context);
+        mAdapter_medicine = new ListViewMedicineAdapter(context, activity);
         mListview.setAdapter(mAdapter_medicine);
 
         btn_mp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                numMedicine = countMedicine();
                 if (numMedicine != 3) {
                     String num = String.valueOf(numMedicine + 1);
-                    MedicineAddDialog mDialog = new MedicineAddDialog(context, num, mAdapter_medicine);
+                    MedicineAddDialog mDialog = new MedicineAddDialog(context, activity, num, mAdapter_medicine);
                     mDialog.showDialog();
                 }
                 else {
@@ -103,5 +97,19 @@ public class MedicineDialog {
                 }
             }
         });
+    }
+
+    public int countMedicine() {
+        int num;
+        if (context.getSharedPreferences("MedicineInfo1", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            num = 0;
+        else if (context.getSharedPreferences("MedicineInfo2", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            num = 1;
+        else if (context.getSharedPreferences("MedicineInfo3", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            num = 2;
+        else
+            num = 3;
+
+        return num;
     }
 }

@@ -1,7 +1,6 @@
 package com.ssu.takecare;
 
 import static com.ssu.takecare.util.FcmTokenUtil.loadFcmToken;
-
 import android.app.Application;
 import android.content.SharedPreferences;
 import com.ssu.takecare.retrofit.RetrofitAPI;

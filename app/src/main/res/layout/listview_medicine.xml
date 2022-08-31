@@ -50,18 +50,6 @@
             android:textColor="@color/black"
             android:fontFamily="@font/font_normal"/>
 
-        <TextView
-            android:id="@+id/medicine_list_period"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/iv_medicine_list"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_medicine_list"
-            app:layout_constraintLeft_toRightOf="@+id/medicine_list_name"
-            app:layout_constraintRight_toLeftOf="@+id/alarm_medicine_list"
-            android:text="period"
-            android:textSize="16sp"
-            android:fontFamily="@font/font_normal"/>
-
         <ImageView
             android:id="@+id/alarm_medicine_list"
             android:layout_width="35dp"
@@ -85,12 +73,24 @@
             android:src="@drawable/check_x" />
 
         <TextView
-            android:id="@+id/medicine_list_time1"
+            android:id="@+id/medicine_list_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/iv_medicine_list"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/medicine_list_time1"
+            android:text="period"
+            android:textSize="16sp"
+            android:fontFamily="@font/font_normal"/>
+
+        <TextView
+            android:id="@+id/medicine_list_time1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/iv_medicine_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/medicine_list_period"
             app:layout_constraintRight_toLeftOf="@id/medicine_list_time2"
             android:layout_marginStart="15dp"
             android:text="time1"
