@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment implements SensorEventListener {
-
+    String TAG="HomeFragment,Jdebug";
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     Date currentTime = Calendar.getInstance().getTime();
@@ -244,8 +244,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         }
 
         int goal_steps = ApplicationClass.sharedPreferences.getInt("goal_steps", 0);
+        int pedometer_count=ApplicationClass.sharedPreferences.getInt("pedometer_count", 0);
         if (goal_steps != 0) {
-            if (todaySteps >= goal_steps)
+            if (pedometer_count>= goal_steps)
                 today_pedometer.setImageResource(R.drawable.walking_complete);
         }
     }
@@ -260,7 +261,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                 sensor_flag = 1;
             }
 
-            today_pedometer_content.setText(String.valueOf(todaySteps));
+            // today_pedometer_content.setText(String.valueOf(todaySteps));
 
             if (sensorEvent.values[0] != sensor_value) {
                 todaySteps++;

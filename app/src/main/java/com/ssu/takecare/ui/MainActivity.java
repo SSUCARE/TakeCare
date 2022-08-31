@@ -1,5 +1,7 @@
 package com.ssu.takecare.ui;
 
+import static com.ssu.takecare.ApplicationClass.sharedPreferences;
+
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -46,7 +48,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
+    private final String TAG="MainActivity,Jdebug";
     private long backKeyPressedTime = 0;
 
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
@@ -75,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     int r_systolic = 0; int r_diastolic = 0; int r_weight = 0;
     List<Integer> r_sugarLevels = new ArrayList<>();
 
-    private final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +105,38 @@ public class MainActivity extends AppCompatActivity {
         init_getReport();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
+
+        Start_pedometer();
     }
 
+    void Start_pedometer(){
+        //pedometer_record_date는 하루가 지나서 만보기를 초기화해야하는지 확인하기 위한 역할
+        int pedometer_record_date = ApplicationClass.sharedPreferences.getInt("pedometer_record_date", 0);
+        if (pedometer_record_date == 0) {
+            editor.putInt("record_date", Integer.parseInt(date_day)).apply();
+        }
+        //ServiceIntent생성
+        Intent serviceIntent = new Intent(MainActivity.this,com.ssu.takecare.assist.service.pedometerService.class);
+
+        //하루가 지나 만보기를 초기화해야하는지 아니면 그대로 두어야하는지 확인
+        if(pedometer_record_date==Integer.parseInt(date_day)){ //아직 하루가 지나지 않음(만보기 초기화 x)
+            Log.d(TAG,"1");
+            Log.d(TAG,"카운트값:"+ApplicationClass.sharedPreferences.getInt("pedometer_count", 0));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                startForegroundService(serviceIntent);
+            else startService(serviceIntent);
+        }else{  //하루가 지났기 때문에 만보기 카운트 초기화하고, 백그라운드 서비스 종료 후 다시 시작하기.
+            Log.d(TAG,"2");
+            editor.putInt("pedometer_record_date", Integer.parseInt(date_day)).apply();
+            sharedPreferences.edit().putInt("pedometer_count",0).apply();
+            stopService(serviceIntent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                startForegroundService(serviceIntent);
+            else startService(serviceIntent);
+        }
+        Log.d(TAG,"걸음 수:"+ApplicationClass.sharedPreferences.getInt("pedometer_count", 0));
+
+    }
     @Override
     public void onBackPressed() {
         // 2초 이내에 뒤로가기 버튼을 한번 더 클릭시 앱 종료
