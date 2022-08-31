@@ -374,6 +374,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String message, String data) {
                 Log.d(TAG, message + data);
+                clearInfo();
+                finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
 
             @Override
@@ -381,16 +384,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        clearInfo();
-        finish();
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
 
     public void clearInfo() {
-        String access_token = ApplicationClass.sharedPreferences.getString("accessToken", "");
         editor.clear();
-        editor.putString("accessToken", access_token);
         editor.apply();
         clearMedicine();
     }
