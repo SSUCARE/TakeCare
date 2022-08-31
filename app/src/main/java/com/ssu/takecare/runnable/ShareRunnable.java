@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ShareRunnable implements Runnable {
 
-    private final String TAG="ShareRunnable_Debug";
+    private final String TAG = "ShareRunnable";
     StringBuilder stringBuilder;
     Handler handler;
 

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     int r_systolic = 0; int r_diastolic = 0; int r_weight = 0;
     List<Integer> r_sugarLevels = new ArrayList<>();
 
-    private final String TAG="MainActivty,Jdebug";
+    private final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

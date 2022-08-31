@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView textViewFind;
     private CheckBox checkBox;
 
-    private final String TAG="LoginActivty,Jdebug";
+    private final String TAG = "LoginActivity";
 
 
     @Override

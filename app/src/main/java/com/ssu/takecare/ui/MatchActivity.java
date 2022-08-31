@@ -49,7 +49,6 @@ public class MatchActivity extends AppCompatActivity {
                     for (int i = 0; i < size; i++) {
                         if (data.getData().get(i).getStatus().equals("PENDING")) {
                             mArrData.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());
-                           // Log.d(TAG,"id:"+data.getData().get(i).getId());
                         }
                         else if (data.getData().get(i).getStatus().equals("ACCEPTED")) {
                             mArrData2.put(data.getData().get(i).getUserName(), data.getData().get(i).getId());

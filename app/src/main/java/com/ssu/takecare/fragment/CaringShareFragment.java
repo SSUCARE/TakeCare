@@ -28,13 +28,12 @@ public class CaringShareFragment extends Fragment {
     Intent intent;
     List<String> Match_UserName_list;
     List<Integer> Match_UserId_list;
-    HashMap<Integer, String> ID_NAME = new HashMap<Integer, String>();
+    HashMap<Integer, String> ID_NAME = new HashMap<>();
 
     TextView tv_name;
     ImageButton btn1, btn2, btn3, btn4;
 
     RecyclerView listview;
-    String TAG="CaringShareFragment,Jdebug";
 
     public CaringShareFragment(List<String> UserName, List<Integer> UserId){
         this.Match_UserName_list = UserName;
@@ -46,10 +45,10 @@ public class CaringShareFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //사용자의 리스트 만들기
         View view=inflater.inflate(R.layout.fragment_share_caring,container, false);
-        btn1=(ImageButton) view.findViewById(R.id.share_my_graph);
-        btn2=(ImageButton) view.findViewById(R.id.share_my_calendar);
-        btn3=(ImageButton) view.findViewById(R.id.share_my_presciption);
-        btn4=(ImageButton) view.findViewById(R.id.share_my_report);
+        btn1= view.findViewById(R.id.share_my_graph);
+        btn2= view.findViewById(R.id.share_my_calendar);
+        btn3= view.findViewById(R.id.share_my_presciption);
+        btn4= view.findViewById(R.id.share_my_report);
         tv_name = view.findViewById(R.id.share_my_name);
 
         String my_name = ApplicationClass.sharedPreferences.getString("name", "");

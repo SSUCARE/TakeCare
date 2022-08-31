@@ -15,7 +15,6 @@ import com.ssu.takecare.ui.CalendarActivity;
 import com.ssu.takecare.ui.GraphActivity;
 import com.ssu.takecare.ui.PrescriptionActivity;
 import com.ssu.takecare.ui.ReportActivity;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class ShareGridAdapter extends RecyclerView.Adapter<ShareGridAdapter.View
     Context mContext;
     List<String> Match_UserName_list;
     List<Integer> Match_UserId_list;
-    HashMap<Integer, String> ID_NAME = new HashMap<Integer, String>();
+    HashMap<Integer, String> ID_NAME = new HashMap<>();
     Intent intent;
-    String TAG="ShareGridAdapter,Jdebug";
+    private final String TAG = "ShareGridAdapter";
 
     public ShareGridAdapter(List<String> name_list, List<Integer> id_list, Context context) {
         this.Match_UserName_list = name_list;
