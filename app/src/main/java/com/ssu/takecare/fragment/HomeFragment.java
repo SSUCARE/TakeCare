@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         today_medicine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog = new MedicineDialog(view.getContext());
+                dialog = new MedicineDialog(view.getContext(), getActivity());
                 dialog.showDialog();
             }
         });
@@ -149,11 +149,13 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
         if (numMedicine != 0 && Arrays.equals(check, check_temp))
             today_medicine.setImageResource(R.drawable.medicine_complete);
+        else
+            today_medicine.setImageResource(R.drawable.medicine);
     }
 
     public void setValue(View view) {
         String json = ApplicationClass.sharedPreferences.getString("sugarLevels", "");
-        ArrayList<String> s_sugarLevels = new ArrayList<String>();
+        ArrayList<String> s_sugarLevels = new ArrayList<>();
         if (json != null) {
             try {
                 JSONArray a = new JSONArray(json);

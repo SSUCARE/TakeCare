@@ -35,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -372,25 +373,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearInfo() {
-        editor.putInt("keep_sign_in_flag", 0); // 자동 로그인과 관련된 flag
-        editor.putString("email_login", "");
-        editor.putString("password_login", "");
-        editor.putString("accessToken", "");
-        editor.putInt("userId", 0);
-        editor.putString("name", "");
-        editor.putString("gender", "");
-        editor.putInt("age", 0);
-        editor.putInt("height", 0);
-        editor.putString("role", "");
-        editor.putInt("mapping_count", 0);
-        editor.putString("systolic", "");
-        editor.putString("diastolic", "");
-        editor.putString("sugarLevels", "");
-        editor.putString("weight", "");
-        editor.putString("alarm_switch", "");
-        editor.putInt("record_date", 0);
-        editor.putInt("today_steps", 0);
+        editor.clear();
         editor.apply();
+        clearMedicine();
+    }
+
+    public void clearMedicine() {
+        int numMedicine;
+        if (getSharedPreferences("MedicineInfo1", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            numMedicine = 0;
+        else if (getSharedPreferences("MedicineInfo2", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            numMedicine = 1;
+        else if (getSharedPreferences("MedicineInfo3", MODE_PRIVATE).getString("medicine_name", "NONE").equals("NONE"))
+            numMedicine = 2;
+        else
+            numMedicine = 3;
+
+        for (int i = 0; i < numMedicine; i++) {
+            SharedPreferences pref = getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.apply();
+        }
     }
 
     public void click_event(View view) {
