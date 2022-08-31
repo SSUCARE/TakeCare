@@ -53,6 +53,8 @@ public class ReportActivity extends AppCompatActivity {
     int userId;
     int reportId;
 
+    Boolean REPORT_FLAG = false;
+
     CommentAdapter commentAdapter;
 
     TextView user_name, low_pressure, high_pressure, before_sugar, after_sugar, weight;
@@ -79,9 +81,15 @@ public class ReportActivity extends AppCompatActivity {
         after_sugar = findViewById(R.id.after_sugar_report);
         weight = findViewById(R.id.weight_report);
 
-        buttonSend = (Button) findViewById(R.id.btn_send);
-        listView = (ListView) findViewById(R.id.list_view);
-        comment = (EditText) findViewById(R.id.chatText);
+        listView = findViewById(R.id.list_view);
+        comment = findViewById(R.id.chatText);
+        buttonSend = findViewById(R.id.btn_send);
+
+        comment.setEnabled(false);
+        buttonSend.setEnabled(false);
+
+        if (!REPORT_FLAG)
+            Toast.makeText(getApplicationContext(), "리포트가 작성된 후에 댓글을 작성할 수 있습니다", Toast.LENGTH_SHORT).show();
 
         commentAdapter = new CommentAdapter(getApplicationContext(), R.layout.activity_comment);
         listView.setAdapter(commentAdapter);
@@ -115,6 +123,10 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String message, List<DataGetReport> data) {
                 if (data.size() != 0) {
+                    REPORT_FLAG = true;
+                    comment.setEnabled(true);
+                    buttonSend.setEnabled(true);
+
                     String str_high_pressure, str_low_pressure, str_before_sugar, str_after_sugar, str_weight;
 
                     Log.d("ReportActivity", "data - CreatedAt : " + data.get(0).getCreatedAt());
@@ -220,7 +232,7 @@ public class ReportActivity extends AppCompatActivity {
         // send 버튼을 누르면 메세지가 전송된다.
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View view) {
                 sendComment();
             }
         });

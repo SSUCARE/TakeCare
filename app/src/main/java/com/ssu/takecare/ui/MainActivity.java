@@ -2,9 +2,7 @@ package com.ssu.takecare.ui;
 
 import android.Manifest;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.assist.alarm.AlarmReceiver;
@@ -61,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
     private AlarmManager alarmManager;
     private GregorianCalendar mCalender;
-    private NotificationManager notificationManager;
-    private NotificationCompat.Builder builder;
 
     Date currentTime = Calendar.getInstance().getTime();
     String date_year = new SimpleDateFormat("yyyy", Locale.getDefault()).format((currentTime));
@@ -99,10 +94,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mCalender = new GregorianCalendar();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         }
 
         setAlarm();
