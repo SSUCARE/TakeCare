@@ -19,8 +19,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     NotificationCompat.Builder builder;
 
     // 오레오 이상은 반드시 채널을 설정해줘야 Notification이 작동함
-    private static String CHANNEL_ID = "my_channel";
-    private static String CHANNEL_NAME = "MyChannel";
+    private static String CHANNEL_ID = "medicine_channel";
+    private static String CHANNEL_NAME = "복용 관리";
 
     @Override
     public void onReceive(Context context, Intent intent) {

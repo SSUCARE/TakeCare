@@ -54,7 +54,7 @@ public class pedometerService extends Service implements SensorEventListener {
 
         // 오래오 윗버젼일 때는 아래와 같이 채널을 만들어 Notification과 연결해야 한다.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("channel", "play!!",
+            NotificationChannel channel = new NotificationChannel("pedometer_channel", "만보기",
                     NotificationManager.IMPORTANCE_DEFAULT);
 
             // Notification과 채널 연걸
@@ -63,7 +63,7 @@ public class pedometerService extends Service implements SensorEventListener {
 
             // Notification 세팅
             notification
-                    = new NotificationCompat.Builder(getApplicationContext(), "channel")
+                    = new NotificationCompat.Builder(getApplicationContext(), "pedometer_channel")
                     .setSmallIcon(R.drawable.pedometer_icon)
                     .setContentTitle(pedometer_count+"걸음")
                     .setContentIntent(pendingIntent)
@@ -108,7 +108,7 @@ public class pedometerService extends Service implements SensorEventListener {
 
             if (sensorEvent.values[0] != sensor_value) {
                 pedometer_count+=2;
-                Log.d(TAG, "핸들러작동중");
+                Log.d(TAG, "핸들러 작동중");
             }
         }
     }

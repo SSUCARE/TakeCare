@@ -1,7 +1,5 @@
 package com.ssu.takecare.ui;
 
-import static com.ssu.takecare.ApplicationClass.sharedPreferences;
-
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         }else{  //하루가 지났기 때문에 만보기 카운트 초기화하고, 백그라운드 서비스 종료 후 다시 시작하기.
             Log.d(TAG,"2");
             editor.putInt("pedometer_record_date", Integer.parseInt(date_day)).apply();
-            sharedPreferences.edit().putInt("pedometer_count",0).apply();
+            ApplicationClass.sharedPreferences.edit().putInt("pedometer_count",0).apply();
             stopService(serviceIntent);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 startForegroundService(serviceIntent);
