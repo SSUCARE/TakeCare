@@ -144,6 +144,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         });
 
+                        if(checkBox.isChecked())
+                            editor.putInt("keep_sign_in_flag",1);
+                        else
+                            editor.putInt("keep_sign_in_flag",0);
+
                         // 여기서 해당 이메일에 대한 정보가 있는지 확인하고 정보가 있으면 저장한 뒤 MainActivity로 감
                         ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
                             @Override
@@ -168,13 +173,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     else
                                         editor.putString("role", "피보호자");
 
-                                    if(checkBox.isChecked())
-                                        editor.putInt("keep_sign_in_flag",1);
-                                    else
-                                        editor.putInt("keep_sign_in_flag",0);
-
                                     editor.apply();
-                                    Log.d(TAG,"keep_sign_in_flag:"+ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
+
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 }

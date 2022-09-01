@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_normal"
                     android:gravity="center"
-                    android:hint="2~5자로 입력하세요"
+                    android:hint="2~4자로 입력하세요"
                     android:inputType="text" />
             </TableRow>
 

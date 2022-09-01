@@ -161,6 +161,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             AlertDialog dialog = dialogBuilder.create();
+
             if (name_str.equals("") || age_str.equals("") || height_str.equals("")) {
                 dialogBuilder.setTitle("알림");
                 dialogBuilder.setMessage("빈 칸을 전부 채워주세요.");
@@ -169,60 +170,67 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 dialog.dismiss();
             }
             else {
-                int age_int = Integer.parseInt(age_str);
-                int height_int = Integer.parseInt(height_str);
+                if (name_str.length() < 5) {
+                    dialogBuilder.setTitle("알림");
+                    dialogBuilder.setMessage("닉네임은 2~4자여야 합니다");
+                    dialogBuilder.setPositiveButton("확인", null);
+                    dialogBuilder.show();
+                    dialog.dismiss();
+                } else {
+                    int age_int = Integer.parseInt(age_str);
+                    int height_int = Integer.parseInt(height_str);
 
-                ApplicationClass.retrofit_manager.info(name_str, gender_register, age_int, height_int, role_register, new RetrofitCallback() {
-                    @Override
-                    public void onError(Throwable t) {
-                    }
+                    ApplicationClass.retrofit_manager.info(name_str, gender_register, age_int, height_int, role_register, new RetrofitCallback() {
+                        @Override
+                        public void onError(Throwable t) {
+                        }
 
-                    @Override
-                    public void onSuccess(String message, String token) {
-                        ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
-                            @Override
-                            public void onError(Throwable t) {
-                            }
-
-                            @Override
-                            public void onSuccess(String message, DataResponseGetUser data) {
-                                editor.putInt("userId", data.getId());
-                                editor.putString("name", data.getName());
-                                editor.putInt("age", data.getAge());
-                                editor.putInt("height", data.getHeight());
-
-                                if (data.getGender().equals("MALE"))
-                                    editor.putString("gender", "남성");
-                                else
-                                    editor.putString("gender", "여성");
-
-                                if (data.getRole().equals("ROLE_CARER"))
-                                    editor.putString("role", "보호자");
-                                else
-                                    editor.putString("role", "피보호자");
-
-                                editor.apply();
-
-                                if (ExistingUser_flag == 2) {
-                                    finish();
-                                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        @Override
+                        public void onSuccess(String message, String token) {
+                            ApplicationClass.retrofit_manager.infoCheck(new RetrofitUserInfoCallback() {
+                                @Override
+                                public void onError(Throwable t) {
                                 }
-                                else {
-                                    finish();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                                @Override
+                                public void onSuccess(String message, DataResponseGetUser data) {
+                                    editor.putInt("userId", data.getId());
+                                    editor.putString("name", data.getName());
+                                    editor.putInt("age", data.getAge());
+                                    editor.putInt("height", data.getHeight());
+
+                                    if (data.getGender().equals("MALE"))
+                                        editor.putString("gender", "남성");
+                                    else
+                                        editor.putString("gender", "여성");
+
+                                    if (data.getRole().equals("ROLE_CARER"))
+                                        editor.putString("role", "보호자");
+                                    else
+                                        editor.putString("role", "피보호자");
+
+                                    editor.apply();
+
+                                    if (ExistingUser_flag == 2) {
+                                        finish();
+                                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                                    } else {
+                                        finish();
+                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(int error_code) {
-                            }
-                        });
-                    }
+                                @Override
+                                public void onFailure(int error_code) {
+                                }
+                            });
+                        }
 
-                    @Override
-                    public void onFailure(int error_code) {
-                    }
-                });
+                        @Override
+                        public void onFailure(int error_code) {
+                        }
+                    });
+                }
             }
         }
     }

@@ -161,8 +161,9 @@ public class PrescriptionActivity extends AppCompatActivity {
                 }
             }
         };
-        Runnable_gm=new GetReport_Month_Runnable(Handler_Report,getApplicationContext(),userId,now_year,last_month+1);
-        Thread st=new Thread(Runnable_gm);
+
+        Runnable_gm = new GetReport_Month_Runnable(Handler_Report, getApplicationContext(), userId, now_year, last_month);
+        Thread st = new Thread(Runnable_gm);
         st.start();
 
         Circle_Dialog = new ProgressDialog(this);
