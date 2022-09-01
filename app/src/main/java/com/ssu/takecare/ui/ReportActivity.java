@@ -88,9 +88,6 @@ public class ReportActivity extends AppCompatActivity {
         comment.setEnabled(false);
         buttonSend.setEnabled(false);
 
-        if (!REPORT_FLAG)
-            Toast.makeText(getApplicationContext(), "리포트가 작성된 후에 댓글을 작성할 수 있습니다", Toast.LENGTH_SHORT).show();
-
         commentAdapter = new CommentAdapter(getApplicationContext(), R.layout.activity_comment);
         listView.setAdapter(commentAdapter);
 
@@ -208,8 +205,10 @@ public class ReportActivity extends AppCompatActivity {
                         }
                     });
                 }
-                else
+                else {
                     Log.d("ReportActivity", "해당 날짜로 생성된 리포트가 없습니다.");
+                    Toast.makeText(getApplicationContext(), "리포트가 작성된 후에 댓글을 작성할 수 있습니다", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
