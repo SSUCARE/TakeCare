@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private String ROLE_CARED_OR_ROLE_CARER;
 
     private AlarmManager alarmManager;
-    private GregorianCalendar mCalender;
+    private GregorianCalendar mCalendar;
 
     Date currentTime = Calendar.getInstance().getTime();
     String date_year = new SimpleDateFormat("yyyy", Locale.getDefault()).format((currentTime));
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        mCalender = new GregorianCalendar();
+        mCalendar = new GregorianCalendar();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         }
@@ -487,6 +487,8 @@ public class MainActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
                 String medTime = getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getString("medicine_time" + (j + 1), "NONE");
                 String time_str = medTime.substring(medTime.indexOf(" ") + 1);
+                if (medTime.substring(0, medTime.indexOf(" ")).equals("오후"))
+                    time_str = Integer.parseInt(time_str.substring(0, time_str.indexOf(":"))) + 12 + time_str.substring(time_str.indexOf(":"));
                 String alarm_time = sdf.format(date) + time_str + ":00";
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -497,8 +499,11 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                mCalender.setTime(datetime);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                if (datetime != null) {
+                    mCalendar.setTime(datetime);
+                }
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
             }
         }
     }

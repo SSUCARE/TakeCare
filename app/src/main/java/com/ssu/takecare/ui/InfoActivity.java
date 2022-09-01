@@ -170,7 +170,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 dialog.dismiss();
             }
             else {
-                if (name_str.length() < 5) {
+                if (name_str.length() > 4) {
                     dialogBuilder.setTitle("알림");
                     dialogBuilder.setMessage("닉네임은 2~4자여야 합니다");
                     dialogBuilder.setPositiveButton("확인", null);
