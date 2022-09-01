@@ -1,4 +1,4 @@
-package com.ssu.takecare.assist.alarm;
+package com.ssu.takecare.assist.service;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

@@ -31,7 +31,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12"
+        android:layout_weight="11.85"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -52,11 +52,9 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
-                app:layout_constraintVertical_bias="0.01"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/tv_profile"
@@ -65,8 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_account"
                 app:layout_constraintBottom_toTopOf="@id/tv_match"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
+                android:layout_marginStart="5dp"
                 android:text="내 정보"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
@@ -78,9 +75,8 @@
                 android:src="@drawable/next"
                 app:layout_constraintTop_toTopOf="@id/tv_profile"
                 app:layout_constraintBottom_toBottomOf="@id/tv_profile"
-                app:layout_constraintLeft_toRightOf="@id/tv_profile"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.99" />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:id="@+id/tv_match"
@@ -89,8 +85,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_profile"
                 app:layout_constraintBottom_toTopOf="@id/tv_password"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
+                android:layout_marginStart="5dp"
                 android:text="상대방 설정"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
@@ -102,9 +97,8 @@
                 android:src="@drawable/next"
                 app:layout_constraintTop_toTopOf="@id/tv_match"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match"
-                app:layout_constraintLeft_toRightOf="@id/tv_match"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.99" />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:id="@+id/tv_password"
@@ -113,8 +107,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_match"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
+                android:layout_marginStart="5dp"
                 android:text="비밀번호 변경"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
@@ -126,9 +119,8 @@
                 android:src="@drawable/next"
                 app:layout_constraintTop_toTopOf="@id/tv_password"
                 app:layout_constraintBottom_toBottomOf="@id/tv_password"
-                app:layout_constraintLeft_toRightOf="@id/tv_password"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.99" />
+                android:layout_marginEnd="5dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -147,11 +139,9 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
-                app:layout_constraintVertical_bias="0.01"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/tv_alarm_on_off"
@@ -160,8 +150,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_alarm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
+                android:layout_marginStart="5dp"
                 android:text="알림 ON / OFF"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
@@ -174,17 +163,16 @@
                 app:track="@drawable/switch_track"
                 app:layout_constraintTop_toTopOf="@id/tv_alarm_on_off"
                 app:layout_constraintBottom_toBottomOf="@id/tv_alarm_on_off"
-                app:layout_constraintLeft_toRightOf="@id/tv_alarm_on_off"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.99" />
+                android:layout_marginEnd="5dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_etc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:layout_marginBottom="10dp" >
+            android:layout_weight="4"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/tv_etc"
@@ -195,21 +183,43 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/font_normal"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_etc"
+                app:layout_constraintBottom_toTopOf="@id/tv_share"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
+                android:text="앱 버전"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"/>
+
+            <TextView
+                android:id="@+id/tv_version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next"
+                android:text="0.0"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                app:layout_constraintTop_toTopOf="@id/tv_version"
+                app:layout_constraintBottom_toBottomOf="@id/tv_version"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
-                app:layout_constraintVertical_bias="0.01"/>
+                android:layout_marginEnd="5dp"/>
 
             <TextView
                 android:id="@+id/tv_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_etc"
+                app:layout_constraintTop_toBottomOf="@id/tv_version"
                 app:layout_constraintBottom_toTopOf="@id/tv_logout"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
+                android:layout_marginStart="5dp"
                 android:text="공유하기"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
@@ -221,9 +231,8 @@
                 android:src="@drawable/next"
                 app:layout_constraintTop_toTopOf="@id/tv_share"
                 app:layout_constraintBottom_toBottomOf="@id/tv_share"
-                app:layout_constraintLeft_toRightOf="@id/tv_share"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.99" />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:id="@+id/tv_logout"
@@ -232,8 +241,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_share"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.01"
+                android:layout_marginStart="5dp"
                 android:text="로그아웃"
                 android:textSize="20sp"
                 android:fontFamily="@font/font_normal" />
@@ -245,9 +253,8 @@
                 android:src="@drawable/next"
                 app:layout_constraintTop_toTopOf="@id/tv_logout"
                 app:layout_constraintBottom_toBottomOf="@id/tv_logout"
-                app:layout_constraintLeft_toRightOf="@id/tv_logout"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.99"
+                android:layout_marginEnd="5dp"
                 android:onClick="logout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

@@ -67,7 +67,7 @@ public class pedometerService extends Service implements SensorEventListener {
             // Notification 세팅
             notification
                     = new NotificationCompat.Builder(getApplicationContext(), "channel")
-                    .setSmallIcon(R.drawable.app_icon)
+                    .setSmallIcon(R.drawable.pedometer_icon)
                     .setContentTitle(pedometer_count+"걸음")
                     .setContentIntent(pendingIntent)
                     .setContentText("목표 걸음 수는 "+Integer.toString(ApplicationClass.sharedPreferences.getInt("goal_steps", 0)).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",")+"입니다.");

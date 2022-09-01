@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+
     <!--포그라운드 서비스 권한 설정-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
@@ -36,13 +37,18 @@
         </provider>
 
         <receiver
-            android:name=".assist.alarm.AlarmReceiver"
+            android:name=".assist.service.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <!-- 서비스 등록 -->
+        <service
+            android:name=".assist.service.pedometerService">
+        </service>
 
         <activity android:name=".ui.PasswordActivity" />
         <activity android:name=".ui.MatchActivity" />
@@ -71,8 +77,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 서비스 등록 -->
-        <service android:name=".assist.service.pedometerService"></service>
     </application>
-
 </manifest>

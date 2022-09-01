@@ -15,7 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.ssu.takecare.R;
-import com.ssu.takecare.assist.alarm.AlarmReceiver;
+import com.ssu.takecare.assist.service.AlarmReceiver;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;

@@ -14,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import com.ssu.takecare.ApplicationClass;
+import com.ssu.takecare.BuildConfig;
 import com.ssu.takecare.R;
 import com.ssu.takecare.retrofit.RetrofitCallback;
 import com.ssu.takecare.runnable.ShareRunnable;
@@ -102,6 +104,9 @@ public class MyPageFragment extends Fragment {
                 }
             }
         });
+
+        TextView version_setting = view.findViewById(R.id.tv_version_name);
+        version_setting.setText(BuildConfig.VERSION_NAME);
 
         ImageView profile_setting = view.findViewById(R.id.btn_profile);
         ImageView match_setting = view.findViewById(R.id.btn_match);

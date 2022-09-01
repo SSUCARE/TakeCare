@@ -19,7 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.ssu.takecare.ApplicationClass;
-import com.ssu.takecare.assist.alarm.AlarmReceiver;
+import com.ssu.takecare.assist.service.AlarmReceiver;
 import com.ssu.takecare.dialog.PressureDialog;
 import com.ssu.takecare.dialog.SugarDialog;
 import com.ssu.takecare.dialog.WeightDialog;
