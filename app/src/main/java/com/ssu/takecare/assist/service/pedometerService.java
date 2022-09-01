@@ -1,6 +1,5 @@
 package com.ssu.takecare.assist.service;
 
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,10 +12,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.util.Log;
-
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-
 import com.ssu.takecare.ApplicationClass;
 import com.ssu.takecare.R;
 import static com.ssu.takecare.ApplicationClass.sharedPreferences;
@@ -87,7 +84,7 @@ public class pedometerService extends Service implements SensorEventListener {
                             notification.setContentTitle(Integer.toString(pedometer_count).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",")+" 걸음");
                             mNotificationManager.notify(1, notification.build());
                             sharedPreferences.edit().putInt("pedometer_count",pedometer_count).apply();
-                            Log.d(TAG, "서비스실행중");
+                            Log.d(TAG, "서비스 실행중");
                         }
                     } catch (Exception e) {
 

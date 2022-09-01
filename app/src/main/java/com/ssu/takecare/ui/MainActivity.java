@@ -5,6 +5,7 @@ import static com.ssu.takecare.ApplicationClass.sharedPreferences;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -102,23 +103,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setAlarm();
+        Start_pedometer();
 
         init_getReport();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, new HomeFragment(REPORT_FLAG)).commit();
-        int keep_sign_in_flag=ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0);
-        if(keep_sign_in_flag==1){
-            Start_pedometer();
-        }
     }
 
     void Start_pedometer(){
-        //pedometer_record_date는 하루가 지나서 만보기를 초기화해야하는지 확인하기 위한 역할
+        // pedometer_record_date는 하루가 지나서 만보기를 초기화해야하는지 확인하기 위한 역할
         int pedometer_record_date = ApplicationClass.sharedPreferences.getInt("pedometer_record_date", 0);
         if (pedometer_record_date == 0) {
-            editor.putInt("record_date", Integer.parseInt(date_day)).apply();
+            editor.putInt("pedometer_record_date", Integer.parseInt(date_day)).apply();
         }
-        //ServiceIntent생성
+
+        //ServiceIntent 생성
         serviceIntent = new Intent(MainActivity.this,com.ssu.takecare.assist.service.pedometerService.class);
 
         //하루가 지나 만보기를 초기화해야하는지 아니면 그대로 두어야하는지 확인
@@ -136,8 +135,16 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 startForegroundService(serviceIntent);
             else startService(serviceIntent);
+
+            // 복용 중인 약 check 초기화
+            for (int i = 0; i < getMedicineCount(); i++) {
+                SharedPreferences pref_c = getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE);
+                SharedPreferences.Editor editor_c = pref_c.edit();
+                editor_c.putString("medicine_check", "NO");
+                editor_c.apply();
+            }
         }
-        Log.d(TAG,"걸음 수:"+ApplicationClass.sharedPreferences.getInt("pedometer_count", 0));
+        Log.d(TAG,"걸음 수:" + ApplicationClass.sharedPreferences.getInt("pedometer_count", 0));
 
     }
     @Override
@@ -578,20 +585,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void cancelAlarm(Context context, int alarmId) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+        alarmManager.cancel(pendingIntent);
+    }
+
     // 자동 로그인 설정을 안했을 경우.
     @Override
     protected void onDestroy() {
         super.onDestroy();
         int keep_sign_in_flag=ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0);
         Log.d(TAG,"keep_sign_in_flag : " + ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
-        if (keep_sign_in_flag == 0) {
-            clearInfo();
-            try{
-                stopService(serviceIntent);
-            }catch (Exception e){
 
+        if (keep_sign_in_flag == 0) {
+            try {
+                stopService(serviceIntent);
+
+                for (int i = 0; i < getMedicineCount(); i++) {
+                    SharedPreferences pref = getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE);
+                    if (pref.getString("medicine_alarm", "NONE").equals("ON")) {
+                        int num;
+                        if (getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getInt("medicine_alarm_id_1", 0) != 0)
+                            num = 0;
+                        else if (getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getInt("medicine_alarm_id_2", 0) != 0)
+                            num = 1;
+                        else if (getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE).getInt("medicine_alarm_id_3", 0) != 0)
+                            num = 2;
+                        else
+                            num = 3;
+
+                        for (int j = 0; j < num; j++)
+                            cancelAlarm(this, pref.getInt("medicine_alarm_id_" + (i + 1), 0));
+                    }
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
             }
 
+            clearInfo();
         }
     }
 }

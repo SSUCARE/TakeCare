@@ -32,12 +32,11 @@ import java.util.Date;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment implements SensorEventListener {
-    String TAG="HomeFragment,Jdebug";
+
     SharedPreferences.Editor editor = ApplicationClass.sharedPreferences.edit();
 
     Date currentTime = Calendar.getInstance().getTime();
     String date = new SimpleDateFormat("M월 d일", Locale.getDefault()).format((currentTime));
-    String step_date = new SimpleDateFormat("Md", Locale.getDefault()).format((currentTime));
 
     Boolean REPORT_FLAG;
 
@@ -215,33 +214,6 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     @Override
     public void onResume() {
         super.onResume();
-
-        int today_steps = ApplicationClass.sharedPreferences.getInt("today_steps", 0);
-        if (today_steps != 0) {
-            int record_date = ApplicationClass.sharedPreferences.getInt("record_date", 0);
-            if (record_date == 0) {
-                editor.putInt("record_date", Integer.parseInt(step_date));
-                editor.apply();
-            }
-
-            // 날짜가 바뀌었다면 0으로 초기화
-            if (Integer.parseInt(step_date) - record_date == 0)
-                todaySteps = today_steps;
-            else {
-                todaySteps = 0;
-                editor.putInt("record_date", Integer.parseInt(step_date));
-                editor.putInt("today_steps", 0);
-                editor.apply();
-
-                // 복용 중인 약 check 초기화
-                for (int i = 0; i < numMedicine; i++) {
-                    SharedPreferences pref_c = getActivity().getSharedPreferences("MedicineInfo" + (i + 1), MODE_PRIVATE);
-                    SharedPreferences.Editor editor_c = pref_c.edit();
-                    editor_c.putString("medicine_check", "NO");
-                    editor_c.apply();
-                }
-            }
-        }
 
         int goal_steps = ApplicationClass.sharedPreferences.getInt("goal_steps", 0);
         int pedometer_count=ApplicationClass.sharedPreferences.getInt("pedometer_count", 0);
