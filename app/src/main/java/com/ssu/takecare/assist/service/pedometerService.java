@@ -24,7 +24,7 @@ public class pedometerService extends Service implements SensorEventListener {
     NotificationCompat.Builder notification;
     SensorManager sensorManager;
     Sensor stepCountSensor;
-
+    Thread t1;
     // 현재 걸음 수
     int pedometer_count = 0;
     int sensor_flag = 0;
@@ -39,11 +39,7 @@ public class pedometerService extends Service implements SensorEventListener {
     @Override
     public void onCreate() {
         pedometer_count=ApplicationClass.sharedPreferences.getInt("pedometer_count", 0);
-        super.onCreate();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG,"onCreate");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         stepCountSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         sensorManager.registerListener(this, stepCountSensor, SensorManager.SENSOR_DELAY_FASTEST);
@@ -75,11 +71,11 @@ public class pedometerService extends Service implements SensorEventListener {
             startForeground(1, notification.build());
 
 
-            Thread t1 = new Thread() {
+            t1 = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        while (true) {//만보기 기록은 2분마다 한번씩 확인하기로 바꾸기.
+                        while (!Thread.currentThread().isInterrupted()) {//만보기 기록은 2분마다 한번씩 확인하기로 바꾸기.
                             Thread.sleep(10000);
                             notification.setContentTitle(Integer.toString(pedometer_count).replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",")+" 걸음");
                             mNotificationManager.notify(1, notification.build());
@@ -94,7 +90,21 @@ public class pedometerService extends Service implements SensorEventListener {
             t1.start();
         }
 
+        super.onCreate();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG,"startCommand");
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        if(t1!=null &&t1.isAlive()){
+            t1.interrupt();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -117,4 +127,5 @@ public class pedometerService extends Service implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
 }

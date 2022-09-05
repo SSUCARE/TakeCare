@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         int pedometer_record_date = ApplicationClass.sharedPreferences.getInt("pedometer_record_date", 0);
         if (pedometer_record_date == 0) {
             editor.putInt("pedometer_record_date", Integer.parseInt(date_day)).apply();
+            pedometer_record_date=Integer.parseInt(date_day);
         }
 
         //ServiceIntent 생성
@@ -120,19 +121,11 @@ public class MainActivity extends AppCompatActivity {
 
         //하루가 지나 만보기를 초기화해야하는지 아니면 그대로 두어야하는지 확인
         if(pedometer_record_date==Integer.parseInt(date_day)){ //아직 하루가 지나지 않음(만보기 초기화 x)
-            Log.d(TAG,"1");
             Log.d(TAG,"카운트값:"+ApplicationClass.sharedPreferences.getInt("pedometer_count", 0));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                startForegroundService(serviceIntent);
-            else startService(serviceIntent);
         }else{  //하루가 지났기 때문에 만보기 카운트 초기화하고, 백그라운드 서비스 종료 후 다시 시작하기.
-            Log.d(TAG,"2");
             editor.putInt("pedometer_record_date", Integer.parseInt(date_day)).apply();
             ApplicationClass.sharedPreferences.edit().putInt("pedometer_count",0).apply();
             stopService(serviceIntent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                startForegroundService(serviceIntent);
-            else startService(serviceIntent);
 
             // 복용 중인 약 check 초기화
             for (int i = 0; i < getMedicineCount(); i++) {
@@ -142,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
                 editor_c.apply();
             }
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            startForegroundService(serviceIntent);
+        else startService(serviceIntent);
         Log.d(TAG,"걸음 수:" + ApplicationClass.sharedPreferences.getInt("pedometer_count", 0));
 
     }
@@ -608,7 +604,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG,"keep_sign_in_flag : " + ApplicationClass.sharedPreferences.getInt("keep_sign_in_flag",0));
 
         if (keep_sign_in_flag == 0) {
-            try {
+            //try {
                 stopService(serviceIntent);
 
                 for (int i = 0; i < getMedicineCount(); i++) {
@@ -628,10 +624,10 @@ public class MainActivity extends AppCompatActivity {
                             cancelAlarm(this, pref.getInt("medicine_alarm_id_" + (i + 1), 0));
                     }
                 }
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
+           // }
+           // catch (Exception e){
+            //    e.printStackTrace();
+           // }
 
             clearInfo();
         }
