@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/tab_color"
-    tools:context=".Dialog.WeightDialog">
+    tools:context=".dialog.WeightDialog">
 
     <TextView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:textColor="@color/black"
             android:fontFamily="@font/font_normal"
             android:padding="5dp"
-            android:layout_marginRight="50dp"/>
+            android:layout_marginEnd="50dp"/>
 
         <EditText
             android:id="@+id/et_weight"

@@ -1,45 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ssu.takecare">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+
+    <!--포그라운드 서비스 권한 설정-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name=".ApplicationClass"
+        android:name="com.ssu.takecare.ApplicationClass"
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TakeCare"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}"
+            android:authorities="com.ssu.takecare.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
 
-        <activity android:name=".UI.ShareInfoImageActivity"/>
-        <activity android:name=".UI.MatchActivity" />
-        <activity android:name=".UI.CalendarActivity" />
-        <activity android:name=".UI.ReportActivity" />
-        <activity android:name=".UI.PrescriptionActivity" />
-        <activity android:name=".UI.ProfileActivity" />
-        <activity android:name=".UI.ShareGraph" />
-        <activity android:name=".UI.InfoActivity" />
-        <activity android:name=".UI.LoginActivity" />
-        <activity android:name=".UI.FindActivity" />
-        <activity android:name=".UI.SignupActivity" />
-        <activity android:name=".UI.MainActivity" />
+        <receiver
+            android:name=".assist.service.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 서비스 등록 -->
+        <service
+            android:name=".assist.service.pedometerService">
+        </service>
+
+        <activity android:name=".ui.PasswordActivity" />
+        <activity android:name=".ui.MatchActivity" />
+        <activity android:name=".ui.GraphActivity" />
+        <activity android:name=".ui.CalendarActivity" />
+        <activity android:name=".ui.PrescriptionActivity" />
+        <activity android:name=".ui.ProfileActivity" />
+        <activity android:name=".ui.InfoActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.FindActivity" />
+        <activity android:name=".ui.SignupActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity
-            android:name=".UI.FirstActivity"
+            android:name=".ui.WelcomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.ReportActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.FirstActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,5 +78,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

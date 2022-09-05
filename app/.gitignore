@@ -68,10 +68,13 @@ obj/
 /out/
 
 # User-specific configurations
+.idea
 .idea/caches/
 .idea/libraries/
 .idea/shelf/
 .idea/workspace.xml
+.idea/deploymentTargetDropDown.xml
+.idea/render.experimental.xml
 .idea/tasks.xml
 .idea/.name
 .idea/compiler.xml

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/tab_color"
-    tools:context="com.ssu.takecare.UI.InfoActivity">
+    tools:context=".ui.InfoActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_normal"
                     android:gravity="center"
-                    android:hint="2~5자로 입력하세요"
+                    android:hint="2~4자로 입력하세요"
                     android:inputType="text" />
             </TableRow>
 
@@ -102,7 +102,7 @@
                 <TextView
                     android:id="@+id/tv_age"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/font_normal"
                     android:gravity="center"
                     android:padding="20dp"

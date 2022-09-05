@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     android:weightSum="10"
     android:orientation="vertical"
-    tools:context="com.ssu.takecare.UI.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"
-        android:background="@color/tab_color"
         android:id="@+id/home_fragment">
     </FrameLayout>
 

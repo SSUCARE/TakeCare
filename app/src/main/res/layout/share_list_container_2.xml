@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/layout_border5"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/share_list_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/share_my_check"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:includeFontPadding="false"
+            android:text="____"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal" />
+
+        <TextView
+            android:id="@+id/share_my_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/share_list_name"
+            android:text=" 님의 건강체크"
+            app:layout_constraintRight_toRightOf="parent"
+            android:includeFontPadding="false"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
+
+        <ImageButton
+            android:id="@+id/share_list_graph"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="10dp"
+            android:background="@drawable/layout_border1"
+            app:layout_constraintTop_toTopOf="@id/share_list_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/share_list_calendar"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            android:src="@drawable/share_graph"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/share_list_graph"
+            app:layout_constraintRight_toRightOf="@+id/share_list_graph"
+            app:layout_constraintTop_toBottomOf="@+id/share_list_graph"
+            android:padding="10dp"
+            android:text="그래프"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
+
+        <ImageButton
+            android:id="@+id/share_list_calendar"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="10dp"
+            android:background="@drawable/layout_border1"
+            app:layout_constraintTop_toTopOf="@+id/share_list_graph"
+            app:layout_constraintStart_toEndOf="@+id/share_list_graph"
+            app:layout_constraintEnd_toStartOf="@+id/share_list_prescription"
+            android:src="@drawable/share_calendar"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/share_list_calendar"
+            app:layout_constraintRight_toRightOf="@+id/share_list_calendar"
+            app:layout_constraintTop_toBottomOf="@+id/share_list_calendar"
+            android:padding="10dp"
+            android:text="캘린더"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
+
+        <ImageButton
+            android:id="@+id/share_list_prescription"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="10dp"
+            android:background="@drawable/layout_border1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/share_list_graph"
+            app:layout_constraintStart_toEndOf="@+id/share_list_calendar"
+            app:layout_constraintEnd_toStartOf="@+id/share_list_report"
+            android:src="@drawable/share_prescription"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/share_list_prescription"
+            app:layout_constraintRight_toRightOf="@+id/share_list_prescription"
+            app:layout_constraintTop_toBottomOf="@+id/share_list_prescription"
+            android:padding="10dp"
+            android:text="처방노트"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
+
+        <ImageButton
+            android:id="@+id/share_list_report"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="10dp"
+            android:background="@drawable/layout_border1"
+            app:layout_constraintTop_toTopOf="@+id/share_list_graph"
+            app:layout_constraintStart_toEndOf="@+id/share_list_prescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/share_report"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/share_list_report"
+            app:layout_constraintRight_toRightOf="@+id/share_list_report"
+            app:layout_constraintTop_toBottomOf="@+id/share_list_report"
+            android:padding="10dp"
+            android:text="건강리포트"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

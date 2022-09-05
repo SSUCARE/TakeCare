@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tab_color"
-    android:weightSum="12"
+    android:background="@color/white"
+    android:weightSum="14"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:background="@color/actionbar_color"
-        android:layout_weight="1">
+        android:layout_weight="1.15">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,298 +28,234 @@
             android:fontFamily="@font/font_merienda_bold"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3.5"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            android:src="@drawable/user_photo"
-            android:id="@+id/img_user"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/img_user"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/img_user"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.2"
-            app:layout_constraintHorizontal_bias="0.1"
-            android:text="_____"
-            android:textSize="20sp"
-            android:fontFamily="@font/font_normal"
-            android:id="@+id/user_name"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/user_name"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/img_user"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.2"
-            app:layout_constraintHorizontal_bias="0.02"
-            android:text=" 님"
-            android:textSize="20sp"
-            android:fontFamily="@font/font_normal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="@id/user_name"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/user_name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.4"
-            app:layout_constraintHorizontal_bias="0"
-            android:text="오늘도 행복한 하루 되세요~"
-            android:textSize="20sp"
-            android:fontFamily="@font/font_normal"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/bg_color"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="11.85"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:background="@color/tab_color">
+        android:padding="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_profile"
+            android:id="@+id/layout_account"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/layout_border1">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                android:src="@drawable/setting_profile"
-                android:id="@+id/img_myprofile"/>
+            android:layout_weight="4"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tv_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/img_myprofile"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                android:text="내 정보"
-                android:textSize="24sp"
+                android:text="계정"
+                android:textSize="22sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/font_normal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_account"
+                app:layout_constraintBottom_toTopOf="@id/tv_match"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
+                android:text="내 정보"
+                android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
 
             <ImageView
-                android:id="@+id/btn_my_profile"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:id="@+id/btn_profile"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_profile"
+                app:layout_constraintBottom_toBottomOf="@id/tv_profile"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_match"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/layout_border1">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                android:src="@drawable/setting_friend"
-                android:id="@+id/img_match"/>
+                android:layout_marginEnd="5dp" />
 
             <TextView
+                android:id="@+id/tv_match"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/img_match"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintTop_toBottomOf="@id/tv_profile"
+                app:layout_constraintBottom_toTopOf="@id/tv_password"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
                 android:text="상대방 설정"
-                android:textSize="24sp"
-                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
 
             <ImageView
                 android:id="@+id/btn_match"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_match"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginEnd="5dp" />
+
+            <TextView
+                android:id="@+id/tv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_match"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
+                android:text="비밀번호 변경"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"/>
+
+            <ImageView
+                android:id="@+id/btn_password"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/next"
+                app:layout_constraintTop_toTopOf="@id/tv_password"
+                app:layout_constraintBottom_toBottomOf="@id/tv_password"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginEnd="5dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_alarm"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/layout_border1">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                android:src="@drawable/setting_alarm"
-                android:id="@+id/img_alarm"/>
+            android:layout_weight="2"
+            android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/tv_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/img_alarm"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
                 android:text="알림 설정"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/font_normal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_alarm_on_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_alarm"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
+                android:text="알림 ON / OFF"
+                android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
 
-            <ImageView
-                android:id="@+id/btn_alarm"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/btn_alarm_on_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                app:track="@drawable/switch_track"
+                app:layout_constraintTop_toTopOf="@id/tv_alarm_on_off"
+                app:layout_constraintBottom_toBottomOf="@id/tv_alarm_on_off"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
-                android:src="@drawable/next"/>
+                android:layout_marginEnd="5dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_share"
+            android:id="@+id/layout_etc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/layout_border1">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                android:src="@drawable/setting_share"
-                android:id="@+id/img_share"/>
+            android:layout_weight="4"
+            android:layout_marginBottom="10dp">
 
             <TextView
+                android:id="@+id/tv_etc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/img_share"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                android:text="공유하기"
-                android:textSize="24sp"
+                android:text="기타 기능"
+                android:textSize="22sp"
                 android:textColor="@color/black"
+                android:fontFamily="@font/font_normal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_etc"
+                app:layout_constraintBottom_toTopOf="@id/tv_share"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
+                android:text="앱 버전"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"/>
+
+            <TextView
+                android:id="@+id/tv_version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next"
+                android:text="0.0"
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal"
+                app:layout_constraintTop_toTopOf="@id/tv_version"
+                app:layout_constraintBottom_toBottomOf="@id/tv_version"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:id="@+id/tv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_version"
+                app:layout_constraintBottom_toTopOf="@id/tv_logout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
+                android:text="공유하기"
+                android:textSize="20sp"
                 android:fontFamily="@font/font_normal"/>
 
             <ImageView
                 android:id="@+id/btn_share"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_share"
+                app:layout_constraintBottom_toBottomOf="@id/tv_share"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_logout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/layout_border1"
-            android:onClick="logout">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                android:src="@drawable/setting_logout"
-                android:id="@+id/img_logout"/>
+                android:layout_marginEnd="5dp" />
 
             <TextView
+                android:id="@+id/tv_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_share"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/img_logout"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="5dp"
                 android:text="로그아웃"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"/>
+                android:textSize="20sp"
+                android:fontFamily="@font/font_normal" />
 
             <ImageView
                 android:id="@+id/btn_logout"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_logout"
+                app:layout_constraintBottom_toBottomOf="@id/tv_logout"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginEnd="5dp"
+                android:onClick="logout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
-
 </LinearLayout>

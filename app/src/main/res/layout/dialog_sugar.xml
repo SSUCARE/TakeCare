@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/tab_color"
-    tools:context=".Dialog.SugarDialog">
+    tools:context=".dialog.SugarDialog">
 
     <TextView
         android:layout_width="match_parent"
@@ -23,118 +23,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:textAlignment="center"
-            android:text="공복 혈당"
+            android:text="혈당 (공복 / 식후)"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/font_normal"
+            android:padding="5dp"
+            android:layout_marginEnd="50dp"/>
+
+        <EditText
+            android:id="@+id/et_sugar"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/font_normal"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mg/dL"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:fontFamily="@font/font_normal"
             android:padding="5dp"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:textAlignment="center"
-            android:text="식후 혈당"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/font_normal"
-            android:padding="5dp"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/et_beforeSugar"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:fontFamily="@font/font_normal"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="mg/dL"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"
-                android:padding="5dp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/et_afterSugar"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:fontFamily="@font/font_normal"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="mg/dL"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/font_normal"
-                android:padding="5dp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
     </LinearLayout>
 
     <LinearLayout

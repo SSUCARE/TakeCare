@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">TakeCare</string>
+
+    <string name="next">다음</string>
+    <string name="skip">건너뛰기</string>
+    <string name="start">확인</string>
+
+    <string name="slide_1_title">Hello Food!</string>
+    <string name="slide_1_desc">The easiest way to order food from your favorite restaurant!</string>
+
+    <string name="slide_2_title">Movie Tickets</string>
+    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+
+    <string name="slide_3_title">Great Discounts</string>
+    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+
+    <string name="slide_4_title">World Travel</string>
+    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+
+    <string-array name="period_array">
+        <item>설정 안 함</item>
+        <item>하루에 한 번</item>
+        <item>하루에 두 번</item>
+        <item>하루에 세 번</item>
+    </string-array>
 </resources>
