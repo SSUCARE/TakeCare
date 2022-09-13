@@ -254,7 +254,7 @@ public class ReportActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String author = commentAdapter.getAuthorName(position);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this, R.style.MyDialogTheme);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
                 builder.setTitle("메세지 삭제");
                 builder.setMessage("이 메시지를 삭제할까요?");
 

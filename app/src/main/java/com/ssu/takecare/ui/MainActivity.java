@@ -2,6 +2,7 @@ package com.ssu.takecare.ui;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -265,41 +266,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makeReport(View view) {
-        if (!hp_input.getText().toString().equals("____")) {
+        hp_input = findViewById(R.id.input_high_pressure);
+        lp_input = findViewById(R.id.input_low_pressure);
+        s_input = findViewById(R.id.input_sugar);
+        w_input = findViewById(R.id.input_weight);
+
+        if ((hp_input.getText().toString().equals("____")) || (lp_input.getText().toString().equals("____"))
+                || (s_input.getText().toString().equals("____")) || (w_input.getText().toString().equals("____"))) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            AlertDialog dialog = dialogBuilder.create();
+
+            dialogBuilder.setTitle("알림");
+            dialogBuilder.setMessage("모든 항목을 입력해주세요.");
+            dialogBuilder.setPositiveButton("확인", null);
+            dialogBuilder.show();
+            dialog.dismiss();
+        }
+        else {
             r_systolic = Integer.parseInt(hp_input.getText().toString());
-        }
-
-        if (!lp_input.getText().toString().equals("____")) {
             r_diastolic = Integer.parseInt(lp_input.getText().toString());
-        }
-
-        if (!s_input.getText().toString().equals("____")) {
             r_sugarLevels.add(Integer.parseInt(s_input.getText().toString()));
-        }
-
-        if (!w_input.getText().toString().equals("____")) {
             r_weight = Integer.parseInt(w_input.getText().toString());
+
+//            if (!hp_input.getText().toString().equals("____")) {
+//                r_systolic = Integer.parseInt(hp_input.getText().toString());
+//            }
+//
+//            if (!lp_input.getText().toString().equals("____")) {
+//                r_diastolic = Integer.parseInt(lp_input.getText().toString());
+//            }
+//
+//            if (!s_input.getText().toString().equals("____")) {
+//                r_sugarLevels.add(Integer.parseInt(s_input.getText().toString()));
+//            }
+//
+//            if (!w_input.getText().toString().equals("____")) {
+//                r_weight = Integer.parseInt(w_input.getText().toString());
+//            }
+
+            ApplicationClass.retrofit_manager.makeReport(r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitReportCallback() {
+                @Override
+                public void onError(Throwable t) {
+                }
+
+                @Override
+                public void onSuccess(String message, DataReport data) {
+                    reportId = data.getReportId();
+                    Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(int error_code) {
+                }
+            });
+
+            saveValue();
+            setValue();
+            setStatus();
         }
-
-        ApplicationClass.retrofit_manager.makeReport(r_systolic, r_diastolic, r_sugarLevels, r_weight, new RetrofitReportCallback() {
-            @Override
-            public void onError(Throwable t) {
-            }
-
-            @Override
-            public void onSuccess(String message, DataReport data) {
-                reportId = data.getReportId();
-                Toast.makeText(getApplicationContext(), "리포트가 작성되었습니다", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(int error_code) {
-            }
-        });
-
-        saveValue();
-        setValue();
-        setStatus();
     }
 
     public void updateReport() {

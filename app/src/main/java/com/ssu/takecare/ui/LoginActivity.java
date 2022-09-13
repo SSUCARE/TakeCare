@@ -106,10 +106,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String email_str = email_login.getText().toString();
             String password_str = password_login.getText().toString();
 
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-            AlertDialog dialog = dialogBuilder.create();
-
             if (email_str.equals("") || password_str.equals("")) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                AlertDialog dialog = dialogBuilder.create();
+
                 dialogBuilder.setTitle("알림");
                 dialogBuilder.setMessage("빈 칸을 전부 채워주세요.");
                 dialogBuilder.setPositiveButton("확인", null);
