@@ -161,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 app:track="@drawable/switch_track"
+                app:thumbTint="@color/white"
                 app:layout_constraintTop_toTopOf="@id/tv_alarm_on_off"
                 app:layout_constraintBottom_toBottomOf="@id/tv_alarm_on_off"
                 app:layout_constraintRight_toRightOf="parent"

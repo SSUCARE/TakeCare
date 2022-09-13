@@ -87,9 +87,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             String email_str = email_register.getText().toString();
             String password_str = password_register.getText().toString();
 
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-            AlertDialog dialog = dialogBuilder.create();
             if (email_str.equals("") || password_str.equals("")) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                AlertDialog dialog = dialogBuilder.create();
+
                 dialogBuilder.setTitle("알림");
                 dialogBuilder.setMessage("빈 칸을 전부 채워주세요.");
                 dialogBuilder.setPositiveButton("확인", null);
